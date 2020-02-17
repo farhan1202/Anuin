@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_other:
                             selecFrag = new OtherFrag();
                             break;
+                            default:
+                                selecFrag = new HomeFrag();
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selecFrag).commit();
