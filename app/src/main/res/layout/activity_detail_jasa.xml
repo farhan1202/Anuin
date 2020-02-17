@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:orientation="vertical"
+    tools:context=".DetailJasaActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@android:color/white"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/imgDetailJasa"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@android:color/holo_orange_dark" />
+
+            <TextView
+                android:id="@+id/txtDetailJasa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imgDetailJasa"
+                android:layout_marginTop="20dp"
+                android:text="Listrik"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/rG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:id="@+id/detail1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Perbaikan / instalasi"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/detail1"
+                            android:text="Rp. 100.000"
+                            android:textColor="@android:color/holo_orange_dark" />
+
+                        <RadioButton
+                            android:id="@+id/radioPerbaikan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:checked="true" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:id="@+id/detail2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Survey / Konsultan"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/detail2"
+                            android:text="Rp. 100.000"
+                            android:textColor="@android:color/holo_orange_dark" />
+
+                        <RadioButton
+                            android:id="@+id/radioSurvey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:id="@+id/tHarga"
+            android:text="Harga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tPrice"
+            android:layout_below="@id/tHarga"
+            android:text="Rp. 100.000"
+            android:textColor="@android:color/holo_orange_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/buttonPesan"
+            android:layout_alignParentEnd="true"
+            android:text="PESAN"
+            android:background="@android:color/holo_orange_dark"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</RelativeLayout>
