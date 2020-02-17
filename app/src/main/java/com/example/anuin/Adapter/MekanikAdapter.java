@@ -36,7 +36,7 @@ public class MekanikAdapter extends RecyclerView.Adapter<MekanikAdapter.viewHold
     @Override
     public void onBindViewHolder(@NonNull final MekanikAdapter.viewHolder viewHolder, int i) {
         viewHolder.textView.setText("AC");
-        viewHolder.imageView.setBackgroundColor(Color.rgb(0,0,0));
+        viewHolder.imageView.setBackgroundColor(Color.rgb(211, 84, 0));
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

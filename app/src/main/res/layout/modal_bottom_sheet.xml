@@ -70,19 +70,25 @@
         android:orientation="horizontal">
 
         <Button
+            android:layout_marginTop="10dp"
             android:id="@+id/btnCancelOrder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/border_search"
             android:text="BATAL"
             android:textColor="@android:color/holo_orange_dark" />
 
         <Button
+            android:layout_marginTop="10dp"
             android:id="@+id/btnAcceptOrder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:background="@color/mainColor"
             android:text="LANJUT"
-            android:textColor="@android:color/holo_orange_dark" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>
