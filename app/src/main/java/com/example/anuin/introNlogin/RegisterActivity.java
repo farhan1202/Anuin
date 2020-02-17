@@ -11,12 +11,12 @@ import android.view.WindowManager;
 
 import com.example.anuin.R;
 
-public class ApiLoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_api_login);
+        setContentView(R.layout.activity_register);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_FULLSCREEN);
@@ -28,10 +28,9 @@ public class ApiLoginActivity extends AppCompatActivity {
         }
     }
 
-    public void signin(View view) {
-        Intent home=new Intent(ApiLoginActivity.this, LoginActivity.class);
-        startActivity(home);
-        finish();
+    public void Login(View view) {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
 }

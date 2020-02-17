@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".introNlogin.RegisterActivity"></activity>
+        <activity android:name=".introNlogin.LoginActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".introNlogin.ApiLoginActivity" />
         <activity android:name=".introNlogin.WelcomeActivity" />
         <activity android:name=".FormPesananActivity" />
