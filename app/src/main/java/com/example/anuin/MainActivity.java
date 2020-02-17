@@ -17,6 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+}
 
-    private BottomNavigationView.OnNavigationItemReselectedListener listener =
-            new Bottom
+
