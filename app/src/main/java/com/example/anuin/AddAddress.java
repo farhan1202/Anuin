@@ -3,6 +3,7 @@ package com.example.anuin;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,10 +21,15 @@ String KK[] = {
   "Pilih Kabupaten / Kota",
         "Bandung"
 };
+
+Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
+        toolbar = findViewById(R.id.toolbarFormAddress);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btnSimpan = findViewById(R.id.btnSimpan);
         spinnerKabKota = findViewById(R.id.spinnerKabKota);
 

@@ -14,9 +14,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".introNlogin.ApiLoginActivity" />
         <activity android:name=".introNlogin.WelcomeActivity" />
-        <activity android:name=".FormPesananActivity" />
-        <activity android:name=".DetailJasaActivity" />
-        <activity android:name=".AddAddress" />
+        <activity android:name=".FormPesananActivity" android:parentActivityName=".DetailJasaActivity"/>
+        <activity android:name=".DetailJasaActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".AddAddress" android:parentActivityName=".MainActivity"/>
         <activity android:name=".introNlogin.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

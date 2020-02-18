@@ -1,173 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbarSize="0dp"
     tools:context=".FormPesananActivity">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarFormPemesanan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:background="@android:color/white"
+        />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/txtPesananTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Perbaikan / Instalasi"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="Listrik"
-                android:textColor="@color/mainColor"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@+id/txtPesananTitle"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/darker_gray" />
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="LOKASI"
-            android:textStyle="bold" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/inpuut_back"
-            android:hint="Pilih Lokasi"
-            android:padding="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="KOTA"
-            android:textStyle="bold" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/inpuut_back"
-            android:hint="Kota"
-            android:padding="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="DETAIL LOKASI"
-            android:textStyle="bold" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/inpuut_back"
-            android:hint="Detail Lokasi Rumah"
-            android:padding="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="WAKTU PEKERJAAN"
-            android:textStyle="bold" />
+    <ScrollView
+        android:layout_below="@id/toolbarFormPemesanan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarSize="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/inpuut_back"
-                android:hint="DD/MM/YYYY"
-                android:padding="15dp" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/inpuut_back"
-                android:hint="HH:MM WIB"
-                android:padding="15dp" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="URAIAN PEKERJAAN"
-            android:textStyle="bold" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/inpuut_back"
-            android:hint="Deskripsi Pekerjaan"
-            android:padding="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="PHOTO (OPTIONAL)"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:hint="Detail Lokasi Rumah"
-            android:padding="15dp"
-            android:src="@drawable/ic_photo_camera_black_24dp" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:cardElevation="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/inpuut_back"
-                android:orientation="vertical"
-                android:padding="10dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/txtPesananTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                    android:text="Pilih metode pembayaran"
+                    android:text="Perbaikan / Instalasi"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Listrik"
+                    android:textColor="@color/mainColor"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <View
@@ -176,38 +52,176 @@
                     android:layout_below="@+id/txtPesananTitle"
                     android:layout_marginTop="10dp"
                     android:background="@android:color/darker_gray" />
+            </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="LOKASI"
+                android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Total Tagihan"
-                        android:textStyle="bold" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpuut_back"
+                android:hint="Pilih Lokasi"
+                android:padding="15dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="10dp"
-                        android:text="Rp 105.000"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="KOTA"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpuut_back"
+                android:hint="Kota"
+                android:padding="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="DETAIL LOKASI"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpuut_back"
+                android:hint="Detail Lokasi Rumah"
+                android:padding="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="WAKTU PEKERJAAN"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/inpuut_back"
+                    android:hint="DD/MM/YYYY"
+                    android:padding="15dp" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/inpuut_back"
+                    android:hint="HH:MM WIB"
+                    android:padding="15dp" />
             </LinearLayout>
-        </android.support.v7.widget.CardView>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/mainColor"
-            android:paddingVertical="10dp"
-            android:text="BUAT PESANAN"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="URAIAN PEKERJAAN"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpuut_back"
+                android:hint="Deskripsi Pekerjaan"
+                android:padding="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="PHOTO (OPTIONAL)"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:hint="Detail Lokasi Rumah"
+                android:padding="15dp"
+                android:src="@drawable/ic_photo_camera_black_24dp" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/inpuut_back"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        android:text="Pilih metode pembayaran"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/txtPesananTitle"
+                        android:layout_marginTop="10dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Total Tagihan"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Rp 105.000"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/mainColor"
+                android:paddingVertical="10dp"
+                android:text="BUAT PESANAN"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
