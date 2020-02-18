@@ -51,7 +51,7 @@
                     android:layout_height="2dp"
                     android:layout_below="@+id/txtPesananTitle"
                     android:layout_marginTop="10dp"
-                    android:background="@android:color/darker_gray" />
+                    android:background="@color/colorCard" />
             </RelativeLayout>
 
             <TextView
@@ -187,7 +187,7 @@
                         android:layout_height="2dp"
                         android:layout_below="@+id/txtPesananTitle"
                         android:layout_marginTop="10dp"
-                        android:background="@android:color/darker_gray" />
+                        android:background="@color/colorCard" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

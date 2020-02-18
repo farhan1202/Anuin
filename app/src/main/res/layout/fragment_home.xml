@@ -12,21 +12,21 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="210dp"
             android:background="@android:color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:overScrollMode="never"
+            <ImageView
+                android:src="@drawable/logoanuin"
                 android:layout_width="match_parent"
-                android:layout_height="155dp">
-
-            </android.support.v4.view.ViewPager>
+                android:layout_height="?attr/actionBarSize"/>
+            <ViewFlipper
+                android:id="@+id/viewFlipper"
+                android:layout_width="match_parent"
+                android:layout_height="115dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/textMekanik"
-                    android:background="@android:color/black" />
+                    android:background="@color/colorCard" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerElektronik"
@@ -86,7 +86,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/textDekor"
-                    android:background="@android:color/black" />
+                    android:background="@color/colorCard" />
 
 
                 <android.support.v7.widget.RecyclerView

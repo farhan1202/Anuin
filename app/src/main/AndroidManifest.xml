@@ -9,14 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".introNlogin.RegisterActivity"></activity>
+        <activity android:name=".pesanan.OrderProcessActivity"></activity>
+        <activity android:name=".pesanan.OrderWaitingActivity" />
+        <activity android:name=".introNlogin.RegisterActivity" />
         <activity android:name=".introNlogin.LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".introNlogin.ApiLoginActivity" />
         <activity android:name=".introNlogin.WelcomeActivity" />
-        <activity android:name=".FormPesananActivity" android:parentActivityName=".DetailJasaActivity"/>
-        <activity android:name=".DetailJasaActivity" android:parentActivityName=".MainActivity"/>
-        <activity android:name=".AddAddress" android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".FormPesananActivity"
+            android:parentActivityName=".DetailJasaActivity" />
+        <activity
+            android:name=".DetailJasaActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AddAddress"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".introNlogin.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
