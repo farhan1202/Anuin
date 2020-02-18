@@ -419,6 +419,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnOrderCancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -429,6 +430,7 @@
                 android:textColor="@android:color/holo_orange_dark" />
 
             <Button
+                android:id="@+id/btnOrderDone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
