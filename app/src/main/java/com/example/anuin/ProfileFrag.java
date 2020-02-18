@@ -16,7 +16,7 @@ import com.example.anuin.Modal.AccountDialog;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFrag extends Fragment {
-    CardView cardNama, cardAddAlamat;
+    CardView cardNama,cardEmail,cardTelp, cardAddAlamat;
 
     public ProfileFrag() {
         // Required empty public constructor
@@ -31,8 +31,25 @@ public class ProfileFrag extends Fragment {
 
         cardNama = view.findViewById(R.id.cardNama);
         cardAddAlamat = view.findViewById(R.id.cardAddAlamat);
+        cardEmail = view.findViewById(R.id.cardEmail);
+        cardTelp = view.findViewById(R.id.cardTelepon);
+
 
         cardNama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AccountDialog dialog = new AccountDialog();
+                dialog.show(getFragmentManager(),"AccountDialog");
+            }
+        });
+        cardEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AccountDialog dialog = new AccountDialog();
+                dialog.show(getFragmentManager(),"AccountDialog");
+            }
+        });
+        cardTelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AccountDialog dialog = new AccountDialog();
@@ -47,6 +64,8 @@ public class ProfileFrag extends Fragment {
                 startActivity(intent);
             }
         });
+
+
 
         return view;
     }
