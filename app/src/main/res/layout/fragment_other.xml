@@ -1,15 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="16dp"
+    android:paddingVertical="12dp"
+    android:orientation="vertical"
     tools:context=".OtherFrag">
+
     <TextView
+        android:id="@+id/pengaturan"
+        android:drawableLeft="@drawable/setting"
+        android:drawableRight="@drawable/next"
+        android:drawablePadding="16dp"
+        android:padding="14dp"
+        android:layout_marginBottom="16dp"
+        android:text="Pengaturan"
+        android:textSize="14dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="OTHER"
-        android:textSize="40dp" />
+    <TextView
+        android:id="@+id/kontakkami"
+        android:drawableLeft="@drawable/phone"
+        android:drawableRight="@drawable/next"
+        android:drawablePadding="16dp"
+        android:padding="14dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"
+        android:text="Kontak Kami"
+        android:textSize="14dp"
+        android:background="@drawable/other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/notifikasi"
+        android:drawableLeft="@drawable/notification"
+        android:drawableRight="@drawable/next"
+        android:drawablePadding="16dp"
+        android:padding="14dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:text="Notifikasi"
+        android:textSize="14dp"
+        android:background="@drawable/other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/keluar"
+        android:drawableLeft="@drawable/exit"
+        android:drawableRight="@drawable/next"
+        android:drawablePadding="16dp"
+        android:padding="14dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:text="Keluar"
+        android:textSize="14dp"
+        android:background="@drawable/other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
