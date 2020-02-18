@@ -112,6 +112,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/txtFormDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -119,9 +120,13 @@
                     android:layout_weight="1"
                     android:background="@drawable/inpuut_back"
                     android:hint="DD/MM/YYYY"
+                    android:textSize="15dp"
+                    android:editable="false"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
                     android:padding="15dp" />
 
                 <EditText
+                    android:id="@+id/txtFormTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -129,6 +134,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/inpuut_back"
                     android:hint="HH:MM WIB"
+                    android:textSize="15dp"
+                    android:editable="false"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_down_black_24dp"
                     android:padding="15dp" />
             </LinearLayout>
 
