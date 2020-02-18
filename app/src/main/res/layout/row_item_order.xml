@@ -41,7 +41,7 @@
                 android:layout_height="25dp"></Button>
         </RelativeLayout>
         <View
-            android:background="@color/dot_dark_screen1"
+            android:background="@color/colorView"
             android:layout_width="match_parent"
             android:elevation="0dp"
             android:layout_marginTop="7dp"
