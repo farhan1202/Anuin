@@ -25,4 +25,9 @@
         <item>@color/dot_dark_screen2</item>
         <item>@color/dot_dark_screen3</item>
     </array>
+
+    <color name="colorCard">#9EC7C1C1</color>
+    <color name="colorView">#3EC0BEBE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="orange">#F57C00</color>
 </resources>

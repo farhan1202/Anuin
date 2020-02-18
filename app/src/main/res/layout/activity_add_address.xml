@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".AddAddress">
+
+    <ImageView
+        android:src="@drawable/back"
+        android:layout_marginBottom="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:text="ALAMAT"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="2dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/editAlamat"
+                android:background="@drawable/modal"
+                android:padding="14dp"
+                android:layout_marginBottom="10dp"
+                android:hint="Rumah, apartement atau lainnya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="LOKASI"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="2dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/editLokasi"
+                android:background="@drawable/modal"
+                android:padding="14dp"
+                android:hint="Tentukan Lokasi"
+                android:layout_marginBottom="10dp"
+                android:drawableRight="@drawable/marker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="KABUPATEN / KOTA"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="2dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/spinnerKabKota"
+                android:padding="24dp"
+                android:background="@drawable/modal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="KECAMATAN"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="2dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/spinnerKecamatan"
+                android:padding="24dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/modal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="Kelurahan"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="2dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/spinnerKelurahan"
+                android:padding="24dp"
+                android:background="@drawable/modal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="PROPERTI"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="2dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/spinnerProperti"
+                android:padding="24dp"
+                android:background="@drawable/modal"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="97dp">
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnSimpan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/btn"
+                android:text="SIMPAN"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
