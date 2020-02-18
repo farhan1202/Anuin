@@ -4,16 +4,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.example.anuin.Adapter.NotifAdapter;
 
 public class NotifActivity extends AppCompatActivity {
 RecyclerView rvNotif;
 NotifAdapter adapter;
+Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
+        toolbar = findViewById(R.id.toolbarNotification);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         rvNotif = findViewById(R.id.rvNotif);
         rvNotif.setHasFixedSize(true);
 

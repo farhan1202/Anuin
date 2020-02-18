@@ -1,6 +1,7 @@
 package com.example.anuin.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.anuin.R;
+import com.example.anuin.order.OrderWaitingActivity;
 
 public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapter.vHolder> {
     Context context;
@@ -27,7 +29,7 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull vHolder vHolder, int i) {
+    public void onBindViewHolder(@NonNull final vHolder vHolder, int i) {
         vHolder.tvkode.setText("Kode Pemesanan #ABC1123");
         vHolder.tvmotode.setText("perbaikan / instalasi");
         vHolder.tvtype.setText("AC");
@@ -42,7 +44,8 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
         vHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, OrderWaitingActivity.class);
+                view.getContext().startActivity(intent);
             }
         });
 
@@ -50,7 +53,7 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 3;
     }
 
     public class vHolder extends RecyclerView.ViewHolder {

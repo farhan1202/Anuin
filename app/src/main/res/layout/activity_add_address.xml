@@ -5,13 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginHorizontal="20dp"
-    android:paddingVertical="10dp"
     tools:context=".AddAddress">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarFormAddress"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <ScrollView
-        android:scrollbars="none"
+        android:layout_marginHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:scrollbarSize="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout

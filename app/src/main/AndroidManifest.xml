@@ -10,7 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".order.OrderProcessActivity" />
-        <activity android:name=".order.OrderWaitingActivity" />
+        <activity
+            android:name=".order.OrderWaitingActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".NotifActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".order.MotodePembayaranActivity" />
         <activity android:name=".introNlogin.RegisterActivity" />
         <activity android:name=".introNlogin.LoginActivity" />
