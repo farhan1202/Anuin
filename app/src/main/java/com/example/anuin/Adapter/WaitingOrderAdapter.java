@@ -50,7 +50,7 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 1;
     }
 
     public class vHolder extends RecyclerView.ViewHolder {
