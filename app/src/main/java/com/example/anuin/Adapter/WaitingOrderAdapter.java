@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.anuin.R;
+import com.example.anuin.order.OrderProcessActivity;
 import com.example.anuin.order.OrderWaitingActivity;
 
 public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapter.vHolder> {
