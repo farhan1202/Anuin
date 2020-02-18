@@ -16,6 +16,7 @@
         <activity android:name=".introNlogin.WelcomeActivity" />
         <activity android:name=".FormPesananActivity" />
         <activity android:name=".DetailJasaActivity" />
+        <activity android:name=".AddAddress" />
         <activity android:name=".introNlogin.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
