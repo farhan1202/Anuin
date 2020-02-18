@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pesanan.OrderProcessActivity"></activity>
-        <activity android:name=".pesanan.OrderWaitingActivity" />
+        <activity android:name=".order.OrderProcessActivity" />
+        <activity android:name=".order.OrderWaitingActivity" />
+        <activity android:name=".order.MotodePembayaranActivity" />
         <activity android:name=".introNlogin.RegisterActivity" />
         <activity android:name=".introNlogin.LoginActivity" />
         <activity android:name=".MainActivity" />
