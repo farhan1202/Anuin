@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.example.anuin.R;
 
-public class MotodePembayaranActivity extends AppCompatActivity {
+public class MetodePembayaranActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class MotodePembayaranActivity extends AppCompatActivity {
         cvTunai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), BayarActivity.class);
+                Intent intent = new Intent(MetodePembayaranActivity.this, BayarActivity.class);
                 startActivity(intent);
             }
         });
