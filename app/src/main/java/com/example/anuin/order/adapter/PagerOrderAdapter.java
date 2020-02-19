@@ -1,4 +1,4 @@
-package com.example.anuin.Adapter;
+package com.example.anuin.order.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

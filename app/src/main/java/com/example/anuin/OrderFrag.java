@@ -10,9 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
-import com.example.anuin.Adapter.PagerOrderAdapter;
+import com.example.anuin.order.adapter.PagerOrderAdapter;
 import com.example.anuin.order.AktifFragment;
 import com.example.anuin.order.SelesaiFragment;
 

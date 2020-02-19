@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:background="#2874A6 "
+                android:background="@drawable/butfb"
                 android:text="Facebook"
                 android:textColor="#fff"></Button>
             <Button
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:background="#C0392B"
+                android:background="@drawable/buttgmail"
                 android:text="Gmail"
                 android:textColor="#fff"></Button>
         </LinearLayout>

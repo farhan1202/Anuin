@@ -1,4 +1,4 @@
-package com.example.anuin.Adapter;
+package com.example.anuin.order.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.anuin.R;
-import com.example.anuin.order.OrderProcessActivity;
 import com.example.anuin.order.OrderWaitingActivity;
 
 public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapter.vHolder> {

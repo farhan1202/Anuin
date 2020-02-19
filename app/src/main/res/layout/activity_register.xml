@@ -90,7 +90,7 @@
                 android:layout_marginTop="12dp"
                 android:text="register"
                 android:textColor="#fff"
-                android:background="@color/btnColorOrange"
+                android:background="@drawable/btnlogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></Button>
 

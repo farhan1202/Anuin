@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.anuin.Adapter.WaitingOrderAdapter;
+import com.example.anuin.order.adapter.WaitingOrderAdapter;
 import com.example.anuin.R;
 
 /**
