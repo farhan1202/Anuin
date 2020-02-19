@@ -54,7 +54,7 @@
                 <View
                     android:id="@+id/g1"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_below="@id/txtSearch"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="20dp"
@@ -81,7 +81,7 @@
                 <View
                     android:id="@+id/g2"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_below="@id/recyclerElektronik"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="20dp"

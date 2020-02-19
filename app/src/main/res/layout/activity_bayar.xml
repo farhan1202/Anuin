@@ -62,7 +62,7 @@
             <Button
                 android:id="@+id/btnBayar"
                 android:layout_alignParentBottom="true"
-                android:background="@color/dot_light_screen1"
+                android:background="@drawable/btn"
                 android:text="BAYAR"
                 android:textColor="#fff"
                 android:layout_width="match_parent"

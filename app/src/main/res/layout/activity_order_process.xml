@@ -47,7 +47,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginTop="15dp"
                     android:background="@color/colorCard" />
 
@@ -74,7 +74,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginTop="15dp"
                     android:background="@color/colorCard" />
 
@@ -97,7 +97,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/border_search"
-                        android:backgroundTint="@android:color/holo_green_light"
+                        android:backgroundTint="#27AE60"
                         android:paddingHorizontal="15dp"
                         android:paddingVertical="5dp"
                         android:text="Proses"
@@ -180,7 +180,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
+                            android:layout_height="1dp"
                             android:layout_marginTop="15dp"
                             android:background="@color/colorCard" />
 
@@ -225,7 +225,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
+                            android:layout_height="1dp"
                             android:layout_marginTop="15dp"
                             android:background="@color/colorCard" />
 
@@ -243,7 +243,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
+                            android:layout_height="1dp"
                             android:layout_marginTop="15dp"
                             android:background="@color/colorCard" />
 
@@ -336,7 +336,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
+                            android:layout_height="1dp"
                             android:layout_marginTop="5dp"
                             android:background="@color/colorCard" />
 
@@ -436,7 +436,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@color/mainColor"
+                android:background="@drawable/btn"
                 android:text="LANJUT"
                 android:textColor="@android:color/white" />
         </LinearLayout>

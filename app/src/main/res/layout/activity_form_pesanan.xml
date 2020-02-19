@@ -48,7 +48,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_below="@+id/txtPesananTitle"
                     android:layout_marginTop="10dp"
                     android:background="@color/colorCard" />
@@ -192,7 +192,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         android:layout_below="@+id/txtPesananTitle"
                         android:layout_marginTop="10dp"
                         android:background="@color/colorCard" />
@@ -206,6 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="Total Tagihan"
+                            android:layout_centerVertical="true"
                             android:textStyle="bold" />
 
                         <TextView
