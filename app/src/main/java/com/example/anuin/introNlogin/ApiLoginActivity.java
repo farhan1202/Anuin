@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.anuin.R;
 
 public class ApiLoginActivity extends AppCompatActivity {
+    TextView tvBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,12 @@ public class ApiLoginActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+        tvBtn=findViewById(R.id.tvBtn);
     }
 
+
     public void signin(View view) {
+        tvBtn.setTextColor(Color.RED);
         Intent home=new Intent(ApiLoginActivity.this, LoginActivity.class);
         startActivity(home);
         finish();
