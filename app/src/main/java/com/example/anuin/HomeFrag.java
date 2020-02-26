@@ -27,7 +27,6 @@ Context context;
 
 ViewPager viewPager;
 AdapterViewPager adapterViewPager;
-private int image[] = {R.drawable.logoanuin,R.drawable.logoanuin,R.drawable.logoanuin };
 
     public HomeFrag() {
         // Required empty public constructor

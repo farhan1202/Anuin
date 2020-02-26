@@ -10,8 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ReviewActivity"></activity>
-        <activity android:name=".order.OrderProcessActivity" />
-        <activity android:name=".order.BayarActivity"/>
+        <activity
+            android:name=".order.OrderProcessActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".order.BayarActivity" />
         <activity
             android:name=".order.OrderWaitingActivity"
             android:parentActivityName=".MainActivity" />

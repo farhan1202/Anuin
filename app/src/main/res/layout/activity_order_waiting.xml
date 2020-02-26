@@ -54,13 +54,15 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Kode Pemesanan"
+                        android:layout_marginTop="10dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -69,6 +71,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_gravity="center_horizontal"
                         android:textStyle="bold"
+                        android:layout_marginTop="10dp"
                         android:text="#ABC123"
                         />
                 </RelativeLayout>
@@ -76,7 +79,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/colorCard" />
 
                 <RelativeLayout

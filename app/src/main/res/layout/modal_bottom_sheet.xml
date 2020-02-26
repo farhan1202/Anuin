@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="20dp">
+
     <View
-        android:background="@drawable/rounded"
+        android:layout_width="40dp"
+        android:layout_height="5dp"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
-        android:layout_width="40dp"
-        android:layout_height="5dp"/>
+        android:background="@drawable/rounded" />
 
     <TextView
         android:id="@+id/detail1"
@@ -30,47 +31,47 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:background="@color/colorCard" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:text="Syarat &amp; ketentuan" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum risus, ornare quis metus ut, malesuada ullamcorper purus. Vivamus mattis posuere odio." />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
+        app:cardElevation="0dp"
         app:cardCornerRadius="10dp">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorCard"
             android:padding="10dp">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jika Anda membatalkan pesanan setelah mitra di lokasi pekerjaa, maka anda dikenakan biaya pembatalan sebesar Rp. 50.000" />
+                android:text="@string/termcondition" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:text="Dengan menekan lanjut saya menyetujui syarat &amp; ketentuan yang berlaku" />
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

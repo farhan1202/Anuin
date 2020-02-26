@@ -45,7 +45,7 @@
                     android:background="@drawable/border_search"
                     android:drawableLeft="@drawable/ic_search"
                     android:hint="Saya membutuhkan jasa"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     android:padding="10dp" />
 
                 <TextView
