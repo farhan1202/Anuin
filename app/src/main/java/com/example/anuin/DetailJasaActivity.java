@@ -32,8 +32,6 @@ RadioButton rB1, rB2;
             Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show();
         }
 
-
-
         btnPesan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -19,14 +19,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
-                android:src="@drawable/logoanuin"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"/>
-            <ViewFlipper
-                android:id="@+id/viewFlipper"
+                android:layout_height="?attr/actionBarSize"
+                android:src="@drawable/logoanuin" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+
                 android:layout_width="match_parent"
-                android:layout_height="115dp"/>
+                android:layout_height="115dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -40,6 +45,7 @@
                     android:background="@drawable/border_search"
                     android:drawableLeft="@drawable/ic_search"
                     android:hint="Saya membutuhkan jasa"
+                    android:maxLines="1"
                     android:padding="10dp" />
 
                 <TextView
