@@ -79,5 +79,4 @@ public class ProfileFrag extends Fragment {
 
         return view;
     }
-
 }
