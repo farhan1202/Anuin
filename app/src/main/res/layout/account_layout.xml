@@ -22,6 +22,8 @@
         android:hint="johndoe"
         android:layout_marginHorizontal="25dp"
         android:padding="14dp"
+       android:singleLine="true"
+        android:maxLength="50"
         android:background="@drawable/modal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
