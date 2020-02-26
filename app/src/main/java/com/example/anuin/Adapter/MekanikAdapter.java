@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.anuin.DetailJasaActivity;
 import com.example.anuin.R;
 
@@ -35,8 +36,13 @@ public class MekanikAdapter extends RecyclerView.Adapter<MekanikAdapter.viewHold
 
     @Override
     public void onBindViewHolder(@NonNull final MekanikAdapter.viewHolder viewHolder, int i) {
-        viewHolder.textView.setText("AC");
-        viewHolder.imageView.setBackgroundColor(Color.rgb(211, 84, 0));
+        viewHolder.textView.setText("Sample");
+        Glide
+                .with(context)
+                .load("https://freeiconshop.com/wp-content/uploads/edd/microwave-flat.png")
+                .centerCrop()
+                .into(viewHolder.imageView);
+
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

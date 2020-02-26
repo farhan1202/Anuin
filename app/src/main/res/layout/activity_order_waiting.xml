@@ -103,7 +103,7 @@
                         android:background="@drawable/bg_btn"
                         android:paddingHorizontal="15dp"
                         android:paddingVertical="5dp"
-                        android:text="Menugnggu"
+                        android:text="Menunggu"
                         android:textColor="#27AE60"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -384,7 +384,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/btn"
-                android:text="LANJUT"
+                android:text="Selesai"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>
