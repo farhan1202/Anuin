@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -23,6 +25,12 @@ DatePickerDialog dialog;
 Time time;
 TimePickerDialog dialog1;
 Context mContext = this;
+Spinner spinner;
+
+    String KK[] = {
+            "Pilih Kabupaten / Kota",
+            "Bandung"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,5 +74,11 @@ Context mContext = this;
                 dialog1.show();
             }
         });
+
+
+        spinner = findViewById(R.id.spinnerLokasi);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, KK);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }
