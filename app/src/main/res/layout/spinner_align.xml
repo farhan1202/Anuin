@@ -9,7 +9,6 @@
     android:padding="16dp"
     android:textSize="14sp"
     android:textColor="@color/dot_dark_screen2"
-
     android:textAlignment="gravity"
     android:gravity="left"
     />

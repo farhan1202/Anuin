@@ -17,9 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/btnSimpan"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/toolbarFormAddress"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -42,10 +42,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:textSize="14sp"
                 android:background="@drawable/modal"
                 android:hint="Rumah, apartement atau lainnya"
-                android:padding="14dp" />
+                android:padding="14dp"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,10 +64,10 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:drawableRight="@drawable/marker"
-                android:singleLine="true"
-                android:textSize="14sp"
                 android:hint="Tentukan Lokasi"
-                android:padding="14dp" />
+                android:padding="14dp"
+                android:singleLine="true"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,14 +79,17 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerKabKota"
+            <RelativeLayout
+                android:background="@drawable/modal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/modal"
-                android:spinnerMode="dropdown"
-                 />
+                android:layout_marginBottom="10dp">
+                <Spinner
+                    android:id="@+id/spinnerKabKota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,12 +101,17 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerKecamatan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <RelativeLayout
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/modal" />
+                android:background="@drawable/modal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/spinnerKecamatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,12 +123,18 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerKelurahan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <RelativeLayout
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/modal"/>
+                android:background="@drawable/modal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/spinnerKelurahan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    />
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -132,13 +146,17 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerProperti"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/modal"
-                />
+           <RelativeLayout
+               android:layout_marginBottom="10dp"
+               android:background="@drawable/modal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <Spinner
+                   android:id="@+id/spinnerProperti"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:spinnerMode="dropdown"/>
+           </RelativeLayout>
 
 
         </LinearLayout>
@@ -155,8 +173,6 @@
         android:background="@drawable/btn"
         android:text="SIMPAN"
         android:textColor="@color/white" />
-
-
 
 
 </RelativeLayout>
