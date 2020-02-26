@@ -7,7 +7,7 @@
     <color name="btnColorOrange">#FB8E03</color>
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#A9A9A9</color>
-    <color name="dot_dark_screen2">#A9A9A9</color>
+    <color name="dot_dark_screen2">#9E9E9E</color>
     <color name="dot_dark_screen3">#A9A9A9</color>
 
     <!-- dots active colors -->

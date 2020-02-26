@@ -10,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.anuin.Modal.AccountDialog;
+import com.example.anuin.Modal.PasswordDialog;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFrag extends Fragment {
-    CardView cardNama,cardEmail,cardTelp, cardAddAlamat;
+    CardView cardNama,cardEmail,cardTelp, cardAddAlamat,cardPassword;
 
     public ProfileFrag() {
         // Required empty public constructor
@@ -33,6 +34,7 @@ public class ProfileFrag extends Fragment {
         cardAddAlamat = view.findViewById(R.id.cardAddAlamat);
         cardEmail = view.findViewById(R.id.cardEmail);
         cardTelp = view.findViewById(R.id.cardTelepon);
+        cardPassword = view.findViewById(R.id.cardPassword);
 
 
         cardNama.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +58,13 @@ public class ProfileFrag extends Fragment {
                 dialog.show(getFragmentManager(),"AccountDialog");
             }
         });
+        cardPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PasswordDialog dialog = new PasswordDialog();
+                dialog.show(getFragmentManager(),"PasswordDialog");
+            }
+        });
 
         cardAddAlamat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +73,7 @@ public class ProfileFrag extends Fragment {
                 startActivity(intent);
             }
         });
+
 
 
 
