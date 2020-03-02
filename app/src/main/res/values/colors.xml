@@ -21,9 +21,9 @@
     </array>
 
     <array name="array_dot_inactive">
-        <item>@color/dot_dark_screen1</item>
-        <item>@color/dot_dark_screen2</item>
-        <item>@color/dot_dark_screen3</item>
+        <item>#E8D5C8</item>
+        <item>#E8D5C8</item>
+        <item>#E8D5C8</item>
     </array>
 
     <color name="colorCard">#9EC7C1C1</color>

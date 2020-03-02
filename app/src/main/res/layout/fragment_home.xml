@@ -39,22 +39,43 @@
                 android:focusableInTouchMode="true"
                 android:padding="20dp">
 
-                <EditText
-                    android:id="@+id/txtSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll1"
                     android:background="@drawable/border_search"
-                    android:drawableStart="@drawable/ic_search"
-                    android:hint="Saya membutuhkan jasa"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:singleLine="true" />
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:src="@drawable/ic_search"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+                    <View
+                        android:background="@android:color/holo_orange_dark"
+                        android:layout_width="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:layout_height="25dp"/>
+                    <EditText
+                        android:id="@+id/txtSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="Saya membutuhkan jasa"
+                        android:layout_marginLeft="8dp"
+                        android:inputType="text"
+                        android:layout_gravity="center_vertical"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/textMekanik"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtSearch"
+                    android:layout_below="@id/ll1"
                     android:layout_marginTop="10dp"
                     android:text="MEKANIKAL &amp; ELEKTRONIK"
                     android:textStyle="bold" />
@@ -63,7 +84,7 @@
                     android:id="@+id/g1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/txtSearch"
+                    android:layout_below="@id/ll1"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/textMekanik"

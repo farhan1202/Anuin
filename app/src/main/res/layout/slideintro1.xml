@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/imgSlide1"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_weight="4.5"
+        android:layout_gravity="center"
+        android:src="@drawable/logoanuin" />
     <LinearLayout
+        android:paddingTop="50dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="center"
         android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/imgSlide1"
-            android:layout_width="300dp"
-            android:layout_height="350dp"
-            android:layout_marginBottom="70dp"
-            android:src="@drawable/logoanuin" />
-
         <TextView
             android:id="@+id/txtTitle1"
             android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
             android:text="text"
-            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             android:textColor="#000"
             android:textSize="@dimen/slide_desc"
             android:textStyle="bold" />
@@ -37,10 +38,10 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="text"
             android:textAlignment="center"
+            android:text="text"
             android:textColor="#000"
             android:textSize="@dimen/slide_desc" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
