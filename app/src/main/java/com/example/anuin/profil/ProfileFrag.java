@@ -1,4 +1,4 @@
-package com.example.anuin;
+package com.example.anuin.profil;
 
 
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.anuin.Modal.AccountDialog;
 import com.example.anuin.Modal.PasswordDialog;
+import com.example.anuin.R;
 
 
 /**

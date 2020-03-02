@@ -3,7 +3,7 @@
     package="com.example.anuin">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ReviewActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".order.ReviewActivity" />
         <activity
             android:name=".order.OrderProcessActivity"
             android:parentActivityName=".MainActivity" />
@@ -21,7 +22,7 @@
             android:name=".order.OrderWaitingActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".NotifActivity"
+            android:name=".other.NotifActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".order.MetodePembayaranActivity" />
         <activity android:name=".introNlogin.RegisterActivity" />
@@ -30,13 +31,13 @@
         <activity android:name=".introNlogin.ApiLoginActivity" />
         <activity android:name=".introNlogin.WelcomeActivity" />
         <activity
-            android:name=".FormPesananActivity"
-            android:parentActivityName=".DetailJasaActivity" />
+            android:name=".home.FormPesananActivity"
+            android:parentActivityName=".home.DetailJasaActivity" />
         <activity
-            android:name=".DetailJasaActivity"
+            android:name=".home.DetailJasaActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".AddAddress"
+            android:name=".profil.AddAddress"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".introNlogin.SplashScreenActivity">
             <intent-filter>

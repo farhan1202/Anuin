@@ -1,4 +1,4 @@
-package com.example.anuin;
+package com.example.anuin.home;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -12,7 +12,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
+
+import com.example.anuin.R;
 
 import java.sql.Time;
 import java.util.Calendar;

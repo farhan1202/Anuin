@@ -2,6 +2,7 @@ package com.example.anuin.introNlogin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +18,46 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import com.example.anuin.R;
+import com.example.anuin.introNlogin.apihelper.ApiInterface;
+import com.example.anuin.introNlogin.apihelper.UtilsApi;
+import com.example.anuin.introNlogin.model.Walkthrough;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WelcomeActivity extends AppCompatActivity {
-    private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
-    private LinearLayout dotsLayout;
-    private TextView[] dots;
-    private int[] layout;
+    private ViewPager mSlider;
     private Button btnSkip,btnNext;
+    private LinearLayout dotsLayout;
+    private AdapterIntro adapterIntro;
+    private TextView[] dots;
     private PrefManager prefManager;
 
+    private ArrayList list;
+    private ArrayList listDesc;
+
+
+    Context context;
+    ApiInterface apiInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
         prefManager = new PrefManager(this);
         if (!prefManager.isFirstTimeLaunch()){
             launchHomeScreen();
@@ -41,24 +68,19 @@ public class WelcomeActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN);
         }
 
-        setContentView(R.layout.activity_welcome);
+        mSlider = findViewById(R.id.view_pager);
 
-        viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
         btnSkip = findViewById(R.id.btn_skip);
         btnNext = findViewById(R.id.btn_next);
 
-        layout = new int[]{
-                R.layout.slideintro1,
-                R.layout.slideintro2,
-                R.layout.slideintro3
-        };
+        context = this;
+        apiInterface = UtilsApi.getApiService();
+
+        fetchData();
+
 
         addBottomDots(0);
-
-        myViewPagerAdapter = new MyViewPagerAdapter();
-        viewPager.setAdapter(myViewPagerAdapter);
-        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,17 +93,59 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int current = getItem(+1);
-                if (current < layout.length){
-                    viewPager.setCurrentItem(current);
+                if (current < 3){
+                    mSlider.setCurrentItem(current);
                 }else {
                     launchHomeScreen();
                 }
             }
         });
+
+    }
+
+    private void fetchData() {
+        apiInterface.getWalkthrough().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONArray jsonArray = jsonObject.getJSONArray("DATA");
+
+                        list = new ArrayList();
+                        listDesc = new ArrayList();
+
+                        ArrayList<Walkthrough> walkthroughs = new ArrayList<>();
+                        Gson gson = new Gson();
+                        for (int i = 0 ; i < jsonArray.length() ; i++){
+                            Walkthrough walkthrough = gson.fromJson(jsonArray.getJSONObject(i)+"", Walkthrough.class);
+                            walkthroughs.add(walkthrough);
+                        }
+
+                        adapterIntro = new AdapterIntro(getApplicationContext(), walkthroughs);
+
+                        mSlider.setAdapter(adapterIntro);
+                        mSlider.addOnPageChangeListener(viewPagerPageChangeListener);
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     private void addBottomDots(int currentPage) {
-        dots = new TextView[layout.length];
+        dots = new TextView[3];
 
         int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
         int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
@@ -97,15 +161,7 @@ public class WelcomeActivity extends AppCompatActivity {
         if (dots.length > 0)
             dots[currentPage].setTextColor(colorsActive[currentPage]);
     }
-    private int getItem(int i){
-        return viewPager.getCurrentItem() + i;
-    }
 
-    private void launchHomeScreen() {
-        prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(WelcomeActivity.this, ApiLoginActivity.class));
-        finish();
-    }
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -116,7 +172,7 @@ public class WelcomeActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-            if (position == layout.length - 1) {
+            if (position == 3 - 1) {
                 // last page. make button text to GOT IT
                 btnNext.setText("Start");
                 btnSkip.setVisibility(View.GONE);
@@ -134,36 +190,15 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     };
 
-    public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater layoutInflater;
+    private void launchHomeScreen() {
+        prefManager.setFirstTimeLaunch(false);
+        startActivity(new Intent(WelcomeActivity.this, ApiLoginActivity.class));
+        finish();
+    }
 
-        public MyViewPagerAdapter(){
-
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View view = layoutInflater.inflate(layout[position], container, false);
-            container.addView(view);
-
-            return view;
-        }
-        @Override
-        public int getCount() {
-            return layout.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object obj) {
-            return view == obj;
-        }
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            View view = (View) object;
-            container.removeView(view);
-        }
+    private int getItem(int i){
+        return mSlider.getCurrentItem() + i;
     }
 }
+
 

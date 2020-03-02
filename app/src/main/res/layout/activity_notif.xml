@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotifActivity">
+    tools:context=".other.NotifActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarNotification"
         android:background="@android:color/white"

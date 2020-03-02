@@ -1,4 +1,4 @@
-package com.example.anuin;
+package com.example.anuin.other;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.anuin.Adapter.NotifAdapter;
+import com.example.anuin.R;
 
 public class NotifActivity extends AppCompatActivity {
 RecyclerView rvNotif;

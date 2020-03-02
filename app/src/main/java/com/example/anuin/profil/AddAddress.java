@@ -1,6 +1,5 @@
-package com.example.anuin;
+package com.example.anuin.profil;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,10 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.example.anuin.R;
 
 public class AddAddress extends AppCompatActivity {
     Button btnSimpan;

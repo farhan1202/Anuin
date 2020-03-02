@@ -1,4 +1,4 @@
-package com.example.anuin;
+package com.example.anuin.order;
 
 
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.anuin.R;
 import com.example.anuin.order.adapter.PagerOrderAdapter;
 import com.example.anuin.order.AktifFragment;
 import com.example.anuin.order.SelesaiFragment;

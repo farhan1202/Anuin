@@ -6,7 +6,7 @@
     android:layout_marginHorizontal="16dp"
     android:paddingVertical="12dp"
     android:orientation="vertical"
-    tools:context=".OtherFrag">
+    tools:context=".other.OtherFrag">
 
     <TextView
         android:id="@+id/pengaturan"

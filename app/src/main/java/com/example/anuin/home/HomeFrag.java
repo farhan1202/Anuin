@@ -1,4 +1,4 @@
-package com.example.anuin;
+package com.example.anuin.home;
 
 
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.widget.ViewFlipper;
 
 import com.example.anuin.Adapter.AdapterViewPager;
 import com.example.anuin.Adapter.MekanikAdapter;
+import com.example.anuin.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.example.anuin;
+package com.example.anuin.home;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.anuin.Adapter.OrderModalSheet;
+import com.example.anuin.R;
 
 public class DetailJasaActivity extends AppCompatActivity {
     Button btnPesan;

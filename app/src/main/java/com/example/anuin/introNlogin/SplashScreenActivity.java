@@ -13,7 +13,7 @@ import android.view.WindowManager;
 import com.example.anuin.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private int time=2001;
+    private int time=3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 Intent home=new Intent(SplashScreenActivity.this, WelcomeActivity.class);
                 startActivity(home);
                 finish();

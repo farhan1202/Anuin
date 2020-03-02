@@ -7,6 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.anuin.home.HomeFrag;
+import com.example.anuin.order.OrderFrag;
+import com.example.anuin.other.OtherFrag;
+import com.example.anuin.profil.ProfileFrag;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
