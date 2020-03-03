@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.anuin.R;
+
+import java.util.Timer;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private int time=3000;
@@ -28,12 +31,20 @@ public class SplashScreenActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent home=new Intent(SplashScreenActivity.this, WelcomeActivity.class);
-                startActivity(home);
-                finish();
+                boolean checkConnection = new ApplicationUtility().checkConnection(getApplicationContext());
+                if (checkConnection){
+                    Intent home=new Intent(SplashScreenActivity.this, WelcomeActivity.class);
+                    startActivity(home);
+                    finish();
+                }else{
+                    Toast.makeText(SplashScreenActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
 
             }
         },time);
