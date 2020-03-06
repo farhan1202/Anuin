@@ -42,7 +42,6 @@ Button btnLogin;
     public void Register(View view) {
         Intent home=new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(home);
-        finish();
     }
 
 }

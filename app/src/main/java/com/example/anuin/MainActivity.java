@@ -1,11 +1,13 @@
 package com.example.anuin;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.anuin.home.HomeFrag;
 import com.example.anuin.order.OrderFrag;
@@ -13,7 +15,8 @@ import com.example.anuin.other.OtherFrag;
 import com.example.anuin.profil.ProfileFrag;
 
 public class MainActivity extends AppCompatActivity {
-
+    private boolean doubleBack;
+    private Toast backToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,26 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBack){
+            backToast.cancel();
+            super.onBackPressed();
+            moveTaskToBack(true);
+        }else{
+            backToast = Toast.makeText(this, "Press back againt to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+            doubleBack = true;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBack=false;
+                }
+            }, 2000);
+        }
+    }
 }
 
 

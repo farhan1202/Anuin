@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class AdapterIntro  extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    ArrayList listTitle, listDesc;
     ArrayList<Walkthrough> walkthroughs;
 
     public AdapterIntro(Context context, ArrayList<Walkthrough> walkthroughs) {
@@ -28,16 +27,10 @@ public class AdapterIntro  extends PagerAdapter {
         this.walkthroughs = walkthroughs;
     }
 
-    public int[] slide_image = {
-            R.drawable.logoanuin,
-            R.drawable.logoanuin,
-            R.drawable.logoanuin,
-    };
-
 
     @Override
     public int getCount() {
-        return slide_image.length;
+        return 3;
     }
 
     @Override

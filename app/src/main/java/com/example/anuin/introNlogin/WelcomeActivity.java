@@ -47,8 +47,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private TextView[] dots;
     private PrefManager prefManager;
 
-    private ArrayList list;
-    private ArrayList listDesc;
+    ArrayList<Walkthrough> walkthroughs;
 
 
     Context context;
@@ -104,7 +103,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void fetchData() {
-        apiInterface.getWalkthrough().enqueue(new Callback<ResponseBody>() {
+        apiInterface.getWalkthrough("clabsLar4dm1n!@#$4Nu1n4Pp$").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
@@ -112,10 +111,8 @@ public class WelcomeActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         JSONArray jsonArray = jsonObject.getJSONArray("DATA");
 
-                        list = new ArrayList();
-                        listDesc = new ArrayList();
 
-                        ArrayList<Walkthrough> walkthroughs = new ArrayList<>();
+                        walkthroughs = new ArrayList<>();
                         Gson gson = new Gson();
                         for (int i = 0 ; i < jsonArray.length() ; i++){
                             Walkthrough walkthrough = gson.fromJson(jsonArray.getJSONObject(i)+"", Walkthrough.class);
@@ -129,9 +126,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
+                    } catch (JSONException | IOException e) {
                         e.printStackTrace();
                     }
                 }
