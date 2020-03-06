@@ -63,8 +63,6 @@ public class AdapterViewPager extends PagerAdapter {
                 .centerCrop()
                 .into(imageView);
 
-        //imageView.setImageResource(R.drawable.logoanuin);
-
         container.addView(view, 0);
         return view;
     }
