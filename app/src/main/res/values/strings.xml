@@ -4,4 +4,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="termcondition">Jika anda membatalkan pesanan setelah mitra di lokasi pekerjaa, <b>maka anda dikenakan biaya pembatalan sebesar Rp. 50.000</b> </string>
+    <string name="nameerror">Enter a valid name</string>
+    <string name="usernameerror">Must be at least 6 characters</string>
+    <string name="emailerror">Enter a valid email</string>
+    <string name="passworderror">Must be at least 8 character</string>
+    <string name="passworderror2">Password Not matching</string>
 </resources>
