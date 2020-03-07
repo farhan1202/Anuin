@@ -36,12 +36,11 @@
             android:id="@+id/txtDesc1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
+            android:paddingHorizontal="30dp"
             android:textAlignment="center"
             android:text="text"
             android:textColor="#000"
-            android:textSize="@dimen/slide_desc" />
+            android:textSize="15dp" />
     </LinearLayout>
 
 </LinearLayout>
