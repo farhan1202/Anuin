@@ -12,7 +12,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.anuin.MainActivity;
 import com.example.anuin.R;
+import com.example.anuin.utils.SessionManagement;
 
 public class ApiLoginActivity extends AppCompatActivity {
     TextView tvBtn;
@@ -34,7 +36,6 @@ public class ApiLoginActivity extends AppCompatActivity {
         }
         tvBtn=findViewById(R.id.tvBtn);
     }
-
 
     public void signin(View view) {
         tvBtn.setTextColor(Color.RED);
@@ -59,5 +60,18 @@ public class ApiLoginActivity extends AppCompatActivity {
                 }
             }, 2000);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SessionManagement sessionManagement = new SessionManagement(this);
+        boolean userId = sessionManagement.getSession();
+        if (userId){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+
     }
 }

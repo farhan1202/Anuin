@@ -12,6 +12,12 @@ public interface ApiInterface {
     @GET("walkthrough")
     Call<ResponseBody> getWalkthrough(@Header("APP_TOKEN") String token);
 
+    @FormUrlEncoded
+    @POST("member-login")
+    Call<ResponseBody> getLogin(@Header("APP_TOKEN") String token,
+                                @Field("email") String email,
+                                @Field("password") String password);
+
     @GET("banner")
     Call<ResponseBody> getBanner(@Header("APP_TOKEN") String token);
 

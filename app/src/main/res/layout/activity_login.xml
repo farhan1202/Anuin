@@ -47,6 +47,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="8dp"
                     android:id="@+id/etEmail"
+                    android:singleLine="true"
                     android:background="#F4F2EF"
                     android:hint="Email"/>
             </LinearLayout>
@@ -75,6 +76,7 @@
                     android:background="#F4F2EF"
                     android:layout_marginLeft="8dp"
                     android:inputType="textPassword"
+                    android:singleLine="true"
                     android:id="@+id/etPassword"
                     android:hint="Password"/>
             </LinearLayout>
