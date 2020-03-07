@@ -19,7 +19,7 @@ import com.example.anuin.MainActivity;
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.apihelper.ApiInterface;
 import com.example.anuin.introNlogin.apihelper.UtilsApi;
-import com.example.anuin.utils.SessionManagement;
+import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.model.Users;
 import com.google.gson.Gson;
 
@@ -113,8 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                             Gson gson = new Gson();
                             Users user = gson.fromJson(data+"", Users.class);
 
-                            SessionManagement sessionManagement = new SessionManagement(context);
-                            sessionManagement.saveSession();
+                            /*SessionManagement sessionManagement = new SessionManagement(context);
+                            sessionManagement.saveSession();*/
+
+                            PrefManager prefManager = new PrefManager(context);
+                            prefManager.saveSession();
 
                             moveToMain();
                         }else{

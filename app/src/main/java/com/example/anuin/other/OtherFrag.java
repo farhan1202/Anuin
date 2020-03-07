@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.ApiLoginActivity;
-import com.example.anuin.utils.SessionManagement;
+import com.example.anuin.utils.PrefManager;
 
 
 /**
@@ -46,8 +46,12 @@ public class OtherFrag extends Fragment {
         keluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SessionManagement sessionManagement = new SessionManagement(view.getContext());
-                sessionManagement.removeSession();
+                /*SessionManagement sessionManagement = new SessionManagement(view.getContext());
+                sessionManagement.removeSession();*/
+
+                PrefManager prefManager = new PrefManager(view.getContext());
+                prefManager.removeSession();
+
                 Intent intent = new Intent(view.getContext(), ApiLoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

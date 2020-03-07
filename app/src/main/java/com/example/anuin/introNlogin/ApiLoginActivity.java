@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.anuin.MainActivity;
 import com.example.anuin.R;
-import com.example.anuin.utils.SessionManagement;
+import com.example.anuin.utils.PrefManager;
 
 public class ApiLoginActivity extends AppCompatActivity {
     TextView tvBtn;
@@ -65,8 +65,11 @@ public class ApiLoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        SessionManagement sessionManagement = new SessionManagement(this);
-        boolean userId = sessionManagement.getSession();
+        /*SessionManagement sessionManagement = new SessionManagement(this);
+        boolean userId = sessionManagement.getSession();*/
+
+        PrefManager prefManager = new PrefManager(this);
+        boolean userId = prefManager.getSession();
         if (userId){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -2,28 +2,21 @@ package com.example.anuin.introNlogin;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.apihelper.ApiInterface;
 import com.example.anuin.introNlogin.apihelper.UtilsApi;
 import com.example.anuin.introNlogin.model.Walkthrough;
+import com.example.anuin.utils.PrefManager;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -32,7 +25,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

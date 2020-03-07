@@ -1,4 +1,4 @@
-package com.example.anuin.introNlogin;
+package com.example.anuin.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,8 @@ public class PrefManager {
 
     private static final String PREF_NAME = "introslide";
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTime";
+    private static final String SESSION_KEY = "SESSION_USER";
+
 
     public PrefManager(Context context){
         this.mcontext = context;
@@ -26,6 +28,21 @@ public class PrefManager {
 
     public boolean isFirstTimeLaunch(){
         return  pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+    }
+
+    //SESSION LOGIN PREF
+    public void saveSession(){
+        editor.putBoolean(SESSION_KEY, true);
+        editor.commit();
+    }
+
+    public boolean getSession(){
+        return pref.getBoolean(SESSION_KEY, false);
+    }
+
+    public void removeSession(){
+        editor.putBoolean(SESSION_KEY, false);
+        editor.commit();
     }
 
 }
