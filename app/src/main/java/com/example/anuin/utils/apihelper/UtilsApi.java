@@ -1,4 +1,4 @@
-package com.example.anuin.introNlogin.apihelper;
+package com.example.anuin.utils.apihelper;
 
 public class UtilsApi {
     public static final String BASE_URL = "http://104.248.149.236/anuin/gateway/public/api/";

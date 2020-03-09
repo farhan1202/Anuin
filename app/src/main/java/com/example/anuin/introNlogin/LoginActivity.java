@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.example.anuin.MainActivity;
 import com.example.anuin.R;
-import com.example.anuin.introNlogin.apihelper.ApiInterface;
-import com.example.anuin.introNlogin.apihelper.UtilsApi;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.model.Users;
 import com.google.gson.Gson;

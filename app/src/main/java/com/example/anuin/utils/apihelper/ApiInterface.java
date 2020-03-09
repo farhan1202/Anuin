@@ -1,4 +1,4 @@
-package com.example.anuin.introNlogin.apihelper;
+package com.example.anuin.utils.apihelper;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

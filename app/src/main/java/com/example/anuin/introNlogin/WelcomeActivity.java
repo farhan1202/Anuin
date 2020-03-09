@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.anuin.R;
-import com.example.anuin.introNlogin.apihelper.ApiInterface;
-import com.example.anuin.introNlogin.apihelper.UtilsApi;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
 import com.example.anuin.introNlogin.model.Walkthrough;
 import com.example.anuin.utils.PrefManager;
 import com.google.gson.Gson;

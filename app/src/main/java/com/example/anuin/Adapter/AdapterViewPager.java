@@ -11,22 +11,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.anuin.R;
 import com.example.anuin.home.model.Banner;
-import com.example.anuin.introNlogin.apihelper.ApiInterface;
-import com.example.anuin.introNlogin.apihelper.UtilsApi;
-import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AdapterViewPager extends PagerAdapter {
     private Context context;

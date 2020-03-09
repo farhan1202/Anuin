@@ -17,9 +17,8 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.anuin.R;
-import com.example.anuin.introNlogin.apihelper.ApiInterface;
-import com.example.anuin.introNlogin.apihelper.UtilsApi;
-import com.google.common.collect.Range;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private void requestLogin() {
         if (awesomeValidation.validate()){
-            apiInterface.registerRequest("clabsLar4dm1n!@#$4Nu1n4Pp$",etName.getText().toString(),
+            apiInterface.registerRequest(UtilsApi.APP_TOKEN,etName.getText().toString(),
                     etUsername.getText().toString(),
                     etEmail.getText().toString(),
                     etPassword.getText().toString())

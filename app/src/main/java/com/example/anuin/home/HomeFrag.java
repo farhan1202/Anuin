@@ -15,8 +15,8 @@ import com.example.anuin.Adapter.AdapterViewPager;
 import com.example.anuin.Adapter.MekanikAdapter;
 import com.example.anuin.R;
 import com.example.anuin.home.model.Banner;
-import com.example.anuin.introNlogin.apihelper.ApiInterface;
-import com.example.anuin.introNlogin.apihelper.UtilsApi;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
