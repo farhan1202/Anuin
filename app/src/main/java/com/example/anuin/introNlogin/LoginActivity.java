@@ -112,13 +112,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
                     try {
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loginDialog.dismissLoadingDialog();
-                            }
-                        }, 1000);
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")){
                             JSONObject data= jsonObject.getJSONObject("DATA");
@@ -151,10 +144,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void moveToMain() {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loginDialog.dismissLoadingDialog();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        }, 1000);
+
     }
 
 

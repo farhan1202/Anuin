@@ -76,9 +76,10 @@
                     android:id="@+id/recyclerGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/row_item_group"
                     android:layout_below="@+id/ll1"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="20dp"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/row_item_group" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

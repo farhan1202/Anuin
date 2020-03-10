@@ -28,4 +28,7 @@ public interface ApiInterface {
                                        @Field("username") String username,
                                        @Field("email") String email,
                                        @Field("password") String password);
+
+    @GET("category")
+    Call<ResponseBody> getCategory(@Header("APP_TOKEN") String token);
 }
