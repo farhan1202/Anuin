@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anuin.MainActivity;
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
@@ -38,6 +40,8 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    LoginDialog loginDialog;
+
     @BindView(R.id.etEmail)
     EditText etEmail;
     @BindView(R.id.etPassword)
@@ -55,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        loginDialog = new LoginDialog(this);
 
         apiInterface = UtilsApi.getApiService();
         context = this;
@@ -96,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setError("Masukkan Password");
             return;
         }else{
+            loginDialog.startLoadingDialog();
             performLogin();
         }
     }
@@ -106,6 +112,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
                     try {
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loginDialog.dismissLoadingDialog();
+                            }
+                        }, 1000);
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")){
                             JSONObject data= jsonObject.getJSONObject("DATA");
