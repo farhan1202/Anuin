@@ -26,11 +26,11 @@
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
-                android:overScrollMode="never"
-                android:clipToPadding="false"
-
                 android:layout_width="match_parent"
-                android:layout_height="115dp" />
+                android:layout_height="115dp"
+
+                android:clipToPadding="false"
+                android:overScrollMode="never" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -41,90 +41,44 @@
 
                 <LinearLayout
                     android:id="@+id/ll1"
-                    android:background="@drawable/border_search"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:background="@drawable/border_search"
                     android:orientation="horizontal">
+
                     <ImageView
-                        android:src="@drawable/ic_search"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="8dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
-                    <View
-                        android:background="@android:color/holo_orange_dark"
-                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="8dp"
-                        android:layout_height="25dp"/>
+                        android:src="@drawable/ic_search"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:background="@android:color/holo_orange_dark" />
+
                     <EditText
                         android:id="@+id/txtSearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
                         android:background="@null"
                         android:hint="Saya membutuhkan jasa"
-                        android:layout_marginLeft="8dp"
                         android:inputType="text"
-                        android:layout_gravity="center_vertical"
-                        android:singleLine="true"/>
+                        android:singleLine="true" />
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/textMekanik"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ll1"
-                    android:layout_marginTop="10dp"
-                    android:text="MEKANIKAL &amp; ELEKTRONIK"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/g1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/ll1"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_toRightOf="@id/textMekanik"
-                    android:background="@color/colorCard" />
-
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerElektronik"
+                    android:id="@+id/recyclerGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textMekanik"
-                    android:layout_marginTop="5dp"
-                    android:scrollbars="none" />
-
-                <TextView
-                    android:id="@+id/textDekor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/recyclerElektronik"
-                    android:layout_marginTop="10dp"
-                    android:text="DEKOR &amp; BANGUNAN"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/g2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/recyclerElektronik"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_toRightOf="@id/textDekor"
-                    android:background="@color/colorCard" />
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerDekor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textDekor"
-                    android:layout_marginTop="5dp" />
-
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/row_item_group"
+                    android:layout_below="@+id/ll1"
+                    android:layout_marginTop="20dp" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
