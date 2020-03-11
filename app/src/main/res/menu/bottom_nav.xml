@@ -11,7 +11,7 @@
         android:title="Pesanan"/>
     <item
         android:id="@+id/nav_profil"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/ic_persons"
         android:title="Profil"/>
     <item
         android:id="@+id/nav_other"
