@@ -128,6 +128,13 @@ public class LoginActivity extends AppCompatActivity {
                             moveToMain();
                         }else{
                             Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_LONG).show();
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loginDialog.dismissLoadingDialog();
+                                }
+                            }, 1000);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
