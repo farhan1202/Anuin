@@ -46,6 +46,7 @@ public class JasaAdapter extends RecyclerView.Adapter<JasaAdapter.viewHolder> {
     public void onBindViewHolder(@NonNull final viewHolder viewHolder, final int i) {
         viewHolder.jasaTitle.setText(dataBeanProductJasa.get(i).getProduct_jasa_title());
         viewHolder.jasaPrice.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(dataBeanProductJasa.get(i).getProduct_jasa_harga())+""));
+
         viewHolder.chk.setChecked(lastSelectedPosition == i);
         viewHolder.chk.setOnClickListener(new View.OnClickListener() {
             @Override

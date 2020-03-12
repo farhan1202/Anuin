@@ -15,17 +15,18 @@
         android:background="@drawable/rounded" />
 
     <TextView
-        android:id="@+id/detail1"
+        android:id="@+id/modalJasaName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Perbaikan / instalasi"
+        android:hint="Nama Jasa"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/modalJasaPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/detail1"
-        android:text="Rp. 100.000"
+        android:layout_below="@id/modalJasaName"
+        android:hint="harga"
         android:textColor="@android:color/holo_orange_dark" />
 
     <View
@@ -41,10 +42,12 @@
         android:text="Syarat &amp; ketentuan" />
 
     <TextView
+        android:id="@+id/modalJasaDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum risus, ornare quis metus ut, malesuada ullamcorper purus. Vivamus mattis posuere odio." />
+        android:hint="Descripsi"
+        />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -58,9 +61,11 @@
             android:background="#f6f6f6"
             android:padding="10dp">
             <TextView
+                android:id="@+id/modalJasaWarning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/termcondition" />
+                android:hint="Warning"
+                />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

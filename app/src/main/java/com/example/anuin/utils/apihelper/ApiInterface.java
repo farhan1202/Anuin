@@ -19,9 +19,6 @@ public interface ApiInterface {
                                 @Field("email") String email,
                                 @Field("password") String password);
 
-    @GET("banner")
-    Call<ResponseBody> getBanner(@Header("APP_TOKEN") String token);
-
     @FormUrlEncoded
     @POST("member-register")
     Call<ResponseBody> registerRequest(@Header("APP_TOKEN") String token,
@@ -30,10 +27,17 @@ public interface ApiInterface {
                                        @Field("email") String email,
                                        @Field("password") String password);
 
+    @GET("banner")
+    Call<ResponseBody> getBanner(@Header("APP_TOKEN") String token);
+
     @GET("category")
     Call<ResponseBody> getCategory(@Header("APP_TOKEN") String token);
 
     @GET("product-jasa/{id}")
     Call<ResponseBody> getProductJasa(@Header("APP_TOKEN") String token,
                                       @Path("id") int id);
+
+    @GET("product-jasa-detail/{id}")
+    Call<ResponseBody> getProductJasaDetail(@Header("APP_TOKEN") String token,
+                                            @Path("id") int id);
 }

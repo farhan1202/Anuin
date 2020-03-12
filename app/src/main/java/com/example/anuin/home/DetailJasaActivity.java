@@ -46,18 +46,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailJasaActivity extends AppCompatActivity {
+
     Button btnPesan;
     Toolbar toolbar;
     RecyclerView recyclerView;
-    JasaAdapter jasaAdapter;
     ApiInterface apiInterface;
     Context context;
     TextView txtDetailJasa, tPrice;
     ImageView imageView;
 
     boolean flags = false;
+    int idJasaSelected;
 
     List<ProductJasa.DATABean.ProductJasaBean> dataBeans;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +73,10 @@ public class DetailJasaActivity extends AppCompatActivity {
         context = this;
         apiInterface = UtilsApi.getApiService();
 
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
+
         Intent intent = getIntent();
         fetchProductJasa(intent);
         /*btnPesan.setOnClickListener(new View.OnClickListener() {
@@ -91,17 +94,17 @@ public class DetailJasaActivity extends AppCompatActivity {
         apiInterface.getProductJasa(UtilsApi.APP_TOKEN, id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("STATUS").equals("200")){
+                        if (jsonObject.getString("STATUS").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
 
                             final JSONArray jsonArray1 = new JSONArray(jsonArray.getJSONObject(0).getString("product_jasa"));
 
                             dataBeans = new ArrayList<>();
                             Gson gson = new Gson();
-                            for (int i = 0 ; i < jsonArray1.length() ; i ++){
+                            for (int i = 0; i < jsonArray1.length(); i++) {
                                 ProductJasa.DATABean.ProductJasaBean bean = gson.fromJson(jsonArray1.get(i).toString(), ProductJasa.DATABean.ProductJasaBean.class);
                                 dataBeans.add(bean);
                             }
@@ -113,11 +116,13 @@ public class DetailJasaActivity extends AppCompatActivity {
                                     .centerCrop()
                                     .into(imageView);
 
+
                             JasaAdapter jasaAdapter = new JasaAdapter(context, dataBeans, new ProductJasaInterface() {
                                 @Override
                                 public void onItemClick(int id, boolean flag) {
-                                    if (id != -1){
-                                        tPrice.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(dataBeans.get(id).getProduct_jasa_harga())+""));
+                                    if (id != -1) {
+                                        tPrice.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(dataBeans.get(id).getProduct_jasa_harga()) + ""));
+                                        idJasaSelected = dataBeans.get(id).getId();
                                         flags = flag;
                                     }
                                 }
@@ -126,14 +131,17 @@ public class DetailJasaActivity extends AppCompatActivity {
                             recyclerView.setHasFixedSize(true);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             recyclerView.setNestedScrollingEnabled(false);
-                            
+
                             btnPesan.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (flags){
+                                    if (flags) {
                                         OrderModalSheet orderModalSheet = new OrderModalSheet();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putInt("id", idJasaSelected);
+                                        orderModalSheet.setArguments(bundle);
                                         orderModalSheet.show(getSupportFragmentManager(), "");
-                                    }else{
+                                    } else {
                                         Toast.makeText(DetailJasaActivity.this, "Product jasa tidak ada", Toast.LENGTH_SHORT).show();
                                     }
                                 }
