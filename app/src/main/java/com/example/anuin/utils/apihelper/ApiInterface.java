@@ -7,6 +7,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
     @GET("walkthrough")
@@ -31,4 +32,8 @@ public interface ApiInterface {
 
     @GET("category")
     Call<ResponseBody> getCategory(@Header("APP_TOKEN") String token);
+
+    @GET("product-jasa/{id}")
+    Call<ResponseBody> getProductJasa(@Header("APP_TOKEN") String token,
+                                      @Path("id") int id);
 }

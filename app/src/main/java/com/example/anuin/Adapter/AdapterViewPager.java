@@ -1,6 +1,8 @@
 package com.example.anuin.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ public class AdapterViewPager extends PagerAdapter {
         Banner.DATABean banner = banners.get(position);
         Glide.with(context)
                 .load(banner.getBanner_image())
+                .placeholder(new ColorDrawable(Color.parseColor("#FB8E03")))
                 .centerCrop()
                 .into(imageView);
 

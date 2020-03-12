@@ -40,7 +40,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull viewHolder viewHolder, final int i) {
         viewHolder.txtNamaRow.setText(subCategoryBeans.get(i).getCategory_title());
         Glide.with(context)
                 .load(subCategoryBeans.get(i).getCategory_image())
@@ -50,6 +50,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailJasaActivity.class);
+                intent.putExtra("eId", subCategoryBeans.get(i).getId());
                 context.startActivity(intent);
             }
         });
