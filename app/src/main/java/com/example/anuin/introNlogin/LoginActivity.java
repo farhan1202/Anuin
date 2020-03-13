@@ -141,6 +141,9 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }else{
+                    Toast.makeText(context, "Server Error ", Toast.LENGTH_SHORT).show();
+                    loginDialog.dismissLoadingDialog();
                 }
             }
             @Override

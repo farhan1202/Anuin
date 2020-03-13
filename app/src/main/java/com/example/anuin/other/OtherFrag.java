@@ -1,6 +1,8 @@
 package com.example.anuin.other;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,13 +50,30 @@ public class OtherFrag extends Fragment {
             public void onClick(View v) {
                 /*SessionManagement sessionManagement = new SessionManagement(view.getContext());
                 sessionManagement.removeSession();*/
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setMessage("Are you sure?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                PrefManager prefManager = new PrefManager(view.getContext());
+                                prefManager.removeSession();
 
-                PrefManager prefManager = new PrefManager(view.getContext());
-                prefManager.removeSession();
+                                Intent intent = new Intent(view.getContext(), ApiLoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
-                Intent intent = new Intent(view.getContext(), ApiLoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+
             }
         });
         kontak.setOnClickListener(new View.OnClickListener() {
