@@ -1,10 +1,10 @@
 package com.example.anuin;
 
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,6 +17,8 @@ import com.example.anuin.profil.ProfileFrag;
 public class MainActivity extends AppCompatActivity {
     private boolean doubleBack;
     private Toast backToast;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFrag()).commit();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(listener);
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener listener =
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
             moveTaskToBack(true);
         }else{
-            backToast = Toast.makeText(this, "Press back againt to exit", Toast.LENGTH_SHORT);
+            backToast = Toast.makeText(this, "Press back againt to exit ", Toast.LENGTH_SHORT);
             backToast.show();
             doubleBack = true;
             Handler handler = new Handler();
@@ -73,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             }, 2000);
         }
     }
+
+
+
 }
 
 

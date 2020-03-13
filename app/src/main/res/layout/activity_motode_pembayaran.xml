@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".order.MetodePembayaranActivity">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         app:cardElevation="0dp"
         android:layout_height="150dp">
@@ -76,8 +76,8 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvTunai"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
@@ -117,8 +117,8 @@
                 android:layout_height="wrap_content">
             </ImageView>
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvBank"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
@@ -158,8 +158,8 @@
                 android:layout_height="wrap_content">
             </ImageView>
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvEWalet"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
@@ -199,6 +199,6 @@
                 android:layout_height="wrap_content">
             </ImageView>
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

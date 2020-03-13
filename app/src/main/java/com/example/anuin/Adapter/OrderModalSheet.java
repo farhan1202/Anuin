@@ -2,9 +2,9 @@ package com.example.anuin.Adapter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import com.example.anuin.home.FormPesananActivity;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,7 +45,6 @@ public class OrderModalSheet extends BottomSheetDialogFragment {
     @BindView(R.id.btnAcceptOrder)
     Button btnAcceptOrder;
     Unbinder unbinder;
-
     ApiInterface apiInterface;
 
     @Nullable
@@ -70,10 +68,10 @@ public class OrderModalSheet extends BottomSheetDialogFragment {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")) {
                             JSONObject jsonObject1 = new JSONObject(jsonObject.getString("DATA"));
-                            modalJasaName.setText(jsonObject1.getString("product_jasa_title"));
-                            modalJasaPrice.setText("" + NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("product_jasa_harga")));
-                            modalJasaDesc.setText(jsonObject1.getString("product_jasa_desc"));
-                            modalJasaWarning.setText(jsonObject1.getString("product_jasa_warning"));
+                                modalJasaName.setText(jsonObject1.getString("product_jasa_title"));
+                                modalJasaPrice.setText("" + NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("product_jasa_harga")));
+                                modalJasaDesc.setText(jsonObject1.getString("product_jasa_desc"));
+                                modalJasaWarning.setText(jsonObject1.getString("product_jasa_warning"));
 
                             btnCancelOrder.setOnClickListener(new View.OnClickListener() {
                                 @Override

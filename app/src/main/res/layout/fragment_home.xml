@@ -25,7 +25,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:src="@drawable/logoanuin" />
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="115dp"
@@ -73,7 +73,7 @@
                         android:singleLine="true" />
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
