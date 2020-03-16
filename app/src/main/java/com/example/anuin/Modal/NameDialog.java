@@ -1,23 +1,32 @@
 package com.example.anuin.Modal;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.example.anuin.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-public class AccountDialog extends BottomSheetDialogFragment {
+import com.example.anuin.R;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class NameDialog extends BottomSheetDialogFragment {
+    @BindView(R.id.editNama)
+    EditText editNama;
     //private AccountDialogListener listener;
-    EditText editData;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.account_layout,container,false);
+        View view = inflater.inflate(R.layout.name_layout, container, false);
+        ButterKnife.bind(this, view);
+        String nama = getArguments().getString("nama");
+        editNama.setText(nama);
         return view;
     }
 

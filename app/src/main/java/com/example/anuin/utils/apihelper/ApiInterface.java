@@ -27,6 +27,12 @@ public interface ApiInterface {
                                        @Field("email") String email,
                                        @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("member-profile")
+    Call<ResponseBody> requestProfile(@Header("APP_TOKEN") String tokenApp,
+                                      @Header("USER_TOKEN") String tokenUser,
+                                      @Field("member_id") int idMember);
+
     @GET("banner")
     Call<ResponseBody> getBanner(@Header("APP_TOKEN") String token);
 
