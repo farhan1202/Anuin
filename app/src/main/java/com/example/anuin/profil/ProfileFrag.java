@@ -1,10 +1,10 @@
 package com.example.anuin.profil;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.cardview.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +13,31 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import android.widget.TextView;
 
-import com.example.anuin.Modal.AccountDialog;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+
+import com.example.anuin.Modal.EmailDialog;
+import com.example.anuin.Modal.NameDialog;
 import com.example.anuin.Modal.PasswordDialog;
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.ApiLoginActivity;
+import com.example.anuin.utils.PrefManager;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
@@ -75,28 +95,10 @@ public class ProfileFrag extends Fragment {
 
         componentDidMount();
 
+        FetchProfile();
 
-        cardNama.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AccountDialog dialog = new AccountDialog();
-                dialog.show(getFragmentManager(), "AccountDialog");
-            }
-        });
-        cardEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AccountDialog dialog = new AccountDialog();
-                dialog.show(getFragmentManager(), "AccountDialog");
-            }
-        });
-        cardTelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AccountDialog dialog = new AccountDialog();
-                dialog.show(getFragmentManager(), "AccountDialog");
-            }
-        });
+
+
         cardPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,23 +116,59 @@ public class ProfileFrag extends Fragment {
         });
 
 
+
+
         return view;
     }
 
-    private void componentDidMount() {
+    private void FetchProfile() {
         PrefManager prefManager = new PrefManager(getContext());
-        apiInterface.getDetailProfil(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId()).enqueue(new Callback<ResponseBody>() {
+        apiHelper.requestProfile(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
-                        JSONObject jsonObject1 = new JSONObject(response.body().string());
-                        if (jsonObject1.getString("STATUS").equals("200")){
-                            JSONObject object = jsonObject1.getJSONObject("DATA");
-                            detailNama.setText(object.getString("name").toString());
-                            detailMail.setText(object.getString("email").toString());
-                            detailTelp.setText(object.getString("phone_number").toString());
+                        JSONObject object = new JSONObject(response.body().string());
+                        if (object.getString("STATUS").equals("200")) {
+                            JSONObject object1 = object.getJSONObject("DATA");
+                            detailNama.setText(object1.getString("name"));
+                            detailMail.setText(object1.getString("email"));
+                            detailTelp.setText(object1.getString("phone_number"));
+
+                            cardNama.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    NameDialog dialog = new NameDialog();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("nama", detailNama.getText().toString());
+                                    dialog.setArguments(bundle);
+                                    dialog.show(getFragmentManager(), "AccountDialog");
+                                }
+                            });
+                            cardEmail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    EmailDialog dialogE = new EmailDialog();
+                                    Bundle bundle1 = new Bundle();
+                                    bundle1.putString("email",detailMail.getText().toString());
+                                    dialogE.setArguments(bundle1);
+                                    dialogE.show(getFragmentManager(), "AccountDialog");
+                                }
+                            });
+                            cardTelp.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    PhoneDialog dialogP = new PhoneDialog();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("phone",detailTelp.getText().toString());
+                                    dialogP.setArguments(bundle);
+                                    dialogP.show(getFragmentManager(), "AccountDialog");
+                                }
+                            });
                         }
+
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -153,6 +191,7 @@ public class ProfileFrag extends Fragment {
                     alertDialog.show();
                     prefManager.removeSession();
                 }
+            }
             }
 
             @Override
