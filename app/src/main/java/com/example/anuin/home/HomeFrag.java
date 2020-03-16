@@ -2,22 +2,36 @@ package com.example.anuin.home;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.anuin.Adapter.AdapterViewPager;
 import com.example.anuin.R;
 import com.example.anuin.home.adapter.CategoryAdapter;
 import com.example.anuin.home.model.Banner;
 import com.example.anuin.home.model.Category;
+import com.example.anuin.introNlogin.ApiLoginActivity;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -52,6 +66,9 @@ ArrayList<Banner.DATABean> banners;
 
 ApiInterface apiHelper;
 
+/*private GoogleApiClient googleApiClient;
+private GoogleSignInOptions gso;*/
+
     public HomeFrag() {
         // Required empty public constructor
     }
@@ -60,8 +77,6 @@ ApiInterface apiHelper;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-/*        recyclerMekanik = view.findViewById(R.id.recyclerElektronik);
-        recyclerDekor = view.findViewById(R.id.recyclerDekor);*/
         context = view.getContext();
         apiHelper = UtilsApi.getApiService();
         viewPager = view.findViewById(R.id.viewPager);
@@ -69,14 +84,14 @@ ApiInterface apiHelper;
 
         FetchBanner();
         fetchCategory();
-/*
-        mekanikAdapter = new MekanikAdapter(context);
-        recyclerMekanik.setAdapter(mekanikAdapter);
-        recyclerMekanik.setLayoutManager(new GridLayoutManager(context, 2));
 
-        recyclerDekor.setAdapter(mekanikAdapter);
-        recyclerDekor.setLayoutManager(new GridLayoutManager(context, 2));*/
+        /*gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleApiClient = new GoogleApiClient.Builder(view.getContext()).enableAutoManage((FragmentActivity) view.getContext(), new GoogleApiClient.OnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+            }
+        }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();*/
 
 
         return view;
@@ -156,4 +171,33 @@ ApiInterface apiHelper;
         });
     }
 
+    /*private void handleResult(GoogleSignInResult result){
+        if (result.isSuccess()){
+            GoogleSignInAccount account = result.getSignInAccount();
+            //get Data here
+        }else{
+            MoveToLogin();
+        }
+    }
+
+    private void MoveToLogin() {
+        startActivity(new Intent(getContext(), ApiLoginActivity.class));;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+        if (opr.isDone()){
+            GoogleSignInResult result = opr.get();
+            handleResult(result);
+        }else{
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(@NonNull GoogleSignInResult result) {
+                    handleResult(result);
+                }
+            });
+        }
+    }*/
 }

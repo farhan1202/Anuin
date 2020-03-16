@@ -31,7 +31,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/butfb"
                 android:text="Facebook"
-                android:textColor="#fff"></Button>
+                android:textColor="#fff"/>
             <Button
                 android:id="@+id/btnGmail"
                 android:layout_marginTop="10dp"
@@ -40,7 +40,14 @@
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/buttgmail"
                 android:text="Gmail"
-                android:textColor="#fff"></Button>
+                android:textColor="#fff"/>
+            <Button
+                android:id="@+id/btnGuest"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="GUEST"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -56,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Have an account?"></TextView>
+                android:text="Have an account?"/>
             <TextView
                 android:id="@+id/tvBtn"
                 android:layout_width="wrap_content"

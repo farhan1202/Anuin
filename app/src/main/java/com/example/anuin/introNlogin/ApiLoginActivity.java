@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.anuin.MainActivity;
 import com.example.anuin.R;
@@ -22,15 +20,21 @@ import com.example.anuin.utils.PrefManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class ApiLoginActivity extends AppCompatActivity{
+public class ApiLoginActivity extends AppCompatActivity {
     TextView tvBtn;
     @BindView(R.id.btnFB)
     Button btnFB;
     @BindView(R.id.btnGmail)
     Button btnGmail;
+    @BindView(R.id.btnGuest)
+    Button btnGuest;
     private Boolean doubleBack = false;
     private Toast toast;
+
+    /*private GoogleApiClient googleApiClient;
+    private static final int SIGN_IN = 9001;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,24 @@ public class ApiLoginActivity extends AppCompatActivity{
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         tvBtn = findViewById(R.id.tvBtn);
+
+        //google login
+        /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+
+        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+            }
+        }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+
+        btnGmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, SIGN_IN);
+            }
+        });*/
     }
 
     public void signin(View view) {
@@ -90,7 +112,29 @@ public class ApiLoginActivity extends AppCompatActivity{
 
     }
 
+    @OnClick(R.id.btnGuest)
+    public void onViewClicked() {
+        PrefManager prefManager = new PrefManager(this);
+        prefManager.saveGuest();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
-
-
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIGN_IN){
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()){
+                PrefManager prefManager = new PrefManager(this);
+                prefManager.saveSession(2);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Login Cancel", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }*/
 }

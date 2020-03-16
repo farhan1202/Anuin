@@ -1,6 +1,8 @@
 package com.example.anuin.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +24,8 @@ import com.example.anuin.R;
 import com.example.anuin.home.adapter.JasaAdapter;
 import com.example.anuin.home.interfaces.ProductJasaInterface;
 import com.example.anuin.home.model.ProductJasa;
+import com.example.anuin.introNlogin.ApiLoginActivity;
+import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
 import com.google.gson.Gson;
@@ -131,14 +135,39 @@ public class DetailJasaActivity extends AppCompatActivity {
                             btnPesan.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (flags) {
-                                        OrderModalSheet orderModalSheet = new OrderModalSheet();
-                                        Bundle bundle = new Bundle();
-                                        bundle.putInt("id", idJasaSelected);
-                                        orderModalSheet.setArguments(bundle);
-                                        orderModalSheet.show(getSupportFragmentManager(), "");
-                                    } else {
-                                        Toast.makeText(DetailJasaActivity.this, "Product jasa tidak ada", Toast.LENGTH_SHORT).show();
+                                    PrefManager prefManager = new PrefManager(context);
+                                    if (prefManager.getGuest()){
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                        builder.setMessage("Silahkan login terlebih dahulu")
+                                                .setCancelable(false)
+                                                .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Intent intent1 = new Intent(context, ApiLoginActivity.class);
+                                                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        startActivity(intent1);
+                                                    }
+                                                })
+                                                .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        dialogInterface.cancel();
+                                                    }
+                                                });
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+
+
+                                    }else{
+                                        if (flags) {
+                                            OrderModalSheet orderModalSheet = new OrderModalSheet();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt("id", idJasaSelected);
+                                            orderModalSheet.setArguments(bundle);
+                                            orderModalSheet.show(getSupportFragmentManager(), "");
+                                        } else {
+                                            Toast.makeText(DetailJasaActivity.this, "Product jasa tidak ada", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 }
                             });

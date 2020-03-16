@@ -117,14 +117,15 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject data= jsonObject.getJSONObject("DATA");
 
                             Gson gson = new Gson();
-                            Users user = gson.fromJson(data+"", Users.class);
+                            Users.DATABean user = gson.fromJson(data+"", Users.DATABean.class);
 
                             /*SessionManagement sessionManagement = new SessionManagement(context);
                             sessionManagement.saveSession();*/
 
                             PrefManager prefManager = new PrefManager(context);
                             prefManager.saveSession();
-
+                            prefManager.spString(PrefManager.SP_TOKEN_USER, user.getUser_token());
+                            prefManager.spInt(prefManager.SP_ID, user.getId());
                             moveToMain();
                         }else{
                             Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_LONG).show();
