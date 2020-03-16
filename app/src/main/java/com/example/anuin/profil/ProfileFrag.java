@@ -1,6 +1,8 @@
 package com.example.anuin.profil;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -21,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.example.anuin.Modal.EmailDialog;
 import com.example.anuin.Modal.NameDialog;
 import com.example.anuin.Modal.PasswordDialog;
+import com.example.anuin.Modal.PhoneDialog;
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.ApiLoginActivity;
 import com.example.anuin.utils.PrefManager;
@@ -93,7 +96,6 @@ public class ProfileFrag extends Fragment {
 
         apiInterface = UtilsApi.getApiService();
 
-        componentDidMount();
 
         FetchProfile();
 
@@ -123,7 +125,7 @@ public class ProfileFrag extends Fragment {
 
     private void FetchProfile() {
         PrefManager prefManager = new PrefManager(getContext());
-        apiHelper.requestProfile(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId()).enqueue(new Callback<ResponseBody>() {
+        apiInterface.requestProfile(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -192,7 +194,7 @@ public class ProfileFrag extends Fragment {
                     prefManager.removeSession();
                 }
             }
-            }
+
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {

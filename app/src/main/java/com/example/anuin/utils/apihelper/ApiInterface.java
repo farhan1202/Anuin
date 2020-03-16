@@ -26,11 +26,6 @@ public interface ApiInterface {
                                        @Field("username") String username,
                                        @Field("email") String email,
                                        @Field("password") String password);
-    @FormUrlEncoded
-    @POST("member-profile")
-    Call<ResponseBody> getDetailProfil(@Header("APP_TOKEN") String token,
-                                       @Header("USER_TOKEN") String uToken,
-                                       @Field("member_id") int id);
 
     @FormUrlEncoded
     @POST("member-profile")
