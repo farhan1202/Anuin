@@ -2,6 +2,7 @@ package com.example.anuin;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 
@@ -18,6 +19,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -27,12 +30,15 @@ import com.example.anuin.home.HomeFrag;
 import com.example.anuin.order.OrderFrag;
 import com.example.anuin.other.OtherFrag;
 import com.example.anuin.profil.ProfileFrag;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 public class MainActivity extends AppCompatActivity {
     private boolean doubleBack;
     private Toast backToast;
 
     PrefManager prefManager;
+
+    BottomNavigationView bottomNav;
 
     /*private GoogleApiClient googleApiClient;
     private GoogleSignInOptions gso;*/
@@ -42,10 +48,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFrag()).commit();
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFrag()).commit();
+        bottomNav = findViewById(R.id.bottom_navigation);
+        //bottomNav.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
 
-        bottomNav.setOnNavigationItemSelectedListener(listener);
+//        bottomNav.setOnNavigationItemSelectedListener(listener);
+
+        initBottomView();
 
         prefManager = new PrefManager(getApplicationContext());
         if (prefManager.getGuest()){
@@ -60,11 +69,63 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();*/
-
-
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener listener =
+    private void initBottomView() {
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment selectedFragment = null;
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
+                        changeFragment(new HomeFrag(), HomeFrag.class
+                                .getSimpleName());
+                        break;
+                    case R.id.nav_order:
+                        changeFragment(new OrderFrag(), OrderFrag.class
+                                .getSimpleName());
+                        break;
+                    case R.id.nav_profil:
+                        changeFragment(new ProfileFrag(), ProfileFrag.class
+                                .getSimpleName());
+                        break;
+                    case R.id.nav_other:
+                        changeFragment(new OtherFrag(), OtherFrag.class
+                                .getSimpleName());
+                        break;
+                }
+                return true;
+            }
+        });
+
+        changeFragment(new HomeFrag(), HomeFrag.class
+                .getSimpleName());
+    }
+
+    public void changeFragment(Fragment fragment, String tagFragmentName) {
+
+        FragmentManager mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+
+        Fragment currentFragment = mFragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragmentTemp = mFragmentManager.findFragmentByTag(tagFragmentName);
+        if (fragmentTemp == null) {
+            fragmentTemp = fragment;
+            fragmentTransaction.add(R.id.fragment_container, fragmentTemp, tagFragmentName);
+        } else {
+            fragmentTransaction.show(fragmentTemp);
+        }
+
+        fragmentTransaction.setPrimaryNavigationFragment(fragmentTemp);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNowAllowingStateLoss();
+    }
+
+    /*private BottomNavigationView.OnNavigationItemSelectedListener listener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -84,13 +145,14 @@ public class MainActivity extends AppCompatActivity {
                             break;
                             default:
                                 selecFrag = new HomeFrag();
-                    }
 
+                    }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selecFrag).commit();
 
                     return true;
                 }
-            };
+            };*/
+
 
     @Override
     public void onBackPressed() {
@@ -115,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        prefManager.removeQuest();
+        prefManager.removeGuest();
     }
 
     /*private void handleResult(GoogleSignInResult result){
@@ -151,9 +213,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }*/
-
-
-
 }
 
 

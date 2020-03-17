@@ -70,7 +70,7 @@ Spinner spinner;
                 dialog1 = new TimePickerDialog(FormPesananActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        txtFormTime.setText(i + ":" + i1 + " WIB");
+                        txtFormTime.setText(i + ":" + i1);
                     }
                 }, hour, minute, android.text.format.DateFormat.is24HourFormat(mContext));
                 dialog1.show();
