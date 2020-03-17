@@ -18,6 +18,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFrag()).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFrag()).commit();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnNavigationItemSelectedListener(listener);
@@ -71,27 +72,54 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selecFrag = null;
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-                            selecFrag = new HomeFrag();
-                            break;
+//                            selecFrag = new HomeFrag();
+                            replace_fragment(new HomeFrag());
+                            return true;
                         case R.id.nav_order:
-                            selecFrag = new OrderFrag();
-                            break;
+//                            selecFrag = new OrderFrag();
+                            replace_fragment(new OrderFrag());
+                            return true;
                         case R.id.nav_profil:
-                            selecFrag = new ProfileFrag();
-                            break;
+//                            selecFrag = new ProfileFrag();
+                            replace_fragment(new ProfileFrag());
+                            return true;
                         case R.id.nav_other:
-                            selecFrag = new OtherFrag();
-                            break;
-                            default:
-                                selecFrag = new HomeFrag();
+//                            selecFrag = new OtherFrag();
+                            replace_fragment(new OtherFrag());
+                            return true;
+
+                            /*default:
+                                selecFrag = new HomeFrag();*/
                     }
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selecFrag).commit();
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selecFrag).commit();
 
-                    return true;
+                    return false;
                 }
             };
 
+    private void replace_fragment(Fragment fragment) {
+
+        String tag = fragment.getClass().getSimpleName();
+        FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
+
+        Fragment curFrag = getSupportFragmentManager().getPrimaryNavigationFragment();
+        Fragment cacheFrag = getSupportFragmentManager().findFragmentByTag(tag);
+
+        if (curFrag != null)
+            tr.hide(curFrag);
+
+        if (cacheFrag == null) {
+            tr.add(R.id.fragment_container, fragment, tag);
+        } else {
+            tr.show(cacheFrag);
+            fragment = cacheFrag;
+        }
+
+        tr.setPrimaryNavigationFragment(fragment);
+        tr.commit();
+
+    }
     @Override
     public void onBackPressed() {
         if (doubleBack){
