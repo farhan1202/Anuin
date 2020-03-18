@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{
-                    Toast.makeText(context, "Server Error ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Member Password Not Match", Toast.LENGTH_SHORT).show();
                     loginDialog.dismissLoadingDialog();
                 }
             }
