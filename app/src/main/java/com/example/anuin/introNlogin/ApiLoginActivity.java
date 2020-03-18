@@ -1,12 +1,10 @@
 package com.example.anuin.introNlogin;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,24 +12,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.anuin.MainActivity;
 import com.example.anuin.R;
 import com.example.anuin.utils.PrefManager;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,20 +30,18 @@ import butterknife.OnClick;
 
 public class ApiLoginActivity extends AppCompatActivity {
     TextView tvBtn;
-
+//    @BindView(R.id.btnFB)
+//    Button btnFB;
     @BindView(R.id.btnGmail)
     Button btnGmail;
     @BindView(R.id.btnGuest)
     Button btnGuest;
-   /* @BindView(R.id.btnFB)
-    LoginButton btnFB;*/
     private Boolean doubleBack = false;
     private Toast toast;
 
-    private CallbackManager callbackManager;
+    private static final int RC_SIGN_IN = 9001;
 
-    /*private GoogleApiClient googleApiClient;
-    private static final int SIGN_IN = 9001;*/
+    GoogleSignInClient mGoogleSignClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,92 +59,56 @@ public class ApiLoginActivity extends AppCompatActivity {
         }
         tvBtn = findViewById(R.id.tvBtn);
 
-//        callbackManager = CallbackManager.Factory.create();
-//        checkLoginStatus();
-//
-//        btnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//
-//            }
-//        });
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
-        //google login
-        /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-
-        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-            }
-        }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+        mGoogleSignClient = GoogleSignIn.getClient(this, gso);
 
         btnGmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intent, SIGN_IN);
-            }
-        });*/
-    }
-
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult(requestCode,resultCode,data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    AccessTokenTracker tokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            if (currentAccessToken==null){
-                Toast.makeText(ApiLoginActivity.this, "User Loggout", Toast.LENGTH_SHORT).show();
-            }else{
-                loaduserPofile(currentAccessToken);
-            }
-
-
-        }
-    };
-
-    private void loaduserPofile (AccessToken newAccessToken){
-        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String email = object.getString("email");
-                    String id = object.getString("id");
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                signInGoogle();
             }
         });
 
-        Bundle parameters = new Bundle();
-        parameters.putString("field","first_name,last_name,email,id");
-        request.setParameters(parameters);
-        request.executeAsync();
     }
 
-    private void checkLoginStatus(){
-        if (AccessToken.getCurrentAccessToken()!= null){
-            loaduserPofile(AccessToken.getCurrentAccessToken());
+    private void signInGoogle() {
+        Intent signInIntent = mGoogleSignClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
         }
-    }*/
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            Toast.makeText(this, "Wellcome " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Toast.makeText(this, "" + e.getStackTrace(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
 
     public void signin(View view) {
@@ -197,6 +150,13 @@ public class ApiLoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+
     }
 
     @OnClick(R.id.btnGuest)
@@ -208,20 +168,5 @@ public class ApiLoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SIGN_IN){
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()){
-                PrefManager prefManager = new PrefManager(this);
-                prefManager.saveSession(2);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }else{
-                Toast.makeText(this, "Login Cancel", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }*/
+
 }

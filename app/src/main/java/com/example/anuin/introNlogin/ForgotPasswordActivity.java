@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
@@ -44,6 +45,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     Context context;
 
+    LoginDialog loginDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,17 +55,28 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         apiInterface = UtilsApi.getApiService();
         context = this;
 
+        loginDialog = new LoginDialog(this);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(tvEmail.getText().toString()))
                     tvEmail.setError("Email can't be blank");
-                else
-                actionfPass();
+                else{
+                    actionfPass();
+                    loginDialog.startLoadingDialog();
+                }
+
             }
         });
-
 
     }
 
@@ -77,6 +91,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")){
+                            loginDialog.dismissLoadingDialog();
                             startActivity(new Intent(getApplicationContext(), CheckEmailActivity.class));
                             finish();
                         }
@@ -96,5 +111,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        super.onBackPressed();
     }
 }

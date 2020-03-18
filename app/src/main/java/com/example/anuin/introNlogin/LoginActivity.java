@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                             PrefManager prefManager = new PrefManager(context);
                             prefManager.saveSession();
                             prefManager.spString(PrefManager.SP_TOKEN_USER, user.getUser_token());
-                            prefManager.spInt(prefManager.SP_ID, user.getId());
+                            prefManager.spInt(PrefManager.SP_ID, user.getId());
                             moveToMain();
                         }else{
                             Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_LONG).show();

@@ -97,7 +97,10 @@ public class ProfileFrag extends Fragment {
         apiInterface = UtilsApi.getApiService();
 
 
-        FetchProfile();
+        if (prefManager.getSession()){
+            FetchProfile();
+        }
+
 
 
 
@@ -168,9 +171,6 @@ public class ProfileFrag extends Fragment {
                                 }
                             });
                         }
-
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

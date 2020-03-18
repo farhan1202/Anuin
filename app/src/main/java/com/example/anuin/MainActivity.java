@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
 
-    /*private GoogleApiClient googleApiClient;
-    private GoogleSignInOptions gso;*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
             bottomNav.getMenu().getItem(2).setEnabled(false);
             bottomNav.getMenu().getItem(3).setEnabled(false);
         }
-        /*gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-            }
-        }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();*/
     }
 
     private void initBottomView() {
@@ -97,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
         changeFragment(new HomeFrag(), HomeFrag.class
                 .getSimpleName());
     }
@@ -180,39 +170,6 @@ public class MainActivity extends AppCompatActivity {
         prefManager.removeGuest();
     }
 
-    /*private void handleResult(GoogleSignInResult result){
-        if (result.isSuccess()){
-            GoogleSignInAccount account = result.getSignInAccount();
-            //get Data here
-        }else{
-            MoveToLogin();
-        }
-    }
-
-    private void MoveToLogin() {
-        startActivity(new Intent(getApplicationContext(), ApiLoginActivity.class));;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        int method = sharedPreferences.getInt("METHOD", 1);
-        if (method == 2){
-            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-            if (opr.isDone()){
-                GoogleSignInResult result = opr.get();
-                handleResult(result);
-            }else{
-                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                    @Override
-                    public void onResult(@NonNull GoogleSignInResult result) {
-                        handleResult(result);
-                    }
-                });
-            }
-        }
-
-    }*/
 }
 
 
