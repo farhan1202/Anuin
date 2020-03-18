@@ -24,8 +24,17 @@
             android:layout_alignParentBottom="true"
             android:paddingBottom="100dp"
             android:orientation="vertical">
+<!--            <com.facebook.login.widget.LoginButton-->
+<!--                android:id="@+id/btnFB"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="20dp"-->
+<!--                android:text="Sign In"-->
+<!--                android:background="@drawable/butfb"-->
+<!--                android:textColor="#fff"-->
+<!--                android:layout_marginBottom="30dp" />-->
             <Button
-                android:id="@+id/btnFB"
+                android:id="@+id/exbtnFB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"

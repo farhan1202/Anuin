@@ -46,4 +46,10 @@ public interface ApiInterface {
     @GET("product-jasa-detail/{id}")
     Call<ResponseBody> getProductJasaDetail(@Header("APP_TOKEN") String token,
                                             @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("forgot-password")
+    Call<ResponseBody> getPassword (@Header("APP_TOKEN") String token,
+                                    @Field("email") String email,
+                                    @Field("reset_date") String date);
 }

@@ -89,8 +89,14 @@ public class LoginActivity extends AppCompatActivity {
                 btnLogin();
                 break;
             case R.id.FPass:
+                forgotPassword();
                 break;
         }
+    }
+
+    private void forgotPassword() {
+        startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class));
+        finish();
     }
 
     private void btnLogin() {
