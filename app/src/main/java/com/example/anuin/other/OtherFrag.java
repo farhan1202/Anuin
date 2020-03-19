@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.ApiLoginActivity;
 import com.example.anuin.utils.PrefManager;
+import com.facebook.login.LoginManager;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,7 +40,7 @@ import com.google.android.gms.tasks.Task;
  */
 public class OtherFrag extends Fragment {
     TextView notifikasi, keluar, kontak;
-
+    private ShareDialog shareDialog;
     public OtherFrag() {
         // Required empty public constructor
     }
@@ -54,6 +56,7 @@ public class OtherFrag extends Fragment {
         notifikasi = view.findViewById(R.id.notifikasi);
         keluar = view.findViewById(R.id.keluar);
         kontak = view.findViewById(R.id.kontakkami);
+        shareDialog = new ShareDialog(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -68,6 +71,7 @@ public class OtherFrag extends Fragment {
                 startActivity(intent);
             }
         });
+
 
         keluar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +92,9 @@ public class OtherFrag extends Fragment {
                                                 // ...
                                             }
                                         });
+
+                                LoginManager.getInstance().logOut();
+
 
                                 PrefManager prefManager = new PrefManager(view.getContext());
                                 prefManager.removeSession();

@@ -24,25 +24,33 @@
             android:layout_alignParentBottom="true"
             android:paddingBottom="100dp"
             android:orientation="vertical">
-<!--            <com.facebook.login.widget.LoginButton-->
-<!--                android:id="@+id/btnFB"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="20dp"-->
-<!--                android:text="Sign In"-->
-<!--                android:background="@drawable/butfb"-->
-<!--                android:textColor="#fff"-->
-<!--                android:layout_marginBottom="30dp" />-->
-            <Button
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/btnFB"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/butfb"
+                android:textColor="#fff" />
+            <!--<Button
                 android:id="@+id/exbtnFB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/butfb"
                 android:text="Facebook"
-                android:textColor="#fff"/>
-            <Button
+                android:textColor="#fff"/>-->
+           <!-- <com.google.android.gms.common.SignInButton
                 android:id="@+id/btnGmail"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:text="Gmail"
+                android:textColor="#fff"/>-->
+            <Button
+                android:id="@+id/exbtnGmail"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
