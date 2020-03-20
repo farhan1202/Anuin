@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.anuin.R;
 import com.example.anuin.utils.apihelper.ApiInterface;
@@ -126,7 +127,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Toast.makeText(context, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }

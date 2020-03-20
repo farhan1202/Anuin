@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.anuin.R;
 import com.example.anuin.home.FormPesananActivity;
@@ -98,7 +99,7 @@ public class OrderModalSheet extends BottomSheetDialogFragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Toast.makeText(getContext(), "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -100,13 +102,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void btnLogin() {
-        if (TextUtils.isEmpty(etEmail.getText().toString())){
+        if (TextUtils.isEmpty(etEmail.getText().toString())) {
             etEmail.setError("Masukkan Email");
             return;
-        }else if(TextUtils.isEmpty(etPassword.getText().toString())){
+        } else if (TextUtils.isEmpty(etPassword.getText().toString())) {
             etPassword.setError("Masukkan Password");
             return;
-        }else{
+        } else {
             loginDialog.startLoadingDialog();
             performLogin();
         }
@@ -116,14 +118,14 @@ public class LoginActivity extends AppCompatActivity {
         apiInterface.getLogin(UtilsApi.APP_TOKEN, etEmail.getText().toString(), etPassword.getText().toString()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("STATUS").equals("200")){
-                            JSONObject data= jsonObject.getJSONObject("DATA");
+                        if (jsonObject.getString("STATUS").equals("200")) {
+                            JSONObject data = jsonObject.getJSONObject("DATA");
 
                             Gson gson = new Gson();
-                            Users.DATABean user = gson.fromJson(data+"", Users.DATABean.class);
+                            Users.DATABean user = gson.fromJson(data + "", Users.DATABean.class);
 
                             /*SessionManagement sessionManagement = new SessionManagement(context);
                             sessionManagement.saveSession();*/
@@ -133,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                             prefManager.spString(PrefManager.SP_TOKEN_USER, user.getUser_token());
                             prefManager.spInt(PrefManager.SP_ID, user.getId());
                             moveToMain();
-                        }else{
+                        } else {
                             Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_LONG).show();
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -148,14 +150,16 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     Toast.makeText(context, "Member Password Not Match", Toast.LENGTH_SHORT).show();
                     loginDialog.dismissLoadingDialog();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                loginDialog.dismissLoadingDialog();
+                Toast.makeText(context, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -167,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 loginDialog.dismissLoadingDialog();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
             }

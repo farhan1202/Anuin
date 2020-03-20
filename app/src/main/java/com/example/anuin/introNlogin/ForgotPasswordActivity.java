@@ -95,7 +95,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), CheckEmailActivity.class));
                             finish();
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -108,7 +107,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                loginDialog.dismissLoadingDialog();
+                Toast.makeText(context, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }

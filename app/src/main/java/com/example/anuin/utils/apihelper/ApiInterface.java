@@ -33,6 +33,17 @@ public interface ApiInterface {
                                       @Header("USER_TOKEN") String tokenUser,
                                       @Field("member_id") int idMember);
 
+    @FormUrlEncoded
+    @POST("member-update")
+    Call<ResponseBody> updateProfile(@Header("APP_TOKEN") String tokenApp,
+                                     @Header("USER_TOKEN") String tokenUser,
+                                     @Field("member_id") int idMember,
+                                     @Field("name") String name,
+                                     @Field("username") String username,
+                                     @Field("email") String email,
+                                     @Field("phone_number") String phone_number,
+                                     @Field("member_image") String member_image);
+
     @GET("banner")
     Call<ResponseBody> getBanner(@Header("APP_TOKEN") String token);
 

@@ -140,9 +140,9 @@ public class ProfileFrag extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     NameDialog dialog = new NameDialog();
-                                    Bundle bundle = new Bundle();
+                                    /*Bundle bundle = new Bundle();
                                     bundle.putString("nama", detailNama.getText().toString());
-                                    dialog.setArguments(bundle);
+                                    dialog.setArguments(bundle);*/
                                     dialog.show(getFragmentManager(), "AccountDialog");
                                 }
                             });
@@ -150,9 +150,9 @@ public class ProfileFrag extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     EmailDialog dialogE = new EmailDialog();
-                                    Bundle bundle1 = new Bundle();
+                                    /*Bundle bundle1 = new Bundle();
                                     bundle1.putString("email",detailMail.getText().toString());
-                                    dialogE.setArguments(bundle1);
+                                    dialogE.setArguments(bundle1);*/
                                     dialogE.show(getFragmentManager(), "AccountDialog");
                                 }
                             });

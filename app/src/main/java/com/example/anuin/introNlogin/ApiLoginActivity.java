@@ -225,6 +225,7 @@ public class ApiLoginActivity extends AppCompatActivity {
             loaduserPofile(AccessToken.getCurrentAccessToken());
         }
     }
+
     private void signInGoogle() {
         Intent signInIntent = mGoogleSignClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -257,7 +258,6 @@ public class ApiLoginActivity extends AppCompatActivity {
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Toast.makeText(this, "" + e.getStackTrace(), Toast.LENGTH_SHORT).show();
         }
     }
 
