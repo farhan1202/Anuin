@@ -45,7 +45,7 @@ public class PrefManager {
         return pref.getBoolean(SESSION_GUEST, false);
     }
 
-    public void removeQuest(){
+    public void removeGuest(){
         editor.putBoolean(SESSION_GUEST, false);
         editor.commit();
     }

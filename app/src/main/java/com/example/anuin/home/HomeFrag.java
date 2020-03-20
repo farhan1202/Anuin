@@ -66,8 +66,7 @@ ArrayList<Banner.DATABean> banners;
 
 ApiInterface apiHelper;
 
-/*private GoogleApiClient googleApiClient;
-private GoogleSignInOptions gso;*/
+
 
     public HomeFrag() {
         // Required empty public constructor
@@ -84,14 +83,6 @@ private GoogleSignInOptions gso;*/
 
         FetchBanner();
         fetchCategory();
-
-        /*gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleApiClient = new GoogleApiClient.Builder(view.getContext()).enableAutoManage((FragmentActivity) view.getContext(), new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-            }
-        }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();*/
 
 
         return view;
@@ -171,33 +162,4 @@ private GoogleSignInOptions gso;*/
         });
     }
 
-    /*private void handleResult(GoogleSignInResult result){
-        if (result.isSuccess()){
-            GoogleSignInAccount account = result.getSignInAccount();
-            //get Data here
-        }else{
-            MoveToLogin();
-        }
-    }
-
-    private void MoveToLogin() {
-        startActivity(new Intent(getContext(), ApiLoginActivity.class));;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-        if (opr.isDone()){
-            GoogleSignInResult result = opr.get();
-            handleResult(result);
-        }else{
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(@NonNull GoogleSignInResult result) {
-                    handleResult(result);
-                }
-            });
-        }
-    }*/
 }

@@ -1,6 +1,7 @@
 package com.example.anuin.other;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,9 +22,15 @@ import com.example.anuin.R;
 import com.example.anuin.introNlogin.ApiLoginActivity;
 import com.example.anuin.utils.PrefManager;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
 /**
@@ -32,12 +39,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class OtherFrag extends Fragment {
     TextView notifikasi, keluar, kontak;
 
-    /*private GoogleApiClient googleApiClient;
-    private GoogleSignInOptions gso;*/
-
     public OtherFrag() {
         // Required empty public constructor
     }
+
+    GoogleSignInClient mGoogleSignClient;
 
 
     @Override
@@ -49,14 +55,11 @@ public class OtherFrag extends Fragment {
         keluar = view.findViewById(R.id.keluar);
         kontak = view.findViewById(R.id.kontakkami);
 
-        /*gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
-        googleApiClient = new GoogleApiClient.Builder(view.getContext()).enableAutoManage((FragmentActivity) view.getContext(), new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-            }
-        }).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();*/
+        mGoogleSignClient = GoogleSignIn.getClient(view.getContext(), gso);
 
         notifikasi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,17 +74,25 @@ public class OtherFrag extends Fragment {
             public void onClick(View v) {
                 /*SessionManagement sessionManagement = new SessionManagement(view.getContext());
                 sessionManagement.removeSession();*/
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setMessage("Are you sure?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
-//                                Auth.GoogleSignInApi.signOut(googleApiClient);
+                                mGoogleSignClient.signOut()
+                                        .addOnCompleteListener((Activity) view.getContext(), new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                // ...
+                                            }
+                                        });
 
                                 PrefManager prefManager = new PrefManager(view.getContext());
                                 prefManager.removeSession();
+                                prefManager.spString(PrefManager.SP_TOKEN_USER, "");
+                                prefManager.spInt(PrefManager.SP_ID, -1);
 
                                 Intent intent = new Intent(view.getContext(), ApiLoginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -101,9 +101,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                            }else{
+                                Toast.makeText(context, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
                             }
                         }
-
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             Toast.makeText(context, "REGISTER FAILED", Toast.LENGTH_SHORT).show();

@@ -9,4 +9,8 @@
     <string name="emailerror">Enter a valid email</string>
     <string name="passworderror">Must be at least 8 character</string>
     <string name="passworderror2">Password Not matching</string>
+    <string name="facebook_app_id">222582585560050</string>
+    <string name="fb_login_protocol_scheme">fb222582585560050</string>
+    <string name="enter_your_email_to">Enter your email to</string>
+
 </resources>

@@ -20,7 +20,6 @@ public class LoginDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setView(LayoutInflater.from(context).inflate(R.layout.login_dialog, null));
-        builder.setCancelable(false);
 
         alertDialog = builder.create();
         alertDialog.show();

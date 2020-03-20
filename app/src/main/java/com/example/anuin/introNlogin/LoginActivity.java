@@ -89,8 +89,14 @@ public class LoginActivity extends AppCompatActivity {
                 btnLogin();
                 break;
             case R.id.FPass:
+                forgotPassword();
                 break;
         }
+    }
+
+    private void forgotPassword() {
+        startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class));
+        finish();
     }
 
     private void btnLogin() {
@@ -125,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                             PrefManager prefManager = new PrefManager(context);
                             prefManager.saveSession();
                             prefManager.spString(PrefManager.SP_TOKEN_USER, user.getUser_token());
-                            prefManager.spInt(prefManager.SP_ID, user.getId());
+                            prefManager.spInt(PrefManager.SP_ID, user.getId());
                             moveToMain();
                         }else{
                             Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_LONG).show();
@@ -143,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{
-                    Toast.makeText(context, "Server Error ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Member Password Not Match", Toast.LENGTH_SHORT).show();
                     loginDialog.dismissLoadingDialog();
                 }
             }
