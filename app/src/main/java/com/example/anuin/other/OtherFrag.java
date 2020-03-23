@@ -114,8 +114,6 @@ public class OtherFrag extends Fragment {
                         });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
-
             }
         });
         kontak.setOnClickListener(new View.OnClickListener() {
