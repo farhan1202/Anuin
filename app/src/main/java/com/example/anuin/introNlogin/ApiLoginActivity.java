@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +20,8 @@ import com.example.anuin.MainActivity;
 import com.example.anuin.R;
 import com.example.anuin.other.OtherFrag;
 import com.example.anuin.utils.PrefManager;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -41,9 +44,15 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ApiLoginActivity extends AppCompatActivity {
     TextView tvBtn;
@@ -63,6 +72,7 @@ public class ApiLoginActivity extends AppCompatActivity {
     private ProfileTracker profileTracker;*/
 
     GoogleSignInClient mGoogleSignClient;
+    ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +88,8 @@ public class ApiLoginActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+
+        apiInterface = UtilsApi.getApiService();
         tvBtn = findViewById(R.id.tvBtn);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -249,10 +261,51 @@ public class ApiLoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            Toast.makeText(this, "Wellcome " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+//            Toast.makeText(this, "Wellcome " + account.getId(), Toast.LENGTH_SHORT).show();
+            apiInterface.loginSocialMedia(UtilsApi.APP_TOKEN,
+                    "google",
+                    account.getId() + "",
+                    account.getEmail()+"")
+                    .enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            if (jsonObject.getString("STATUS").equals("200")){
+                                JSONObject jsonObject1 = jsonObject.getJSONObject("DATA");
+                                PrefManager prefManager = new PrefManager(getApplicationContext());
+                                prefManager.saveSession();
+                                prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
+                                prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                            Toast.makeText(ApiLoginActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

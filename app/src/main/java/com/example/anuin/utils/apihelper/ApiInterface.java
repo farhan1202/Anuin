@@ -20,6 +20,13 @@ public interface ApiInterface {
                                 @Field("password") String password);
 
     @FormUrlEncoded
+    @POST("member-login-social-media")
+    Call<ResponseBody> loginSocialMedia(@Header("APP_TOKEN") String token,
+                                        @Field("provider") String provider,
+                                        @Field("provider_id") String provide_id,
+                                        @Field("email") String email);
+
+    @FormUrlEncoded
     @POST("member-register")
     Call<ResponseBody> registerRequest(@Header("APP_TOKEN") String token,
                                        @Field("name") String name,
