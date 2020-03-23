@@ -19,11 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:src="@drawable/logoanuin" />
+                android:layout_height="?attr/actionBarSize">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/logoanuin" />
+            </RelativeLayout>
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"

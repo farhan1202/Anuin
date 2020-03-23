@@ -115,14 +115,12 @@ public class ApiLoginActivity extends AppCompatActivity {
         AccessTokenTracker tokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                if (currentAccessToken==null){
+                if (currentAccessToken == null) {
                     Toast.makeText(ApiLoginActivity.this, "User Loggout", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     loaduserPofile(currentAccessToken);
 
                 }
-
-
             }
         };
         /*accessTokenTracker = new AccessTokenTracker() {
@@ -193,9 +191,10 @@ public class ApiLoginActivity extends AppCompatActivity {
             startActivity(main);
         }
     }
-*/}
+*/
+    }
 
-    private void loaduserPofile (AccessToken newAccessToken){
+    private void loaduserPofile(AccessToken newAccessToken) {
         GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -213,15 +212,14 @@ public class ApiLoginActivity extends AppCompatActivity {
         });
         Intent main = new Intent(ApiLoginActivity.this, MainActivity.class);
         startActivity(main);
-
         Bundle parameters = new Bundle();
-        parameters.putString("field","first_name,last_name,email,id");
+        parameters.putString("field", "first_name,last_name,email,id");
         request.setParameters(parameters);
         request.executeAsync();
     }
 
-    private void checkLoginStatus(){
-        if (AccessToken.getCurrentAccessToken()!= null){
+    private void checkLoginStatus() {
+        if (AccessToken.getCurrentAccessToken() != null) {
             loaduserPofile(AccessToken.getCurrentAccessToken());
         }
     }

@@ -101,7 +101,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else {
-                    Toast.makeText(context, "No account match that information", Toast.LENGTH_SHORT).show();
+                    loginDialog.dismissLoadingDialog();
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

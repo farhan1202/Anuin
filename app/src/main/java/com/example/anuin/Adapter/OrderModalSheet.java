@@ -88,6 +88,15 @@ public class OrderModalSheet extends BottomSheetDialogFragment {
                                     startActivity(intent);
                                 }
                             });
+                        }else {
+                            try {
+                                JSONObject jsonObject1 = new JSONObject(response.errorBody().string());
+                                Toast.makeText(getContext(), "" + jsonObject1.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

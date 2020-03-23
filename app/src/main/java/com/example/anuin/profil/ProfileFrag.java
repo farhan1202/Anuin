@@ -101,9 +101,6 @@ public class ProfileFrag extends Fragment {
             FetchProfile();
         }
 
-
-
-
         cardPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
