@@ -12,5 +12,6 @@
     <string name="facebook_app_id">222582585560050</string>
     <string name="fb_login_protocol_scheme">fb222582585560050</string>
     <string name="enter_your_email_to">Enter your email to</string>
+    <string name="map_key" translatable="false">AIzaSyDS6IQzOpmGRgCRyxR-0X6nIT3asGpm41Y</string>
 
 </resources>

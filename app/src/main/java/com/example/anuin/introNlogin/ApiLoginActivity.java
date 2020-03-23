@@ -71,6 +71,7 @@ public class ApiLoginActivity extends AppCompatActivity {
    /* private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;*/
 
+
     GoogleSignInClient mGoogleSignClient;
     ApiInterface apiInterface;
 
@@ -108,56 +109,21 @@ public class ApiLoginActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
-        btnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-        AccessTokenTracker tokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                if (currentAccessToken == null) {
-                    Toast.makeText(ApiLoginActivity.this, "User Loggout", Toast.LENGTH_SHORT).show();
-                } else {
-                    loaduserPofile(currentAccessToken);
-
-                }
-            }
-        };
-        /*accessTokenTracker = new AccessTokenTracker() {
+        AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 
             }
         };
-
-        profileTracker = new ProfileTracker() {
+        ProfileTracker profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                nextActivity(currentProfile);
+
             }
         };
-        accessTokenTracker.startTracking();
-        profileTracker.startTracking();
-
-        btnFB.setReadPermissions("user_friends");
         btnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
-                nextActivity(profile);
-                Toast.makeText(ApiLoginActivity.this, "Loggin Success", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -171,61 +137,77 @@ public class ApiLoginActivity extends AppCompatActivity {
 
             }
         });
-
     }
+    AccessTokenTracker tokenTracker = new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+            if (currentAccessToken==null){
+                Toast.makeText(ApiLoginActivity.this, "User Loggout", Toast.LENGTH_SHORT).show();
+            }else{
+                loaduserPofile(currentAccessToken);
+            }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Profile profile = Profile.getCurrentProfile();
-        nextActivity(profile);
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        accessTokenTracker.stopTracking();
-        profileTracker.stopTracking();
-    }
-
-    private void nextActivity(Profile profile){
-        if (profile != null){
-            Intent main = new Intent(ApiLoginActivity.this, MainActivity.class);
-            main.putExtra("id", profile.getId());
-            main.putExtra("first_name", profile.getFirstName());
-            main.putExtra("last_name", profile.getLastName());
-            main.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
-            startActivity(main);
         }
-    }
-*/
-    }
+    };
+
 
     private void loaduserPofile(AccessToken newAccessToken) {
         GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
+                Log.e("aa", ""+response.toString());
                 try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String email = object.getString("email");
-                    String id = object.getString("id");
+                    apiInterface.loginSocialMedia(UtilsApi.APP_TOKEN,"facebook",
+                            object.getString("id"),
+                            object.getString("email"))
+                            .enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response.body().string());
+                                            if (jsonObject.getString("STATUS").equals("200")){
+                                                JSONObject jsonObject1 = jsonObject.getJSONObject("DATA");
+                                                PrefManager prefManager = new PrefManager(getApplicationContext());
+                                                prefManager.saveSession();
+                                                prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
+                                                prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }else{
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                            Toast.makeText(ApiLoginActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                }
+                            });
+
+                    Toast.makeText(getApplicationContext(), "Hi, " + object.getString("name"), Toast.LENGTH_LONG).show();
+                } catch(JSONException ex) {
+                    ex.printStackTrace();
                 }
             }
-
         });
-        Intent main = new Intent(ApiLoginActivity.this, MainActivity.class);
-        startActivity(main);
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
         Bundle parameters = new Bundle();
-        parameters.putString("field", "first_name,last_name,email,id");
+        parameters.putString("fields", "id,name,email");
         request.setParameters(parameters);
         request.executeAsync();
     }
