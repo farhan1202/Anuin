@@ -39,7 +39,7 @@ import com.google.android.gms.tasks.Task;
  * A simple {@link Fragment} subclass.
  */
 public class OtherFrag extends Fragment {
-    TextView notifikasi, keluar, kontak;
+    TextView notifikasi, keluar, kontak, pengaturan;
     private ShareDialog shareDialog;
     public OtherFrag() {
         // Required empty public constructor
@@ -56,6 +56,7 @@ public class OtherFrag extends Fragment {
         notifikasi = view.findViewById(R.id.notifikasi);
         keluar = view.findViewById(R.id.keluar);
         kontak = view.findViewById(R.id.kontakkami);
+        pengaturan = view.findViewById(R.id.pengaturan);
         shareDialog = new ShareDialog(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -63,6 +64,13 @@ public class OtherFrag extends Fragment {
                 .build();
 
         mGoogleSignClient = GoogleSignIn.getClient(view.getContext(), gso);
+
+        pengaturan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SettingActivity.class));
+            }
+        });
 
         notifikasi.setOnClickListener(new View.OnClickListener() {
             @Override

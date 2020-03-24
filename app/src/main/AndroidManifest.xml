@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".introNlogin.FirstTimeLoginSocialMediaActivity"></activity>
+        <activity android:name=".other.SettingActivity"></activity>
+        <activity android:name=".introNlogin.FirstTimeLoginSocialMediaActivity" />
         <activity android:name=".introNlogin.CheckEmailActivity" />
         <activity android:name=".introNlogin.ForgotPasswordActivity" />
         <activity android:name=".order.ReviewActivity" />

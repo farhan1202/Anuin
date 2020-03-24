@@ -124,7 +124,7 @@ public class ApiLoginActivity extends AppCompatActivity {
         };
 
         btnFB.setReadPermissions(Arrays.asList(
-                "public_profile", "email", "user_birthday", "user_friends"));
+                "public_profile", "email"));
 
         btnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -161,7 +161,7 @@ public class ApiLoginActivity extends AppCompatActivity {
         GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
-                Log.e("aa", ""+response.toString());
+                Log.e("test", ""+response.toString());
                 try {
                     apiInterface.loginSocialMedia(UtilsApi.APP_TOKEN,"facebook",
                             object.getString("id"),
