@@ -24,6 +24,7 @@ import com.example.anuin.Modal.EmailDialog;
 import com.example.anuin.Modal.NameDialog;
 import com.example.anuin.Modal.PasswordDialog;
 import com.example.anuin.Modal.PhoneDialog;
+import com.example.anuin.Modal.UsernameDialog;
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.ApiLoginActivity;
 import com.example.anuin.utils.PrefManager;
@@ -62,13 +63,14 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFrag extends Fragment {
-    CardView cardNama, cardEmail, cardTelp, cardAddAlamat, cardPassword;
+    CardView cardNama, cardEmail, cardTelp, cardAddAlamat, cardPassword, cardUsername;
     @BindView(R.id.detailNama)
     TextView detailNama;
     @BindView(R.id.detailMail)
     TextView detailMail;
     @BindView(R.id.detailTelp)
     TextView detailTelp;
+    @BindView(R.id.detailUsername) TextView detailUsername;
 
     ApiInterface apiInterface;
     PrefManager prefManager;
@@ -91,6 +93,7 @@ public class ProfileFrag extends Fragment {
         cardEmail = view.findViewById(R.id.cardEmail);
         cardTelp = view.findViewById(R.id.cardTelepon);
         cardPassword = view.findViewById(R.id.cardPassword);
+        cardUsername = view.findViewById(R.id.cardUsername);
 
         prefManager = new PrefManager(view.getContext());
 
@@ -100,9 +103,6 @@ public class ProfileFrag extends Fragment {
         if (prefManager.getSession()){
             FetchProfile();
         }
-
-
-
 
         cardPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +135,7 @@ public class ProfileFrag extends Fragment {
                             detailNama.setText(object1.getString("name"));
                             detailMail.setText(object1.getString("email"));
                             detailTelp.setText(object1.getString("phone_number"));
+                            detailUsername.setText(object1.getString("username"));
 
                             cardNama.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -164,6 +165,16 @@ public class ProfileFrag extends Fragment {
                                     bundle.putString("phone",detailTelp.getText().toString());
                                     dialogP.setArguments(bundle);
                                     dialogP.show(getFragmentManager(), "AccountDialog");
+                                }
+                            });
+                            cardUsername.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    UsernameDialog dialogUN = new UsernameDialog();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("username",detailUsername.getText().toString());
+                                    dialogUN.setArguments(bundle);
+                                    dialogUN.show(getFragmentManager(),"AccountDialog");
                                 }
                             });
                         }

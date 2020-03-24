@@ -52,4 +52,32 @@ public interface ApiInterface {
     Call<ResponseBody> getPassword (@Header("APP_TOKEN") String token,
                                     @Field("email") String email,
                                     @Field("reset_date") String date);
+
+    @FormUrlEncoded
+    @POST("member-address-add")
+    Call<ResponseBody> addAddress (@Header("APP_TOKEN") String token,
+                                   @Header("USER_TOKEN") String uTOken,
+                                   @Field("member_id") int id,
+                                   @Field("alamat") String alamat,
+                                   //lokasi maps
+                                   @Field("city") String city,
+                                   @Field("kecamatan") String kec,
+                                   @Field("kelurahan") String kel,
+                                   @Field("kode_post") String pos,
+                                   @Field("property") String properti
+
+    );
+
+    @GET("provinsi-list")
+    Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token
+                                   );
+
+    @GET("kabupaten-list/{id}")
+    Call<ResponseBody> getKabupaten (@Header("APP_TOKEN") String token,
+                                     @Path("id") int id
+    );
+
+    @GET("kecamatan-list/13")
+    Call<ResponseBody> getKecamatan( @Header("APP_TOKEN") String token
+    );
 }

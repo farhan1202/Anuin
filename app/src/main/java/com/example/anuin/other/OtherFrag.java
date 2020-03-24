@@ -55,6 +55,7 @@ public class OtherFrag extends Fragment {
         keluar = view.findViewById(R.id.keluar);
         kontak = view.findViewById(R.id.kontakkami);
 
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();

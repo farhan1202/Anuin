@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".introNlogin.CheckEmailActivity"></activity>
+        <activity android:name=".introNlogin.CheckEmailActivity" />
         <activity android:name=".introNlogin.ForgotPasswordActivity" />
         <activity android:name=".order.ReviewActivity" />
         <activity
