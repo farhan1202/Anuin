@@ -100,7 +100,7 @@ public class OtherFrag extends Fragment {
                                 prefManager.removeSession();
                                 prefManager.spString(PrefManager.SP_TOKEN_USER, "");
                                 prefManager.spInt(PrefManager.SP_ID, -1);
-
+                                getActivity().finish();
                                 Intent intent = new Intent(view.getContext(), ApiLoginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);

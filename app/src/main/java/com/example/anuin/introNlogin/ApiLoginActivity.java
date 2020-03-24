@@ -125,6 +125,7 @@ public class ApiLoginActivity extends AppCompatActivity {
 
         btnFB.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday", "user_friends"));
+
         btnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -201,8 +202,6 @@ public class ApiLoginActivity extends AppCompatActivity {
 
                                 }
                             });
-
-                    Toast.makeText(getApplicationContext(), "Hi, " + object.getString("name"), Toast.LENGTH_SHORT).show();
                 } catch(JSONException ex) {
                     ex.printStackTrace();
                 }
@@ -261,13 +260,20 @@ public class ApiLoginActivity extends AppCompatActivity {
                                     if (jsonObject.getString("STATUS").equals("200")){
                                         JSONObject jsonObject1 = jsonObject.getJSONObject("DATA");
                                         PrefManager prefManager = new PrefManager(getApplicationContext());
-                                        prefManager.saveSession();
+
                                         prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
                                         prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
-
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
+                                        if (jsonObject1.getString("name").equals("") || jsonObject1.getString("name") == null){
+                                            Intent intent = new Intent(getApplicationContext(), FirstTimeLoginSocialMediaActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                            finish();
+                                        }else{
+                                            prefManager.saveSession();
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);    
+                                        }
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
