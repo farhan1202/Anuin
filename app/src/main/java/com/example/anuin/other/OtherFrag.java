@@ -59,6 +59,7 @@ public class OtherFrag extends Fragment {
         pengaturan = view.findViewById(R.id.pengaturan);
         shareDialog = new ShareDialog(this);
 
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();

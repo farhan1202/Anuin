@@ -1,23 +1,8 @@
 package com.example.anuin.profil;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-
-import android.provider.Settings;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,28 +21,11 @@ import java.util.Locale;
 
 public class AddAddress extends AppCompatActivity {
     Button btnSimpan;
-    Spinner spinnerKabKota, spinnerKec, spinnerKel, spinnerProp;
-    EditText editLokasi;
-    String KK[] = {
-            "Pilih Kabupaten / Kota",
-            "Bandung"
-    };
-    String Kec[] = {
-            "Pilih Kecamatan",
-            "Regol"
-    };
-    String Kel[] = {
-            "Pilih Kelurahan",
-    };
-    String Prop[] = {
-            "Pilih Properti",
-    };
-
-    private static  final int REQUEST_LOCATION=1;
-    LocationManager locationManager;
-    double latitude, longitude;
-
+    Spinner spinnerProv,spinnerKabKota, spinnerKec, spinnerKel;
+    EditText editLokasi,editAlamat,editPos,editProperti;
     Toolbar toolbar;
+    ApiInterface apiHelper;
+    String idProv,idKab,idKec,idKel,idProperti; //idkel sama properti masih kosong
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +35,20 @@ public class AddAddress extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btnSimpan = findViewById(R.id.btnSimpan);
+        spinnerProv = findViewById(R.id.spinnerProvinsi);
         spinnerKabKota = findViewById(R.id.spinnerKabKota);
         spinnerKec = findViewById(R.id.spinnerKecamatan);
         spinnerKel = findViewById(R.id.spinnerKelurahan);
-        spinnerProp = findViewById(R.id.spinnerProperti);
+        editProperti = findViewById(R.id.editProperti);
         editLokasi = findViewById(R.id.editLokasi);
+        editAlamat = findViewById(R.id.editAlamat);
+        editPos = findViewById(R.id.editPos);
+
+        apiHelper = UtilsApi.getApiService();
+
+        //Ambil data dari API ke Spinner
+        fetchProv();
+        fetchKec();
 
         //permission gps
         ActivityCompat.requestPermissions(this,new String[]
@@ -90,26 +67,172 @@ public class AddAddress extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter adapterKK = new ArrayAdapter(this, R.layout.spinner_align, KK);
-        adapterKK.setDropDownViewResource(R.layout.spinner_align);
-        spinnerKabKota.setAdapter(adapterKK);
-
-        ArrayAdapter adapterKec = new ArrayAdapter(this, R.layout.spinner_align, Kec);
-        adapterKec.setDropDownViewResource(R.layout.spinner_align);
-        spinnerKec.setAdapter(adapterKec);
-
-        ArrayAdapter adapterKel = new ArrayAdapter(this, R.layout.spinner_align, Kel);
-        adapterKel.setDropDownViewResource(R.layout.spinner_align);
-        spinnerKel.setAdapter(adapterKel);
-
-        ArrayAdapter adapterProp = new ArrayAdapter(this, R.layout.spinner_align, Prop);
-        adapterProp.setDropDownViewResource(R.layout.spinner_align);
-        spinnerProp.setAdapter(adapterProp);
-
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                saveAddress();
+
+            }
+
+            private void saveAddress() {
+                PrefManager manager = new PrefManager(getApplicationContext());
+                apiHelper.addAddress(UtilsApi.APP_TOKEN,
+                        manager.getTokenUser(),
+                        manager.getId(),
+                        editAlamat.getText().toString(),
+                        idKab,idKec,idKel,
+                        editPos.getText().toString(),idProperti
+                        ).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()){
+                            try {
+                                JSONObject object = new JSONObject(response.body().string());
+                                if (object.getString("STATUS").equals("200")){
+                                    Toast.makeText(AddAddress.this, object.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(AddAddress.this,object.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+    }//end onCreate
+
+    private void fetchProv() {
+        ArrayList<String> prov = new ArrayList<>();
+        apiHelper.getProvinsi(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        if (object.get("STATUS").equals("200")) {
+                            JSONArray array = object.getJSONArray("DATA");
+                            for (int i = 0; i <array.length() ; i++) {
+                                prov.add(array.getJSONObject(i).getString("name"));
+                            }
+
+                            ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),R.layout.spinner_align,prov);
+                            adapter.setDropDownViewResource(R.layout.spinner_align);
+                            spinnerProv.setAdapter(adapter);
+
+                            spinnerProv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    try {
+                                        idProv = array.getJSONObject(position).getString("id");     //untuk addAddress
+                                        fetchKabKota(Integer.parseInt(idProv));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    }
+                }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+    private void fetchKabKota(int id) {
+        ArrayList<String> kab = new ArrayList<>();
+        apiHelper.getKabupaten(UtilsApi.APP_TOKEN,id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        if (object.getString("STATUS").equals("200")){
+                            JSONArray array = object.getJSONArray("DATA");
+                            for (int i = 0; i < array.length(); i++) {
+                                kab.add(array.getJSONObject(i).getString("name"));
+                            }
+
+                            ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),R.layout.spinner_align,kab);
+                            adapter.setDropDownViewResource(R.layout.spinner_align);
+                            spinnerKabKota.setAdapter(adapter);
+
+                            spinnerKabKota.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    try {
+                                        idKab = array.getJSONObject(position).getString("id");
+//                                        Toast.makeText(AddAddress.this, ""+idKab, Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void fetchKec() {
+        apiHelper.getKecamatan(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        if (object.getString("STATUS").equals("200")){
+                            Toast.makeText(AddAddress.this, "" + object.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }

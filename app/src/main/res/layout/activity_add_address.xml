@@ -18,11 +18,11 @@
         android:layout_height="match_parent"
         android:layout_above="@id/btnSimpan"
         android:layout_below="@id/toolbarFormAddress"
-        android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="10dp"
         android:scrollbars="none">
 
         <LinearLayout
+            android:paddingHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -44,7 +44,8 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:hint="Rumah, apartement atau lainnya"
-                android:padding="14dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="16dp"
                 android:textSize="14sp" />
 
             <TextView
@@ -74,6 +75,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginBottom="6dp"
+                android:text="PROVINSI"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:background="@drawable/modal"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:layout_marginBottom="10dp">
+                <Spinner
+                    android:id="@+id/spinnerProvinsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"
+                    android:scrollbars="none"
+                    android:paddingBottom="2dp"/>
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginBottom="6dp"
                 android:text="KABUPATEN / KOTA"
                 android:textColor="#000000"
                 android:textSize="12dp"
@@ -82,13 +108,17 @@
             <RelativeLayout
                 android:background="@drawable/modal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
+                android:gravity="center"
                 android:layout_marginBottom="10dp">
                 <Spinner
                     android:id="@+id/spinnerKabKota"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown" />
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"
+                    android:scrollbars="none"
+                    android:paddingBottom="2dp"
+                    />
             </RelativeLayout>
 
             <TextView
@@ -105,12 +135,14 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="47dp">
                 <Spinner
                     android:id="@+id/spinnerKecamatan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"/>
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"
+                    android:scrollbars="none"
+                    android:paddingBottom="2dp"/>
             </RelativeLayout>
 
             <TextView
@@ -127,14 +159,38 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="47dp">
                 <Spinner
                     android:id="@+id/spinnerKelurahan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"
+                    android:scrollbars="none"
+                    android:paddingBottom="2dp"
                     />
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginBottom="6dp"
+                android:text="KODE POS"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editPos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/modal"
+                android:hint="Kode Pos"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="16dp"
+                android:textSize="14sp" />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,18 +202,16 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
-           <RelativeLayout
-               android:layout_marginBottom="10dp"
-               android:background="@drawable/modal"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <Spinner
-                   android:id="@+id/spinnerProperti"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:spinnerMode="dropdown"/>
-           </RelativeLayout>
-
+            <EditText
+                android:id="@+id/editProperti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/modal"
+                android:hint="Properti"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="16dp"
+                android:textSize="14sp" />
 
         </LinearLayout>
     </ScrollView>
