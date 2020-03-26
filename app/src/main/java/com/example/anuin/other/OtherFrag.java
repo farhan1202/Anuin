@@ -107,6 +107,7 @@ public class OtherFrag extends Fragment {
 
                                 PrefManager prefManager = new PrefManager(view.getContext());
                                 prefManager.removeSession();
+                                prefManager.removeSessionSosmed();
                                 prefManager.spString(PrefManager.SP_TOKEN_USER, "");
                                 prefManager.spInt(PrefManager.SP_ID, -1);
                                 getActivity().finish();

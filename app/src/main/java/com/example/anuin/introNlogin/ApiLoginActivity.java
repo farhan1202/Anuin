@@ -99,7 +99,7 @@ public class ApiLoginActivity extends AppCompatActivity {
 
 
         mGoogleSignClient = GoogleSignIn.getClient(this, gso);
-        checkLoginStatus();
+        //checkLoginStatus();
 
         btnGmail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +129,9 @@ public class ApiLoginActivity extends AppCompatActivity {
         btnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
+                if (loginResult.getAccessToken() != null) {
+                    loaduserPofile(loginResult.getAccessToken());
+                }
             }
 
             @Override
@@ -143,27 +145,24 @@ public class ApiLoginActivity extends AppCompatActivity {
             }
         });
     }
-    AccessTokenTracker tokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            if (currentAccessToken==null){
-                Toast.makeText(ApiLoginActivity.this, "User Loggout", Toast.LENGTH_SHORT).show();
-            }else{
-                loaduserPofile(currentAccessToken);
-            }
 
-
-        }
-    };
+//    AccessTokenTracker tokenTracker = new AccessTokenTracker() {
+//        @Override
+//        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+//            if (currentAccessToken != null) {
+//                loaduserPofile(currentAccessToken);
+//            }
+//        }
+//    };
 
 
     private void loaduserPofile(AccessToken newAccessToken) {
         GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
-                Log.e("test", ""+response.toString());
+                Log.e("test", "" + response.toString());
                 try {
-                    apiInterface.loginSocialMedia(UtilsApi.APP_TOKEN,"facebook",
+                    apiInterface.loginSocialMedia(UtilsApi.APP_TOKEN, "facebook",
                             object.getString("id"),
                             object.getString("email"))
                             .enqueue(new Callback<ResponseBody>() {
@@ -172,19 +171,29 @@ public class ApiLoginActivity extends AppCompatActivity {
                                     if (response.isSuccessful()) {
                                         try {
                                             JSONObject jsonObject = new JSONObject(response.body().string());
-                                            if (jsonObject.getString("STATUS").equals("200")){
+                                            if (jsonObject.getString("STATUS").equals("200")) {
                                                 JSONObject jsonObject1 = jsonObject.getJSONObject("DATA");
                                                 PrefManager prefManager = new PrefManager(getApplicationContext());
-                                                prefManager.saveSession();
                                                 prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
                                                 prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
+                                                if (jsonObject1.getString("name").equals("") || jsonObject1.getString("username").equals("")) {
+                                                    Intent intent = new Intent(getApplicationContext(), FirstTimeLoginSocialMediaActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else {
+                                                    prefManager.saveSession();
+                                                    prefManager.saveSessionSosmed();
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    startActivity(intent);
+                                                }
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                    }else{
+                                    } else {
                                         try {
                                             JSONObject jsonObject = new JSONObject(response.errorBody().string());
                                             Toast.makeText(ApiLoginActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
@@ -202,24 +211,22 @@ public class ApiLoginActivity extends AppCompatActivity {
 
                                 }
                             });
-                } catch(JSONException ex) {
+                } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
             }
         });
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email,gender,birthday");
         request.setParameters(parameters);
         request.executeAsync();
     }
 
-    private void checkLoginStatus() {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            loaduserPofile(AccessToken.getCurrentAccessToken());
-        }
-    }
+//    private void checkLoginStatus() {
+//        if (AccessToken.getCurrentAccessToken() != null) {
+//            loaduserPofile(AccessToken.getCurrentAccessToken());
+//        }
+//    }
 
     private void signInGoogle() {
         Intent signInIntent = mGoogleSignClient.getSignInIntent();
@@ -250,29 +257,31 @@ public class ApiLoginActivity extends AppCompatActivity {
             apiInterface.loginSocialMedia(UtilsApi.APP_TOKEN,
                     "google",
                     account.getId() + "",
-                    account.getEmail()+"")
+                    account.getEmail() + "")
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response.body().string());
-                                    if (jsonObject.getString("STATUS").equals("200")){
+                                    if (jsonObject.getString("STATUS").equals("200")) {
                                         JSONObject jsonObject1 = jsonObject.getJSONObject("DATA");
                                         PrefManager prefManager = new PrefManager(getApplicationContext());
-
+                                        Toast.makeText(ApiLoginActivity.this, "" + account.getDisplayName(), Toast.LENGTH_SHORT).show();
                                         prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
                                         prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
-                                        if (jsonObject1.getString("name").equals("") || jsonObject1.getString("name") == null){
+                                        if (jsonObject1.getString("name").equals("") || jsonObject1.getString("name") == null ||
+                                                jsonObject1.getString("username").equals("") || jsonObject1.getString("username") == null) {
                                             Intent intent = new Intent(getApplicationContext(), FirstTimeLoginSocialMediaActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
                                             finish();
-                                        }else{
+                                        } else {
                                             prefManager.saveSession();
+                                            prefManager.saveSessionSosmed();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(intent);    
+                                            startActivity(intent);
                                         }
                                     }
                                 } catch (JSONException e) {
@@ -280,7 +289,7 @@ public class ApiLoginActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                            }else{
+                            } else {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response.errorBody().string());
                                     Toast.makeText(ApiLoginActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
@@ -345,12 +354,12 @@ public class ApiLoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        /*GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-        }
+        }*/
 
     }
 

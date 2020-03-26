@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.cardview.widget.CardView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -42,6 +45,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
@@ -70,7 +74,8 @@ public class ProfileFrag extends Fragment {
     TextView detailMail;
     @BindView(R.id.detailTelp)
     TextView detailTelp;
-    @BindView(R.id.detailUsername) TextView detailUsername;
+    @BindView(R.id.detailUsername)
+    TextView detailUsername;
 
     ApiInterface apiInterface;
     PrefManager prefManager;
@@ -100,15 +105,19 @@ public class ProfileFrag extends Fragment {
         apiInterface = UtilsApi.getApiService();
 
 
-        if (prefManager.getSession()){
+        if (prefManager.getSession()) {
             FetchProfile();
         }
 
         cardPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PasswordDialog dialog = new PasswordDialog();
-                dialog.show(getFragmentManager(), "PasswordDialog");
+                if (prefManager.getSessionSosmed()){
+                    Toast.makeText(getContext(), "Can't Edit Password", Toast.LENGTH_SHORT).show();
+                }else{
+                    PasswordDialog dialog = new PasswordDialog();
+                    dialog.show(getFragmentManager(), "PasswordDialog");
+                }
             }
         });
 
@@ -150,20 +159,25 @@ public class ProfileFrag extends Fragment {
                             cardEmail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    EmailDialog dialogE = new EmailDialog();
+                                    if (prefManager.getSessionSosmed()) {
+                                        Toast.makeText(getContext(), "Can't Edit Email", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        EmailDialog dialogE = new EmailDialog();
                                     /*Bundle bundle1 = new Bundle();
                                     bundle1.putString("email",detailMail.getText().toString());
                                     dialogE.setArguments(bundle1);*/
-                                    dialogE.show(getFragmentManager(), "AccountDialog");
+                                        dialogE.show(getFragmentManager(), "AccountDialog");
+                                    }
+
                                 }
                             });
                             cardTelp.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     PhoneDialog dialogP = new PhoneDialog();
-                                    Bundle bundle = new Bundle();
+                                    /*Bundle bundle = new Bundle();
                                     bundle.putString("phone",detailTelp.getText().toString());
-                                    dialogP.setArguments(bundle);
+                                    dialogP.setArguments(bundle);*/
                                     dialogP.show(getFragmentManager(), "AccountDialog");
                                 }
                             });
@@ -171,10 +185,10 @@ public class ProfileFrag extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     UsernameDialog dialogUN = new UsernameDialog();
-                                    Bundle bundle = new Bundle();
+                                    /*Bundle bundle = new Bundle();
                                     bundle.putString("username",detailUsername.getText().toString());
-                                    dialogUN.setArguments(bundle);
-                                    dialogUN.show(getFragmentManager(),"AccountDialog");
+                                    dialogUN.setArguments(bundle);*/
+                                    dialogUN.show(getFragmentManager(), "AccountDialog");
                                 }
                             });
                         }
@@ -183,7 +197,7 @@ public class ProfileFrag extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("Sesi Login Berakhir")
                             .setCancelable(false)
@@ -191,7 +205,7 @@ public class ProfileFrag extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     Intent intent1 = new Intent(getContext(), ApiLoginActivity.class);
-                                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent1);
                                 }
                             });

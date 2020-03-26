@@ -45,7 +45,7 @@
                 <TextView
                     android:textAlignment="center"
                     android:layout_marginTop="20dp"
-                    android:text="Check your email and click on the \nconfirmations to continue"
+                    android:text="Check your email and click on the \nverify email to continue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <TextView

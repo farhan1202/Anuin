@@ -34,7 +34,7 @@
         <activity android:name=".order.MetodePembayaranActivity" />
         <activity android:name=".introNlogin.RegisterActivity" />
         <activity android:name=".introNlogin.LoginActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"/>
         <activity android:name=".introNlogin.ApiLoginActivity" />
         <activity android:name=".introNlogin.WelcomeActivity" />
         <activity

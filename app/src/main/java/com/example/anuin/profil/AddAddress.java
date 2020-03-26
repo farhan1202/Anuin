@@ -1,11 +1,14 @@
 package com.example.anuin.profil;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +17,21 @@ import android.widget.Toast;
 
 import com.example.anuin.MainActivity;
 import com.example.anuin.R;
+import com.example.anuin.utils.PrefManager;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddAddress extends AppCompatActivity {
     Button btnSimpan;
@@ -48,18 +62,14 @@ public class AddAddress extends AppCompatActivity {
 
         //Ambil data dari API ke Spinner
         fetchProv();
-        fetchKec();
-
-        //permission gps
-        ActivityCompat.requestPermissions(this,new String[]
-                {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+//        fetchKec();
 
         editLokasi.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= editLokasi.getRight() - editLokasi.getTotalPaddingRight()) {
-                            getLocation();
+                        Toast.makeText(AddAddress.this, "Drawable Clicked", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 }
@@ -80,19 +90,31 @@ public class AddAddress extends AppCompatActivity {
                         manager.getTokenUser(),
                         manager.getId(),
                         editAlamat.getText().toString(),
-                        idKab,idKec,idKel,
-                        editPos.getText().toString(),idProperti
-                        ).enqueue(new Callback<ResponseBody>() {
+                        editLokasi.getText().toString(),
+                        idProv,
+                        idKab,
+                        idKec,
+                        idKel,
+                        editPos.getText().toString(),
+                        editProperti.getText().toString()).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()){
                             try {
-                                JSONObject object = new JSONObject(response.body().string());
-                                if (object.getString("STATUS").equals("200")){
-                                    Toast.makeText(AddAddress.this, object.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(AddAddress.this,object.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                JSONObject jsonObject = new JSONObject(response.body().string());
+                                if (jsonObject.getString("STATUS").equals("200")){
+                                    Toast.makeText(AddAddress.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                Toast.makeText(AddAddress.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
@@ -153,8 +175,8 @@ public class AddAddress extends AppCompatActivity {
                     }
 
 
-                    }
                 }
+            }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
@@ -186,6 +208,7 @@ public class AddAddress extends AppCompatActivity {
                                     try {
                                         idKab = array.getJSONObject(position).getString("id");
 //                                        Toast.makeText(AddAddress.this, ""+idKab, Toast.LENGTH_SHORT).show();
+                                        fetchKecamatan(Integer.parseInt(idKab));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -212,7 +235,107 @@ public class AddAddress extends AppCompatActivity {
         });
     }
 
-    private void fetchKec() {
+    private void fetchKecamatan(int id) {
+            ArrayList<String> kec = new ArrayList<>();
+            apiHelper.getKecamatan(UtilsApi.APP_TOKEN, id).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()){
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            if (jsonObject.getString("STATUS").equals("200")){
+                                JSONArray array = jsonObject.getJSONArray("DATA");
+                                for (int i = 0; i < array.length(); i++) {
+                                    kec.add(array.getJSONObject(i).getString("name"));
+                                }
+
+                                ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),R.layout.spinner_align,kec);
+                                adapter.setDropDownViewResource(R.layout.spinner_align);
+                                spinnerKec.setAdapter(adapter);
+
+                                spinnerKec.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                        try {
+                                            idKec = array.getJSONObject(i).getString("id");
+                                            fetchKelurangan(Integer.parseInt(idKec));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                    }
+                                });
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+    }
+
+    private void fetchKelurangan(int idKec) {
+        ArrayList<String> kel = new ArrayList<>();
+        apiHelper.getKelurahan(UtilsApi.APP_TOKEN, idKec).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("STATUS").equals("200")){
+                            JSONArray array = jsonObject.getJSONArray("DATA");
+                            for (int i = 0; i < array.length(); i++) {
+                                kel.add(array.getJSONObject(i).getString("name"));
+                            }
+
+                            ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),R.layout.spinner_align,kel);
+                            adapter.setDropDownViewResource(R.layout.spinner_align);
+                            spinnerKel.setAdapter(adapter);
+
+                            spinnerKel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    try {
+                                        idKel = array.getJSONObject(i).getString("id");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /*private void fetchKec() {
         apiHelper.getKecamatan(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -235,104 +358,7 @@ public class AddAddress extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void getLocation() {
-        locationManager=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            //Write Function To enable gps
-            OnGPS();
-        }else{
-            //GPS is already On then
-            getLocations();
-        }
-    }
-
-    private void getLocations() {
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ){
-            ActivityCompat.requestPermissions(this,new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        }else{
-            Location LocationGps= locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            Location LocationNetwork=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            Location LocationPassive=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-
-            if (LocationGps !=null)
-            {
-                double lat=LocationGps.getLatitude();
-                double longi=LocationGps.getLongitude();
-
-                latitude=lat;
-                longitude=longi;
-
-                convertWithGeoCoder(latitude, longitude);
-
-            }
-            else if (LocationNetwork !=null)
-            {
-                double lat=LocationNetwork.getLatitude();
-                double longi=LocationNetwork.getLongitude();
-
-                latitude=lat;
-                longitude=longi;
-
-                convertWithGeoCoder(latitude, longitude);
-            }
-            else if (LocationPassive !=null)
-            {
-                double lat=LocationPassive.getLatitude();
-                double longi=LocationPassive.getLongitude();
-
-                latitude=lat;
-                longitude=longi;
-
-                convertWithGeoCoder(latitude, longitude);
-            }
-            else
-            {
-                Toast.makeText(this, "Can't Get Your Location", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void convertWithGeoCoder(double latitude, double longitude) {
-        Geocoder geocoder;
-        geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses;
-
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            String address = addresses.get(0).getAddressLine(0);
-            String city = addresses.get(0).getLocality();
-            String state = addresses.get(0).getAdminArea();
-            String country = addresses.get(0).getCountryName();
-            String postalCode = addresses.get(0).getPostalCode();
-            String knownName = addresses.get(0).getFeatureName();
-            Log.i("TAG", "convertWithGeoCoder: " + city + " " + state + " " + country + " " + postalCode + " " + knownName);
-            editLokasi.setText(address);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void OnGPS() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
-        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        final AlertDialog alertDialog=builder.create();
-        alertDialog.show();
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

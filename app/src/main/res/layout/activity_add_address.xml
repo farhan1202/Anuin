@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
+                android:singleLine="true"
                 android:hint="Rumah, apartement atau lainnya"
                 android:paddingHorizontal="14dp"
                 android:paddingVertical="16dp"
@@ -83,15 +84,15 @@
             <RelativeLayout
                 android:background="@drawable/modal"
                 android:layout_width="match_parent"
-                android:layout_height="47dp"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
                 android:layout_marginBottom="10dp">
                 <Spinner
                     android:id="@+id/spinnerProvinsi"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:spinnerMode="dialog"
-                    android:scrollbars="none"
-                    android:paddingBottom="2dp"/>
+                    android:scrollbars="none"/>
             </RelativeLayout>
 
 
@@ -108,17 +109,15 @@
             <RelativeLayout
                 android:background="@drawable/modal"
                 android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
                 android:layout_marginBottom="10dp">
                 <Spinner
                     android:id="@+id/spinnerKabKota"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:spinnerMode="dialog"
-                    android:scrollbars="none"
-                    android:paddingBottom="2dp"
-                    />
+                    android:scrollbars="none" />
             </RelativeLayout>
 
             <TextView
@@ -135,14 +134,13 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:layout_width="match_parent"
-                android:layout_height="47dp">
+                android:layout_height="wrap_content">
                 <Spinner
                     android:id="@+id/spinnerKecamatan"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:spinnerMode="dialog"
-                    android:scrollbars="none"
-                    android:paddingBottom="2dp"/>
+                    android:scrollbars="none"/>
             </RelativeLayout>
 
             <TextView
@@ -159,14 +157,13 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:layout_width="match_parent"
-                android:layout_height="47dp">
+                android:layout_height="wrap_content">
                 <Spinner
                     android:id="@+id/spinnerKelurahan"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:spinnerMode="dialog"
                     android:scrollbars="none"
-                    android:paddingBottom="2dp"
                     />
             </RelativeLayout>
 
@@ -187,6 +184,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:hint="Kode Pos"
+                android:singleLine="true"
                 android:paddingHorizontal="14dp"
                 android:paddingVertical="16dp"
                 android:textSize="14sp" />
@@ -209,6 +207,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/modal"
                 android:hint="Properti"
+                android:singleLine="true"
                 android:paddingHorizontal="14dp"
                 android:paddingVertical="16dp"
                 android:textSize="14sp" />

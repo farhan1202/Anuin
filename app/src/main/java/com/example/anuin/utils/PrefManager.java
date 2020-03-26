@@ -13,6 +13,7 @@ public class PrefManager {
     private static final String PREF_NAME = "introslide";
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTime";
     private static final String SESSION_KEY = "SESSION_USER";
+    private static final String SESSION_KEY_SOSMED = "SESSION_SOSMED";
 
     private static final String SESSION_GUEST = "SESSION_GUEST";
 
@@ -62,6 +63,21 @@ public class PrefManager {
 
     public void removeSession(){
         editor.putBoolean(SESSION_KEY, false);
+        editor.commit();
+    }
+
+    //session login sosmed
+    public void saveSessionSosmed(){
+        editor.putBoolean(SESSION_KEY_SOSMED, true);
+        editor.commit();
+    }
+
+    public boolean getSessionSosmed(){
+        return pref.getBoolean(SESSION_KEY_SOSMED, false);
+    }
+
+    public void removeSessionSosmed(){
+        editor.putBoolean(SESSION_KEY_SOSMED, false);
         editor.commit();
     }
 

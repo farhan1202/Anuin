@@ -17,6 +17,7 @@ import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
@@ -81,10 +82,10 @@ public class FirstTimeLoginSocialMediaActivity extends AppCompatActivity {
                             btnConfirm.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (TextUtils.isEmpty(txtNewNameUser.getText().toString())) {
-                                        txtNewNameUser.setError("Field can't be blank");
-                                    } else if(TextUtils.isEmpty(txtNewUsername.getText().toString())){
+                                    if (TextUtils.isEmpty(txtNewUsername.getText().toString())) {
                                         txtNewUsername.setError("Field can't be blank");
+                                    } else if(TextUtils.isEmpty(txtNewNameUser.getText().toString())){
+                                        txtNewNameUser.setError("Field can't be blank");
                                     } else{
                                         updateProfile(email, phone_number, member_image);
                                         loginDialog.startLoadingDialog();
@@ -126,6 +127,7 @@ public class FirstTimeLoginSocialMediaActivity extends AppCompatActivity {
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
                                     prefManager.saveSession();
+                                    prefManager.saveSessionSosmed();
                                     loginDialog.dismissLoadingDialog();
                                 }
                             } catch (JSONException e) {
@@ -152,5 +154,4 @@ public class FirstTimeLoginSocialMediaActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }

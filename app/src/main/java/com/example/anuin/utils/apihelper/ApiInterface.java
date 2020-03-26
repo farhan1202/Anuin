@@ -73,18 +73,18 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("member-address-add")
-    Call<ResponseBody> addAddress (@Header("APP_TOKEN") String token,
-                                   @Header("USER_TOKEN") String uTOken,
-                                   @Field("member_id") int id,
+    Call<ResponseBody> addAddress (@Header("APP_TOKEN") String tokenApp,
+                                   @Header("USER_TOKEN") String tokenUser,
+                                   @Field("member_id") int idMember,
                                    @Field("alamat") String alamat,
-                                   //lokasi maps
+                                   @Field("lokasi_maps") String lokasi,
+                                   @Field("provinsi") String provinsi,
                                    @Field("city") String city,
-                                   @Field("kecamatan") String kec,
-                                   @Field("kelurahan") String kel,
-                                   @Field("kode_post") String pos,
-                                   @Field("property") String properti
+                                   @Field("kecamatan") String kecamatan,
+                                   @Field("kelurahan") String kelurahan,
+                                   @Field("kode_post") String kodePost,
+                                   @Field("property") String property);
 
-    );
 
     @GET("provinsi-list")
     Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token
@@ -95,7 +95,14 @@ public interface ApiInterface {
                                      @Path("id") int id
     );
 
-    @GET("kecamatan-list/13")
-    Call<ResponseBody> getKecamatan( @Header("APP_TOKEN") String token
+    @GET("kecamatan-list/{id}")
+    Call<ResponseBody> getKecamatan( @Header("APP_TOKEN") String token,
+                                     @Path("id") int id
     );
+
+    @GET("kelurahan-list/{id}")
+    Call<ResponseBody> getKelurahan( @Header("APP_TOKEN") String token,
+                                     @Path("id") int id
+    );
+
 }

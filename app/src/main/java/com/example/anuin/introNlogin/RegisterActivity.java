@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
@@ -49,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.btnRegister)
     Button btnRegister;
 
+    LoginDialog loginDialog;
+
     private AwesomeValidation awesomeValidation;
 
     @Override
@@ -56,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-
+        loginDialog = new LoginDialog(this);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_FULLSCREEN);
@@ -82,7 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private void requestLogin() {
         if (awesomeValidation.validate()){
-            apiInterface.registerRequest(UtilsApi.APP_TOKEN,etName.getText().toString(),
+            apiInterface.registerRequest(UtilsApi.APP_TOKEN,
+                    etName.getText().toString(),
                     etUsername.getText().toString(),
                     etEmail.getText().toString(),
                     etPassword.getText().toString())
@@ -93,8 +97,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response.body().string());
                                     if (jsonObject.getString("STATUS").equals("200")) {
-                                        Toast.makeText(context, "RESGISTER SUCCESSFULY", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Please, check your email to verify", Toast.LENGTH_SHORT).show();
+                                        loginDialog.dismissLoadingDialog();
                                         startActivity(new Intent(context, LoginActivity.class));
+                                        finish();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -102,16 +108,26 @@ public class RegisterActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }else{
-                                Toast.makeText(context, "Terjadi Kesalahan ", Toast.LENGTH_SHORT).show();
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                    Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                    loginDialog.dismissLoadingDialog();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Toast.makeText(context, "REGISTER FAILED", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(context, "Periksa koneksi!", Toast.LENGTH_SHORT).show();
+                            loginDialog.dismissLoadingDialog();
                         }
                     });
 
+        }else{
+            loginDialog.dismissLoadingDialog();
         }
 
     }
@@ -123,6 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnRegister)
     public void onViewClicked() {
+        loginDialog.startLoadingDialog();
         requestLogin();
     }
 }
