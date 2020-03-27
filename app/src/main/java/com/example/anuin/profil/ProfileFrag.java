@@ -110,7 +110,7 @@ public class ProfileFrag extends Fragment {
         cardAddAlamat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddAddress.class);
+                Intent intent = new Intent(v.getContext(), AddAddressActivity.class);
                 startActivity(intent);
             }
         });
@@ -138,6 +138,15 @@ public class ProfileFrag extends Fragment {
                             recyclerAddress.setAdapter(addressAdapter);
                             recyclerAddress.setHasFixedSize(true);
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getContext(), "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

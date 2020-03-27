@@ -16,7 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".other.SettingActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".profil.UpdateAddressActivity"></activity>
+        <activity android:name=".profil.DetailAddressActivity" />
+        <activity
+            android:name=".other.SettingActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".introNlogin.FirstTimeLoginSocialMediaActivity" />
         <activity android:name=".introNlogin.CheckEmailActivity" />
         <activity android:name=".introNlogin.ForgotPasswordActivity" />
@@ -34,7 +38,7 @@
         <activity android:name=".order.MetodePembayaranActivity" />
         <activity android:name=".introNlogin.RegisterActivity" />
         <activity android:name=".introNlogin.LoginActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".introNlogin.ApiLoginActivity" />
         <activity android:name=".introNlogin.WelcomeActivity" />
         <activity
@@ -44,7 +48,7 @@
             android:name=".home.DetailJasaActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".profil.AddAddress"
+            android:name=".profil.AddAddressActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".introNlogin.SplashScreenActivity">
             <intent-filter>

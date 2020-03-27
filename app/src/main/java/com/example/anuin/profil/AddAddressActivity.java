@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,13 +34,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddAddress extends AppCompatActivity {
+public class AddAddressActivity extends AppCompatActivity {
     Button btnSimpan;
     Spinner spinnerProv,spinnerKabKota, spinnerKec, spinnerKel;
     EditText editLokasi,editAlamat,editPos,editProperti;
     Toolbar toolbar;
     ApiInterface apiHelper;
-    String idProv,idKab,idKec,idKel,idProperti; //idkel sama properti masih kosong
+    String idProv,idKab,idKec,idKel; //idkel sama properti masih kosong
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +63,13 @@ public class AddAddress extends AppCompatActivity {
 
         //Ambil data dari API ke Spinner
         fetchProv();
-//        fetchKec();
 
         editLokasi.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= editLokasi.getRight() - editLokasi.getTotalPaddingRight()) {
-                        Toast.makeText(AddAddress.this, "Drawable Clicked", Toast.LENGTH_SHORT).show();
+
                         return true;
                     }
                 }
@@ -103,7 +103,7 @@ public class AddAddress extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.body().string());
                                 if (jsonObject.getString("STATUS").equals("200")){
-                                    Toast.makeText(AddAddress.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddAddressActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }
                             } catch (JSONException e) {
@@ -114,7 +114,7 @@ public class AddAddress extends AppCompatActivity {
                         }else{
                             try {
                                 JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                                Toast.makeText(AddAddress.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddAddressActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
@@ -173,8 +173,6 @@ public class AddAddress extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             }
 
@@ -334,31 +332,6 @@ public class AddAddress extends AppCompatActivity {
             }
         });
     }
-
-    /*private void fetchKec() {
-        apiHelper.getKecamatan(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
-                    try {
-                        JSONObject object = new JSONObject(response.body().string());
-                        if (object.getString("STATUS").equals("200")){
-                            Toast.makeText(AddAddress.this, "" + object.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
