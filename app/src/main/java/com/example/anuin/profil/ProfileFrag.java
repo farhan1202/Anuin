@@ -5,10 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.cardview.widget.CardView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +13,8 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import android.widget.TextView;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anuin.Modal.EmailDialog;
 import com.example.anuin.Modal.NameDialog;
@@ -30,30 +23,20 @@ import com.example.anuin.Modal.PhoneDialog;
 import com.example.anuin.Modal.UsernameDialog;
 import com.example.anuin.R;
 import com.example.anuin.introNlogin.ApiLoginActivity;
+import com.example.anuin.profil.adapter.AddressAdapter;
+import com.example.anuin.profil.model.Address;
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import com.example.anuin.utils.PrefManager;
-import com.example.anuin.utils.apihelper.ApiInterface;
-import com.example.anuin.utils.apihelper.UtilsApi;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +62,8 @@ public class ProfileFrag extends Fragment {
 
     ApiInterface apiInterface;
     PrefManager prefManager;
+    @BindView(R.id.recyclerAddress)
+    RecyclerView recyclerAddress;
 
 
     public ProfileFrag() {
@@ -107,14 +92,15 @@ public class ProfileFrag extends Fragment {
 
         if (prefManager.getSession()) {
             FetchProfile();
+            fetchAddress();
         }
 
         cardPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (prefManager.getSessionSosmed()){
+                if (prefManager.getSessionSosmed()) {
                     Toast.makeText(getContext(), "Can't Edit Password", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     PasswordDialog dialog = new PasswordDialog();
                     dialog.show(getFragmentManager(), "PasswordDialog");
                 }
@@ -129,6 +115,42 @@ public class ProfileFrag extends Fragment {
             }
         });
         return view;
+    }
+
+    private void fetchAddress() {
+        PrefManager prefManager = new PrefManager(getContext());
+        List<Address.DATABean> dataBeans = new ArrayList<>();
+        apiInterface.getAddressUser(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("STATUS").equals("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("DATA");
+                            Gson gson = new Gson();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Address.DATABean dataBean = gson.fromJson(jsonArray.getJSONObject(i).toString(), Address.DATABean.class);
+                                dataBeans.add(dataBean);
+                            }
+                            AddressAdapter addressAdapter = new AddressAdapter(getContext(), dataBeans);
+                            recyclerAddress.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerAddress.setAdapter(addressAdapter);
+                            recyclerAddress.setHasFixedSize(true);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Check your connections", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void FetchProfile() {

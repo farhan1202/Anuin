@@ -85,6 +85,12 @@ public interface ApiInterface {
                                    @Field("kode_post") String kodePost,
                                    @Field("property") String property);
 
+    @FormUrlEncoded
+    @POST("member-address")
+    Call<ResponseBody> getAddressUser(@Header("APP_TOKEN") String tokenApp,
+                                      @Header("USER_TOKEN") String tokenUser,
+                                      @Field("member_id") int idMember);
+
 
     @GET("provinsi-list")
     Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/layoutClick"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtAlamat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alamat"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detailAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_below="@id/txtAlamat"
+            android:ellipsize="marquee"
+            android:layout_marginRight="20dp"
+            android:text="Alamat I - Jalan Mandar III jhasdhajshdbaajsdbajsbdjasbdjahsb" />
+
+        <ImageView
+
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/next" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginHorizontal="9dp"
+        android:background="@color/colorView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</LinearLayout>

@@ -176,6 +176,7 @@ public class ApiLoginActivity extends AppCompatActivity {
                                                 PrefManager prefManager = new PrefManager(getApplicationContext());
                                                 prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
                                                 prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
+                                                Toast.makeText(ApiLoginActivity.this, "" + object.getString("name"), Toast.LENGTH_SHORT).show();
                                                 if (jsonObject1.getString("name").equals("") || jsonObject1.getString("username").equals("")) {
                                                     Intent intent = new Intent(getApplicationContext(), FirstTimeLoginSocialMediaActivity.class);
                                                     startActivity(intent);

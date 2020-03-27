@@ -1,257 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <TableLayout
-        android:layout_marginHorizontal="10dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TableRow>
-            <TextView
-                android:id="@+id/Akun"
-                android:text="Akun"
-                android:padding="9dp"
-                android:textStyle="bold"
-                android:textSize="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:paddingHorizontal="4dp"
-                android:layout_marginTop="18dp"
-                android:background="@color/colorView" />
-        </TableRow>
-    </TableLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardUsername"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="4dp"
-        android:background="@drawable/rounded"
-        app:cardElevation="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:padding="10dp"
+        <TableLayout
+            android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:id="@+id/Akun"
+                    android:text="Akun"
+                    android:padding="9dp"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/txtUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/detailUsername"
-                android:text="--"
-                android:layout_below="@id/txtUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:src="@drawable/next"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="18dp"
-                android:layout_height="18dp"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:paddingHorizontal="4dp"
+                    android:layout_marginTop="18dp"
+                    android:background="@color/colorView" />
+            </TableRow>
+        </TableLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardNama"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="4dp"
-        android:background="@drawable/rounded"
-        app:cardElevation="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/txtNama"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nama"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/detailNama"
-                android:text="--"
-                android:layout_below="@id/txtNama"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:src="@drawable/next"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="18dp"
-                android:layout_height="18dp"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardEmail"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="4dp"
-        android:background="@color/colorAccent"
-        app:cardElevation="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txtMail"
-                android:text="E-Mail"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/detailMail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtMail"
-                android:text="--" />
-            <ImageView
-                android:src="@drawable/next"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="18dp"
-                android:layout_height="18dp"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardTelepon"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="4dp"
-        android:background="@color/colorAccent"
-        app:cardElevation="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txtTelp"
-                android:text="Telepon"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/detailTelp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtTelp"
-                android:inputType="phone"
-                android:text="--" />
-            <ImageView
-                android:src="@drawable/next"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="18dp"
-                android:layout_height="18dp"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardPassword"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="4dp"
-        android:background="@color/colorAccent"
-        app:cardElevation="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txtPass"
-                android:text="Password"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/detailPass"
-                android:text="123456 "
-                android:inputType="textPassword"
-                android:textSize="20sp"
-                android:layout_below="@id/txtPass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:src="@drawable/next"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="18dp"
-                android:layout_height="18dp"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-
-    <TableLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableRow>
-            <TextView
-                android:id="@+id/Lainnya"
-                android:text="Lainnya"
-                android:padding="9dp"
-                android:textStyle="bold"
-                android:textSize="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:paddingHorizontal="4dp"
-                android:layout_marginTop="18dp"
-                android:background="@color/colorView" />
-        </TableRow>
-    </TableLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="4dp"
-        android:background="@color/colorAccent"
-        app:cardElevation="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardUsername"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="4dp"
+            android:background="@drawable/rounded"
+            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:id="@+id/txtAlamat"
-                    android:text="Alamat"
-                    android:textStyle="bold"
+                    android:id="@+id/txtUsername"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textStyle="bold" />
                 <TextView
-                    android:id="@+id/detailAlamat"
-                    android:text="Alamat I - Jalan Mandar III Blok"
-                    android:maxLength="35"
-                    android:layout_below="@id/txtAlamat"
+                    android:id="@+id/detailUsername"
+                    android:text="--"
+                    android:layout_below="@id/txtUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ImageView
@@ -261,39 +65,214 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"/>
             </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardNama"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="4dp"
+            android:background="@drawable/rounded"
+            app:cardElevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <RelativeLayout
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <View
-                    android:layout_marginHorizontal="9dp"
-                    android:background="@color/colorView"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+
+                <TextView
+                    android:id="@+id/txtNama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/detailNama"
+                    android:text="--"
+                    android:layout_below="@id/txtNama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:src="@drawable/next"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"/>
             </RelativeLayout>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardAddAlamat"
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardEmail"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="4dp"
+            android:background="@color/colorAccent"
+            app:cardElevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_margin="8dp"
+                <TextView
+                    android:id="@+id/txtMail"
+                    android:text="E-Mail"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/detailMail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtMail"
+                    android:text="--" />
+                <ImageView
+                    android:src="@drawable/next"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTelepon"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="4dp"
+            android:background="@color/colorAccent"
+            app:cardElevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtTelp"
+                    android:text="Telepon"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/detailTelp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTelp"
+                    android:inputType="phone"
+                    android:text="--" />
+                <ImageView
+                    android:src="@drawable/next"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPassword"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="4dp"
+            android:background="@color/colorAccent"
+            app:cardElevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtPass"
+                    android:text="Password"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/detailPass"
+                    android:text="123456 "
+                    android:inputType="textPassword"
+                    android:textSize="20sp"
+                    android:layout_below="@id/txtPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:src="@drawable/next"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <TableLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:id="@+id/Lainnya"
+                    android:text="Lainnya"
+                    android:padding="9dp"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:paddingHorizontal="4dp"
+                    android:layout_marginTop="18dp"
+                    android:background="@color/colorView" />
+            </TableRow>
+        </TableLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="4dp"
+            android:background="@color/colorAccent"
+            app:cardElevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerAddress"
+                    tools:listitem="@layout/row_item_address"
+                    tools:itemCount="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAddAlamat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/plus"
-                        android:layout_toLeftOf="@id/add"
-                        android:layout_centerInParent="true"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"/>
-                    <TextView
-                        android:id="@+id/add"
-                        android:text="Tambah Alamat"
-                        android:layout_centerInParent="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                    <RelativeLayout
+                        android:layout_margin="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/plus"
+                            android:layout_toLeftOf="@id/add"
+                            android:layout_centerInParent="true"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"/>
+                        <TextView
+                            android:id="@+id/add"
+                            android:text="Tambah Alamat"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-</LinearLayout>
+
+</ScrollView>
