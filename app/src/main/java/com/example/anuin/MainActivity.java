@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBottomView() {
+        Intent intent = getIntent();
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -88,8 +89,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        changeFragment(new HomeFrag(), HomeFrag.class
-                .getSimpleName());
+        int flag =intent.getIntExtra("FLAGPAGE", 0);
+        if (flag == 2){
+            changeFragment(new ProfileFrag(), ProfileFrag.class
+                    .getSimpleName());
+            bottomNav.setSelectedItemId(R.id.nav_profil);
+        }else{
+            changeFragment(new HomeFrag(), HomeFrag.class
+                    .getSimpleName());
+        }
+
+
     }
 
     public void changeFragment(Fragment fragment, String tagFragmentName) {

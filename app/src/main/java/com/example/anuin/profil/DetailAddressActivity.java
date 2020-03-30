@@ -165,7 +165,9 @@ public class DetailAddressActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")) {
                             Toast.makeText(DetailAddressActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("FLAGPAGE", 2);
+                            startActivity(intent);
                             finish();
                         }
                     } catch (JSONException e) {

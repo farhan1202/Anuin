@@ -118,6 +118,7 @@ public class UsernameDialog extends BottomSheetDialogFragment {
                             Toast.makeText(getContext(), "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                             loginDialog.dismissLoadingDialog();
                             Intent intent1 = new Intent(getContext(), MainActivity.class);
+                            intent1.putExtra("FLAGPAGE", 2);
                             startActivity(intent1);
                             getActivity().finish();
                         }else{

@@ -60,7 +60,7 @@ public class UpdateAddressActivity extends AppCompatActivity {
     Button btnUpdate;
 
     ApiInterface apiHelper;
-    String idProv,idKab,idKec,idKel;
+    String idProvs,idKab,idKec,idKel;
     String provs, kabs, kecs, kels;
     PrefManager prefManager;
     int idAddress;
@@ -138,7 +138,7 @@ public class UpdateAddressActivity extends AppCompatActivity {
                 idAddress,
                 editAlamat.getText().toString(),
                 editLokasi.getText().toString(),
-                idProv,
+                idProvs,
                 idKab,
                 idKec,
                 idKel,
@@ -151,7 +151,9 @@ public class UpdateAddressActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")){
                             Toast.makeText(UpdateAddressActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("FLAGPAGE", 2);
+                            startActivity(intent);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -207,8 +209,8 @@ public class UpdateAddressActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     try {
-                                        idProv = array.getJSONObject(position).getString("id");     //untuk addAddress
-                                        fetchKabKota(Integer.parseInt(idProv));
+                                        idProvs = array.getJSONObject(position).getString("id");     //untuk addAddress
+                                        fetchKabKota(Integer.parseInt(idProvs));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
