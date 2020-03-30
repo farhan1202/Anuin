@@ -32,6 +32,7 @@
             <TextView
                 android:id="@+id/tv2"
                 android:text="Push Notification"
+                android:textSize="16dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -66,26 +67,28 @@
             <TextView
                 android:id="@+id/tv3"
                 android:text="Share this app"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
+                android:paddingLeft="20dp"
+                android:textSize="16dp"
+                android:paddingVertical="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tv4"
                 android:layout_below="@id/tv3"
                 android:text="Feedback"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_width="wrap_content"
+                android:textSize="16dp"
+                android:paddingLeft="20dp"
+                android:paddingVertical="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tvHelp"
                 android:layout_below="@id/tv4"
                 android:text="Help"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
+                android:textSize="16dp"
+                android:paddingLeft="20dp"
+                android:paddingVertical="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
@@ -108,25 +111,28 @@
             <TextView
                 android:id="@+id/tvTerm"
                 android:text="Term of Use"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
+                android:paddingLeft="20dp"
+                android:textSize="16dp"
+                android:paddingVertical="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tvprivacy"
                 android:layout_below="@id/tvTerm"
                 android:text="Privacy Policy"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_width="wrap_content"
+                android:paddingLeft="20dp"
+                android:textSize="16dp"
+                android:paddingVertical="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_below="@id/tvprivacy"
+                android:textSize="16dp"
                 android:text="About this app"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
+                android:paddingLeft="20dp"
+                android:paddingVertical="5dp"
                 android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
