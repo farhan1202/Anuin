@@ -111,4 +111,14 @@ public interface ApiInterface {
                                      @Path("id") int id
     );
 
+    @GET("privacy-policy")
+    Call<ResponseBody> getPrivacyPolicy (@Header("APP_TOKEN") String token
+    );
+
+    @GET("helps")
+    Call<ResponseBody> getHelp (@Header("APP_TOKEN") String token
+    );
+
+
+
 }

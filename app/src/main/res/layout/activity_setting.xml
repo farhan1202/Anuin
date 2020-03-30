@@ -79,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/tvHelp"
                 android:layout_below="@id/tv4"
                 android:text="Help"
                 android:layout_marginLeft="20dp"
@@ -105,22 +106,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tv5"
+                android:id="@+id/tvTerm"
                 android:text="Term of Use"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/tv6"
-                android:layout_below="@id/tv5"
+                android:id="@+id/tvprivacy"
+                android:layout_below="@id/tvTerm"
                 android:text="Privacy Policy"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:layout_below="@id/tv6"
+                android:layout_below="@id/tvprivacy"
                 android:text="About this app"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
