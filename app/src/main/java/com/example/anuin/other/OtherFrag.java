@@ -129,7 +129,7 @@ public class OtherFrag extends Fragment {
         kontak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "02242831923"));
+                Intent intent = new Intent(getContext(),ContactUsActivity.class);
                 startActivity(intent);
             }
         });

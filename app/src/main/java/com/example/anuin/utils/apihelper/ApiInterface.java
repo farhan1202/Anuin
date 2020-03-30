@@ -105,4 +105,12 @@ public interface ApiInterface {
                                      @Path("id") int id
     );
 
+    @POST("contact")
+    Call<ResponseBody> aboutUs(@Header("APP_TOKEN") String token
+    );
+
+    @GET("terms-of-use")
+    Call<ResponseBody> termOfUse(@Header("APP_TOKEN") String token
+    );
+
 }
