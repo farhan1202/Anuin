@@ -3,12 +3,18 @@ package com.example.anuin.other;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.anuin.R;
+import com.example.anuin.other.setting.HelpActivity;
+import com.example.anuin.other.setting.PrivacyPolicyActivity;
 
 public class SettingActivity extends AppCompatActivity {
+    TextView tvHelp,tvPrivacy;
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +24,22 @@ public class SettingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Setting");
+        tvHelp=findViewById(R.id.tvHelp);
+        tvPrivacy=findViewById(R.id.tvprivacy);
+
+        tvHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+            }
+        });
+
+        tvPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), PrivacyPolicyActivity.class));
+            }
+        });
     }
 
     @Override
