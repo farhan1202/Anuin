@@ -110,6 +110,8 @@ ApiInterface apiHelper;
                             recyclerView.setAdapter(categoryAdapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             recyclerView.setHasFixedSize(true);
+                        }else{
+                            Toast.makeText(context, "404", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
