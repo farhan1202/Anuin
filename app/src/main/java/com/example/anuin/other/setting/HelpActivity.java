@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anuin.R;
 import com.example.anuin.other.adapter.HelpAdapter;
-import com.example.anuin.other.model.HelpModel;
+import com.example.anuin.other.model.HelpsModel;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
 import com.google.gson.Gson;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +39,7 @@ public class HelpActivity extends AppCompatActivity {
 
     private ExpandableListAdapter expandableListAdapter;*/
 
-    private List<HelpModel.DATABean> listHelp;
+    private List<HelpsModel.DATABean> listHelp;
     private HelpAdapter helpAdapter;
 
 
@@ -69,7 +70,7 @@ public class HelpActivity extends AppCompatActivity {
 
 
     private void initListData() {
-        apiInterface.getHelp(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
+        apiInterface.getHelps(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -79,16 +80,15 @@ public class HelpActivity extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
 
                             listHelp = new ArrayList<>();
+
                             Gson gson = new Gson();
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                HelpModel.DATABean dataBean = gson.fromJson(jsonArray.getJSONObject(i).toString(), HelpModel.DATABean.class);
-                                listHelp.add(dataBean);
+                           for (int i = 0; i < jsonArray.length(); i++){
+                               HelpsModel.DATABean dataBean = gson.fromJson(jsonArray.getJSONObject(i).toString(), HelpsModel.DATABean.class);
+                               listHelp.add(dataBean);
 
-
-                                helpAdapter = new HelpAdapter(listHelp,context);
-                                recyclerView.setAdapter(helpAdapter);
-                            }
-
+                           }
+                            helpAdapter = new HelpAdapter(listHelp,context);
+                            recyclerView.setAdapter(helpAdapter);
 
                         }
                     } catch (JSONException e) {

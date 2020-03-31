@@ -159,7 +159,7 @@ public interface ApiInterface {
     Call<ResponseBody> getPrivacyPolicy (@Header("APP_TOKEN") String token
     );
 
-    @GET("helps")
-    Call<ResponseBody> getHelp (@Header("APP_TOKEN") String token
+    @GET("helps-group")
+    Call<ResponseBody> getHelps (@Header("APP_TOKEN") String token
     );
 }
