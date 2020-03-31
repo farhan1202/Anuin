@@ -24,9 +24,7 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".profil.UpdateAddressActivity" />
         <activity android:name=".profil.DetailAddressActivity" />
-        <activity
-            android:name=".other.SettingActivity"
-            android:parentActivityName=".MainActivity" />
+
         <activity android:name=".introNlogin.FirstTimeLoginSocialMediaActivity" />
         <activity android:name=".introNlogin.CheckEmailActivity" />
         <activity android:name=".introNlogin.ForgotPasswordActivity" />
@@ -54,7 +52,7 @@
             android:name=".home.DetailJasaActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".profil.AddAddress"
+            android:name=".profil.AddAddressActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".introNlogin.SplashScreenActivity">
             <intent-filter>

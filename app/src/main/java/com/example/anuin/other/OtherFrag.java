@@ -122,8 +122,8 @@ public class OtherFrag extends Fragment {
         kontak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),ContactUsActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getContext(),ContactUsActivity.class);
+                startActivity(intent);*/
             }
         });
 
