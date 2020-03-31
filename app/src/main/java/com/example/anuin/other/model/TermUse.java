@@ -59,26 +59,7 @@ public class TermUse {
         private String created_at;
         private String updated_at;
 
-       /* private boolean expanded;
 
-        public boolean isExpanded() {
-            return expanded;
-        }
-
-        public void setExpanded(boolean expanded) {
-            this.expanded = expanded;
-        }*/
-
-        public DATABean(int id, String title, String content, String deleted, int created_by, int updated_by, String created_at, String updated_at) {
-            this.id = id;
-            this.title = title;
-            this.content = content;
-            this.deleted = deleted;
-            this.created_by = created_by;
-            this.updated_by = updated_by;
-            this.created_at = created_at;
-            this.updated_at = updated_at;
-        }
         public int getId() {
             return id;
         }
