@@ -25,6 +25,12 @@
         <activity android:name=".profil.UpdateAddressActivity" />
         <activity android:name=".profil.DetailAddressActivity" />
 
+        <activity android:name=".other.submenusetting.AboutUsActivity"></activity>
+        <activity android:name=".other.submenusetting.TermOfUserActivity"></activity>
+        <activity android:name=".other.ContactUsActivity" />
+        <activity
+            android:name=".other.SettingActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".introNlogin.FirstTimeLoginSocialMediaActivity" />
         <activity android:name=".introNlogin.CheckEmailActivity" />
         <activity android:name=".introNlogin.ForgotPasswordActivity" />
