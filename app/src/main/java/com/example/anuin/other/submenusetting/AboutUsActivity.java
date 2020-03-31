@@ -49,7 +49,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
         apiHelper = UtilsApi.getApiService();
 
-        //fetchAbout();
+        fetchAbout();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +59,40 @@ public class AboutUsActivity extends AppCompatActivity {
         });
     }
 
+    private void fetchAbout() {
+        apiHelper.getAbout(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        if (object.getString("STATUS").equals("200")) {
+                            JSONArray array = object.getJSONArray("DATA");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                Glide.with(getApplicationContext())
+                                        .load(array.getJSONObject(i).getString("about_image"))
+                                        .centerCrop()
+                                        .into(imgAbout);
+                                txtAbout.setText(array.getJSONObject(i).getString("about_title"));
+                                descAbout.setText(array.getJSONObject(i).getString("content"));
+                            }
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     public void onBackPressed() {
