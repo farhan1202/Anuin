@@ -1,6 +1,8 @@
 package com.example.anuin.other.submenusetting;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +43,9 @@ public class rowTermAdapter extends RecyclerView.Adapter<rowTermAdapter.viewHold
         holder.titleTerm.setText(dataBeanList.get(position).getTitle());
         holder.contentTerm.setText(dataBeanList.get(position).getContent());
 
-        /*boolean isExpanded = dataBeanList.get(position).isExpanded();
-        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            holder.contentTerm.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+        }
     }
 
     @Override
@@ -60,16 +63,6 @@ public class rowTermAdapter extends RecyclerView.Adapter<rowTermAdapter.viewHold
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-
-            /*expandableLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
-                    TermUse.DATABean dataBean = dataBeanList.get(getAdapterPosition());
-                    dataBean.setExpanded(!dataBean.isExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });*/
         }
     }
 }

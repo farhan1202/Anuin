@@ -1,11 +1,13 @@
 package com.example.anuin.other.submenusetting;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.anuin.R;
@@ -38,16 +40,20 @@ rowTermAdapter rowTermAdapter;
 List<TermUse.DATABean> dataBeanList;
 
 ApiInterface apiHelper;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_of_user);
         ButterKnife.bind(this);
 
+        toolbar = findViewById(R.id.toolbarSetting);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Term of Use");
+
         context = getApplicationContext();
         apiHelper = UtilsApi.getApiService();
-
-
 
         fetchTerm();
     }
@@ -101,5 +107,18 @@ ApiInterface apiHelper;
                 Toast.makeText(context, "Failure", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

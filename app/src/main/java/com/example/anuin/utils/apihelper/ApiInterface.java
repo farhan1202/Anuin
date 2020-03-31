@@ -112,5 +112,9 @@ public interface ApiInterface {
     @GET("terms-of-use")
     Call<ResponseBody> termOfUse(@Header("APP_TOKEN") String token
     );
+    @GET("about")
+    Call<ResponseBody> getAbout(@Header("APP_TOKEN") String token
+
+    );
 
 }
