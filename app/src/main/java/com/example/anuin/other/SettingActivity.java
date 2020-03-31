@@ -1,16 +1,14 @@
 package com.example.anuin.other;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.anuin.R;
 import com.example.anuin.other.setting.HelpActivity;
@@ -22,23 +20,38 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SettingActivity extends AppCompatActivity {
-    TextView tvHelp,tvPrivacy;
-    @BindView(R.id.tv5)
-    TextView txtTermofuse;
-    @BindView(R.id.tv7)
-    TextView txtAboutUs;
+
 
     Toolbar toolbar;
+    @BindView(R.id.toolbarSetting)
+    Toolbar toolbarSetting;
+    @BindView(R.id.tv2)
+    TextView tv2;
+    @BindView(R.id.appS1)
+    Switch appS1;
+    @BindView(R.id.tv3)
+    TextView tv3;
+    @BindView(R.id.tv4)
+    TextView tv4;
+    @BindView(R.id.tvHelp)
+    TextView tvHelp;
+    @BindView(R.id.tvTerm)
+    TextView tvTerm;
+    @BindView(R.id.tvprivacy)
+    TextView tvprivacy;
+    @BindView(R.id.tv7)
+    TextView tv7;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        ButterKnife.bind(this);
         toolbar = findViewById(R.id.toolbarSetting);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Setting");
-        tvHelp=findViewById(R.id.tvHelp);
-        tvPrivacy=findViewById(R.id.tvprivacy);
+        tvHelp = findViewById(R.id.tvHelp);
 
         tvHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,21 +60,21 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        tvPrivacy.setOnClickListener(new View.OnClickListener() {
+        tvprivacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), PrivacyPolicyActivity.class));
             }
         });
 
-        txtTermofuse.setOnClickListener(new View.OnClickListener() {
+        tvTerm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), TermOfUserActivity.class);
                 startActivity(intent);
             }
         });
-        txtAboutUs.setOnClickListener(new View.OnClickListener() {
+        tv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AboutUsActivity.class);

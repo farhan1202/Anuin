@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".other.setting.DetailChildActivity"></activity>
+        <activity android:name=".other.setting.DetailChildActivity"/>
         <activity android:name=".other.setting.PrivacyPolicyActivity" />
         <activity android:name=".other.setting.HelpActivity" />
         <activity
@@ -28,9 +28,6 @@
         <activity android:name=".other.submenusetting.AboutUsActivity"></activity>
         <activity android:name=".other.submenusetting.TermOfUserActivity"></activity>
         <activity android:name=".other.ContactUsActivity" />
-        <activity
-            android:name=".other.SettingActivity"
-            android:parentActivityName=".MainActivity" />
         <activity android:name=".introNlogin.FirstTimeLoginSocialMediaActivity" />
         <activity android:name=".introNlogin.CheckEmailActivity" />
         <activity android:name=".introNlogin.ForgotPasswordActivity" />

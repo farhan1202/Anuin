@@ -45,7 +45,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarSetting);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Pfivacy Plolicy");
+        getSupportActionBar().setTitle("Privacy Plolicy");
         context = this;
         apiHelper = UtilsApi.getApiService();
         recyclerView = findViewById(R.id.rvPrivacyPolicy);

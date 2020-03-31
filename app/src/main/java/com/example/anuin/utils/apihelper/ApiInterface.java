@@ -67,23 +67,23 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("forgot-password")
-    Call<ResponseBody> getPassword (@Header("APP_TOKEN") String token,
-                                    @Field("email") String email,
-                                    @Field("reset_date") String date);
+    Call<ResponseBody> getPassword(@Header("APP_TOKEN") String token,
+                                   @Field("email") String email,
+                                   @Field("reset_date") String date);
 
     @FormUrlEncoded
     @POST("member-address-add")
-    Call<ResponseBody> addAddress (@Header("APP_TOKEN") String tokenApp,
-                                   @Header("USER_TOKEN") String tokenUser,
-                                   @Field("member_id") int idMember,
-                                   @Field("alamat") String alamat,
-                                   @Field("lokasi_maps") String lokasi,
-                                   @Field("provinsi") String provinsi,
-                                   @Field("city") String city,
-                                   @Field("kecamatan") String kecamatan,
-                                   @Field("kelurahan") String kelurahan,
-                                   @Field("kode_post") String kodePost,
-                                   @Field("property") String property);
+    Call<ResponseBody> addAddress(@Header("APP_TOKEN") String tokenApp,
+                                  @Header("USER_TOKEN") String tokenUser,
+                                  @Field("member_id") int idMember,
+                                  @Field("alamat") String alamat,
+                                  @Field("lokasi_maps") String lokasi,
+                                  @Field("provinsi") String provinsi,
+                                  @Field("city") String city,
+                                  @Field("kecamatan") String kecamatan,
+                                  @Field("kelurahan") String kelurahan,
+                                  @Field("kode_post") String kodePost,
+                                  @Field("property") String property);
 
     @FormUrlEncoded
     @POST("member-address-update")
@@ -122,21 +122,21 @@ public interface ApiInterface {
 
     @GET("provinsi-list")
     Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token
-                                   );
+    );
 
     @GET("kabupaten-list/{id}")
-    Call<ResponseBody> getKabupaten (@Header("APP_TOKEN") String token,
-                                     @Path("id") int id
+    Call<ResponseBody> getKabupaten(@Header("APP_TOKEN") String token,
+                                    @Path("id") int id
     );
 
     @GET("kecamatan-list/{id}")
-    Call<ResponseBody> getKecamatan( @Header("APP_TOKEN") String token,
-                                     @Path("id") int id
+    Call<ResponseBody> getKecamatan(@Header("APP_TOKEN") String token,
+                                    @Path("id") int id
     );
 
     @GET("kelurahan-list/{id}")
-    Call<ResponseBody> getKelurahan( @Header("APP_TOKEN") String token,
-                                     @Path("id") int id
+    Call<ResponseBody> getKelurahan(@Header("APP_TOKEN") String token,
+                                    @Path("id") int id
     );
 
     @GET("provinsi-detail/{id}")
@@ -157,10 +157,6 @@ public interface ApiInterface {
 
     @GET("privacy-policy")
     Call<ResponseBody> getPrivacyPolicy (@Header("APP_TOKEN") String token
-    );
-    @GET("about")
-    Call<ResponseBody> getAbout(@Header("APP_TOKEN") String token
-
     );
 
     @GET("helps-group")
