@@ -73,6 +73,8 @@ public class OrderModalSheet extends BottomSheetDialogFragment {
                                 modalJasaPrice.setText("" + NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("product_jasa_harga")));
                                 modalJasaDesc.setText(jsonObject1.getString("product_jasa_desc"));
                                 modalJasaWarning.setText(jsonObject1.getString("product_jasa_warning"));
+                                int id_category = jsonObject1.getInt("category_id");
+//                            Toast.makeText(getContext(), "" + id_category, Toast.LENGTH_SHORT).show();
 
                             btnCancelOrder.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -84,8 +86,10 @@ public class OrderModalSheet extends BottomSheetDialogFragment {
                             btnAcceptOrder.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent(view.getContext(), FormPesananActivity.class);
-                                    startActivity(intent);
+                                        Intent intent = new Intent(view.getContext(), FormPesananActivity.class);
+                                        intent.putExtra("id", id);
+                                        intent.putExtra("id1", id_category);
+                                        startActivity(intent);
                                 }
                             });
                         }else {

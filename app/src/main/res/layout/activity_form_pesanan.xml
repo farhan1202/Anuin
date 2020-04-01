@@ -30,18 +30,19 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/txtPesananTitle"
+                    android:id="@+id/txtPesananTitles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Perbaikan / Instalasi"
+                    android:text="--"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txtCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="Listrik"
+                    android:text="--"
                     android:textColor="@color/mainColor"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -49,7 +50,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/txtPesananTitle"
+                    android:layout_below="@+id/txtPesananTitles"
                     android:layout_marginTop="10dp"
                     android:background="@color/colorCard" />
             </RelativeLayout>
@@ -70,24 +71,76 @@
                     android:id="@+id/spinnerLokasi"
                     android:spinnerMode="dropdown"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="48dp"/>
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="PROVINSI"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fieldProvinsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpuut_back"
+                android:singleLine="true"
+                android:hint="Provinsi"
+                android:padding="15dp" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="KOTA"
+                android:text="KABUPATEN/KOTA"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
+                android:id="@+id/fieldKabupaten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/inpuut_back"
                 android:singleLine="true"
-                android:hint="Kota"
+                android:hint="Kabupaten / Kota"
+                android:padding="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="KECAMATAN"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fieldKecamatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpuut_back"
+                android:singleLine="true"
+                android:hint="Kecamatan"
+                android:padding="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="KELURAHAN"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fieldKelurahan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/inpuut_back"
+                android:singleLine="true"
+                android:hint="Kelurahan"
                 android:padding="15dp" />
 
             <TextView
