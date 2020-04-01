@@ -223,13 +223,28 @@
                 android:text="PHOTO (OPTIONAL)"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            <LinearLayout
+
                 android:layout_marginTop="10dp"
-                android:hint="Detail Lokasi Rumah"
-                android:padding="15dp"
-                android:src="@drawable/ic_photo_camera_black_24dp" />
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/takePickture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_photo_camera_black_24dp" />
+
+                <!--<ImageView
+                    android:id="@+id/picktureResult"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:padding="15dp"/>-->
+
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

@@ -104,9 +104,17 @@ public class AddAddressActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response.body().string());
                                 if (jsonObject.getString("STATUS").equals("200")){
                                     Toast.makeText(AddAddressActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent.putExtra("FLAGPAGE", 2);
-                                    startActivity(intent);
+                                    Intent intent = getIntent();
+                                    int flag = intent.getIntExtra("CODE", 0);
+                                    if (flag == 1){
+                                        Intent intent1 = new Intent();
+                                        setResult(RESULT_OK, intent1);
+                                        finish();
+                                    }else{
+                                        Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent1.putExtra("FLAGPAGE", 2);
+                                        startActivity(intent1);
+                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

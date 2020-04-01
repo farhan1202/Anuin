@@ -1,9 +1,12 @@
 package com.example.anuin.home;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.MenuItem;
@@ -12,15 +15,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.anuin.R;
+import com.example.anuin.profil.AddAddressActivity;
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
@@ -42,6 +48,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FormPesananActivity extends AppCompatActivity {
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri mImageUri;
+
     Toolbar toolbar;
     EditText txtFormDate, txtFormTime;
     Calendar calendar, calender1;
@@ -67,6 +76,12 @@ public class FormPesananActivity extends AppCompatActivity {
     TextView txtPesananTitles;
     @BindView(R.id.txtCategory)
     TextView txtCategory;
+    @BindView(R.id.takePickture)
+    ImageView takePickture;
+//    @BindView(R.id.picktureResult)
+//    ImageView picktureResult;
+    ArrayList<String> list;
+    int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +91,8 @@ public class FormPesananActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarFormPemesanan);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        list = new ArrayList<>();
 
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
@@ -119,6 +136,52 @@ public class FormPesananActivity extends AppCompatActivity {
             }
         });
 
+        takePickture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFileChooser();
+            }
+        });
+
+        /*picktureResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String lagi = "";
+                for (int i = 0; i < list.size() ; i++){
+                    lagi += list.get(i) + ", ";
+                }
+                Intent intent = new Intent(getApplicationContext(), ViewImageActivity.class);
+                intent.putExtra("URI", mImageUri.toString());
+                Toast.makeText(mContext, "" + lagi, Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });*/
+
+    }
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK){
+            mImageUri = data.getData();
+            /*picktureResult.setImageURI(mImageUri);
+            picktureResult.setVisibility(View.VISIBLE);
+            list.add(flag + "");
+            flag++;*/
+        }
+
+        if (requestCode == 27){
+            if (resultCode == RESULT_OK){
+                fetchLokasi();
+            }
+        }
     }
 
     private void fetchTitle() {
@@ -128,16 +191,16 @@ public class FormPesananActivity extends AppCompatActivity {
         apiInterface.getProductJasa(UtilsApi.APP_TOKEN, id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("STATUS").equals("200")){
+                        if (jsonObject.getString("STATUS").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
                             txtCategory.setText(jsonArray.getJSONObject(0).getString("category_title"));
                             JSONArray jsonArray1 = new JSONArray(jsonArray.getJSONObject(0).getString("product_jasa"));
 
-                            for (int i = 0 ; i < jsonArray1.length() ; i++){
-                                if (Integer.parseInt(jsonArray1.getJSONObject(i).getString("id")) == ids){
+                            for (int i = 0; i < jsonArray1.length(); i++) {
+                                if (Integer.parseInt(jsonArray1.getJSONObject(i).getString("id")) == ids) {
                                     txtPesananTitles.setText(jsonArray1.getJSONObject(i).getString("product_jasa_title"));
                                 }
                             }
@@ -147,7 +210,7 @@ public class FormPesananActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     try {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(mContext, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
@@ -179,6 +242,13 @@ public class FormPesananActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 datas.add(jsonArray.getJSONObject(i).getString("alamat"));
                             }
+                            if (!datas.isEmpty()){
+                                datas.add("Tambah Alamat");    
+                            }else{
+                                showAlertDialog();
+
+                            }
+                            
                             ArrayAdapter spinnerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, datas);
                             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerLokasi.setAdapter(spinnerAdapter);
@@ -187,11 +257,18 @@ public class FormPesananActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                     try {
-                                        id1 = Integer.parseInt(jsonArray.getJSONObject(i).getString("provinsi"));
-                                        id2 = Integer.parseInt(jsonArray.getJSONObject(i).getString("city"));
-                                        id3 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kecamatan"));
-                                        id4 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kelurahan"));
-                                        fetchWilayah();
+                                        if (i == datas.size() -1){
+                                            Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
+                                            intent.putExtra("CODE", 1);
+                                            startActivityForResult(intent, 27);
+                                        }else{
+                                            id1 = Integer.parseInt(jsonArray.getJSONObject(i).getString("provinsi"));
+                                            id2 = Integer.parseInt(jsonArray.getJSONObject(i).getString("city"));
+                                            id3 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kecamatan"));
+                                            id4 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kelurahan"));
+                                            fetchWilayah();    
+                                        }
+                                        
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -226,6 +303,22 @@ public class FormPesananActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "No internet connection", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("Please add your address first")
+                .setCancelable(true)
+                .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
+                        intent.putExtra("CODE", 1);
+                        startActivityForResult(intent, 27);
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void fetchWilayah() {
@@ -383,4 +476,6 @@ public class FormPesananActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

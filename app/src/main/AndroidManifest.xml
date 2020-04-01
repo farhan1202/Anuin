@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".other.setting.DetailChildActivity"/>
+        <activity android:name=".home.ViewImageActivity"></activity>
+        <activity android:name=".other.setting.DetailChildActivity" />
         <activity android:name=".other.setting.PrivacyPolicyActivity" />
         <activity android:name=".other.setting.HelpActivity" />
         <activity
@@ -24,9 +25,8 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".profil.UpdateAddressActivity" />
         <activity android:name=".profil.DetailAddressActivity" />
-
-        <activity android:name=".other.submenusetting.AboutUsActivity"></activity>
-        <activity android:name=".other.submenusetting.TermOfUserActivity"></activity>
+        <activity android:name=".other.submenusetting.AboutUsActivity" />
+        <activity android:name=".other.submenusetting.TermOfUserActivity" />
         <activity android:name=".other.ContactUsActivity" />
         <activity android:name=".introNlogin.FirstTimeLoginSocialMediaActivity" />
         <activity android:name=".introNlogin.CheckEmailActivity" />
