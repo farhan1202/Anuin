@@ -236,6 +236,19 @@
                     android:padding="15dp"
                     android:src="@drawable/ic_photo_camera_black_24dp" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPhoto"
+                    tools:listitem="@layout/row_item_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"/>
+                <ImageButton
+                    android:id="@+id/btnClear"
+                    android:src="@drawable/ic_close"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
                 <!--<ImageView
                     android:id="@+id/picktureResult"
                     android:layout_width="50dp"

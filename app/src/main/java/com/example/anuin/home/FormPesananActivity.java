@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,8 +25,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anuin.R;
+import com.example.anuin.home.adapter.TakePhotoAdapter;
 import com.example.anuin.profil.AddAddressActivity;
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
@@ -49,6 +53,10 @@ import retrofit2.Response;
 
 public class FormPesananActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
+    @BindView(R.id.recyclerPhoto)
+    RecyclerView recyclerPhoto;
+    @BindView(R.id.btnClear)
+    ImageButton btnClear;
     private Uri mImageUri;
 
     Toolbar toolbar;
@@ -78,9 +86,10 @@ public class FormPesananActivity extends AppCompatActivity {
     TextView txtCategory;
     @BindView(R.id.takePickture)
     ImageView takePickture;
-//    @BindView(R.id.picktureResult)
+    //    @BindView(R.id.picktureResult)
 //    ImageView picktureResult;
     ArrayList<String> list;
+    TakePhotoAdapter takePhotoAdapter;
     int flag = 0;
 
     @Override
@@ -139,7 +148,22 @@ public class FormPesananActivity extends AppCompatActivity {
         takePickture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFileChooser();
+                if (list.size() < 3) {
+                    openFileChooser();
+                } else {
+                    Toast.makeText(mContext, "Maksimal 3 gambar", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.clear();
+                takePhotoAdapter = new TakePhotoAdapter(mContext, list);
+                recyclerPhoto.setAdapter(takePhotoAdapter);
+                btnClear.setVisibility(View.GONE);
             }
         });
 
@@ -169,16 +193,21 @@ public class FormPesananActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
             mImageUri = data.getData();
             /*picktureResult.setImageURI(mImageUri);
             picktureResult.setVisibility(View.VISIBLE);
             list.add(flag + "");
             flag++;*/
+            list.add(mImageUri.toString());
+            takePhotoAdapter = new TakePhotoAdapter(mContext, list);
+            recyclerPhoto.setAdapter(takePhotoAdapter);
+            recyclerPhoto.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            btnClear.setVisibility(View.VISIBLE);
         }
 
-        if (requestCode == 27){
-            if (resultCode == RESULT_OK){
+        if (requestCode == 27) {
+            if (resultCode == RESULT_OK) {
                 fetchLokasi();
             }
         }
@@ -242,13 +271,13 @@ public class FormPesananActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 datas.add(jsonArray.getJSONObject(i).getString("alamat"));
                             }
-                            if (!datas.isEmpty()){
-                                datas.add("Tambah Alamat");    
-                            }else{
+                            if (!datas.isEmpty()) {
+                                datas.add("Tambah Alamat");
+                            } else {
                                 showAlertDialog();
 
                             }
-                            
+
                             ArrayAdapter spinnerAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, datas);
                             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinnerLokasi.setAdapter(spinnerAdapter);
@@ -257,18 +286,18 @@ public class FormPesananActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                     try {
-                                        if (i == datas.size() -1){
+                                        if (i == datas.size() - 1) {
                                             Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
                                             intent.putExtra("CODE", 1);
                                             startActivityForResult(intent, 27);
-                                        }else{
+                                        } else {
                                             id1 = Integer.parseInt(jsonArray.getJSONObject(i).getString("provinsi"));
                                             id2 = Integer.parseInt(jsonArray.getJSONObject(i).getString("city"));
                                             id3 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kecamatan"));
                                             id4 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kelurahan"));
-                                            fetchWilayah();    
+                                            fetchWilayah();
                                         }
-                                        
+
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();

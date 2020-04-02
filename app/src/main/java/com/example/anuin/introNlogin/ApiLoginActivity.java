@@ -178,9 +178,7 @@ public class ApiLoginActivity extends AppCompatActivity {
                                                 prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
                                                 Toast.makeText(ApiLoginActivity.this, "" + object.getString("name"), Toast.LENGTH_SHORT).show();
                                                 if (jsonObject1.getString("name").equals("") || jsonObject1.getString("username").equals("")) {
-                                                    Intent intent = new Intent(getApplicationContext(), FirstTimeLoginSocialMediaActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
+                                                    updateProfile(object.getString("name"), jsonObject1.getString("email"), jsonObject1.getString("member_image"), jsonObject1.getString("phone_number"));
                                                 } else {
                                                     prefManager.saveSession();
                                                     prefManager.saveSessionSosmed();
@@ -273,10 +271,7 @@ public class ApiLoginActivity extends AppCompatActivity {
                                         prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
                                         if (jsonObject1.getString("name").equals("") || jsonObject1.getString("name") == null ||
                                                 jsonObject1.getString("username").equals("") || jsonObject1.getString("username") == null) {
-                                            Intent intent = new Intent(getApplicationContext(), FirstTimeLoginSocialMediaActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(intent);
-                                            finish();
+                                            updateProfile(account.getDisplayName(), jsonObject1.getString("email"), jsonObject1.getString("member_image"), jsonObject1.getString("phone_number"));
                                         } else {
                                             prefManager.saveSession();
                                             prefManager.saveSessionSosmed();
@@ -312,6 +307,49 @@ public class ApiLoginActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
         }
+    }
+
+    private void updateProfile(String displayName, String email, String member_image, String phone_number) {
+        PrefManager prefManager = new PrefManager(this);
+        apiInterface.updateProfile(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId(),
+                displayName,
+                displayName,
+                email,
+                phone_number,
+                member_image).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("STATUS").equals("200")){
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                            prefManager.saveSession();
+                            prefManager.saveSessionSosmed();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(ApiLoginActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
