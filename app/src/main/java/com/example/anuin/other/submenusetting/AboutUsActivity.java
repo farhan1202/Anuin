@@ -3,8 +3,12 @@ package com.example.anuin.other.submenusetting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,7 +79,11 @@ public class AboutUsActivity extends AppCompatActivity {
                                         .centerCrop()
                                         .into(imgAbout);
                                 txtAbout.setText(array.getJSONObject(i).getString("about_title"));
-                                descAbout.setText(array.getJSONObject(i).getString("content"));
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    descAbout.setText(Html.fromHtml(array.getJSONObject(i).getString("content"), Html.FROM_HTML_MODE_COMPACT) );
+                                }else{
+                                    descAbout.setText(Html.fromHtml(array.getJSONObject(i).getString("content")));
+                                }
                             }
 
                         }

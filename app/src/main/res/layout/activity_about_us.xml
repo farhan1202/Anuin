@@ -18,7 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:background="@drawable/aboutbg"
             android:gravity="center"
             android:orientation="vertical">
@@ -41,17 +41,20 @@
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="4">
+
             <TextView
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:id="@+id/descAbout"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ini Deskripsi FixID"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="#000000"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
