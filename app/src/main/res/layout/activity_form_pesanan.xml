@@ -151,6 +151,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/txtDetailLokasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -208,6 +209,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/txtDeskripsiPekerjaan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -311,6 +313,7 @@
             </androidx.cardview.widget.CardView>
 
             <Button
+                android:id="@+id/btnProses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

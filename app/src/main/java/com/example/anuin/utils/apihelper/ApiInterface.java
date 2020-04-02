@@ -1,12 +1,20 @@
 package com.example.anuin.utils.apihelper;
 
+import java.util.Map;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.HeaderMap;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
@@ -120,6 +128,28 @@ public interface ApiInterface {
                                          @Field("member_id") int idMember,
                                          @Field("member_address_id") int idAddressMember);
 
+    @Multipart
+    @POST("booking-order")
+    Call<ResponseBody> bookingOrder(@HeaderMap Map<String, String> stringStringMap,
+                                    @PartMap Map<String, RequestBody> stringBody,
+                                    @Part MultipartBody.Part booking_image
+    );
+    /*@Part("member_id") RequestBody member_id,
+    @Part("product_jasa_id") RequestBody product_jasa_id,
+    @Part("member_address_id") RequestBody member_address_id,
+    @Part("provinsi") RequestBody provinsi,
+    @Part("city") RequestBody city,
+    @Part("kecamatan") RequestBody kecamatan,
+    @Part("kelurahan") RequestBody kelurahan,
+    @Part("kode_post") RequestBody kode_post,
+    @Part("work_date") RequestBody work_date,
+    @Part("detail_pekerjaan") RequestBody detail_pekerjaan,
+    @Part("detail_lokasi") RequestBody detail_lokasi,
+    @Part("biaya_panggil") RequestBody biaya_panggil,
+    @Part("biaya_layanan") RequestBody biaya_layanan,
+    @Part("total_tagihan") RequestBody total_tagihan,
+    @Part("payment_method") RequestBody payment_method,
+    @Part("payment_driver") RequestBody payment_driver,*/
     @GET("provinsi-list")
     Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token
     );
@@ -156,17 +186,16 @@ public interface ApiInterface {
                                           @Path("id") int id);
 
     @GET("privacy-policy")
-    Call<ResponseBody> getPrivacyPolicy (@Header("APP_TOKEN") String token
+    Call<ResponseBody> getPrivacyPolicy(@Header("APP_TOKEN") String token
     );
 
     @GET("helps-group")
-    Call<ResponseBody> getHelps (@Header("APP_TOKEN") String token
+    Call<ResponseBody> getHelps(@Header("APP_TOKEN") String token
     );
+
     @POST("contact")
-    Call<ResponseBody> aboutUs(@Header("APP_TOKEN") String token
-    @GET("helps-group")
-    Call<ResponseBody> getHelps (@Header("APP_TOKEN") String token
-    );
+    Call<ResponseBody> aboutUs(@Header("APP_TOKEN") String token);
+
 
     @FormUrlEncoded
     @POST("booking-list")
@@ -178,6 +207,7 @@ public interface ApiInterface {
     @GET("terms-of-use")
     Call<ResponseBody> termOfUse(@Header("APP_TOKEN") String token
     );
+
     @GET("about")
     Call<ResponseBody> getAbout(@Header("APP_TOKEN") String token
 

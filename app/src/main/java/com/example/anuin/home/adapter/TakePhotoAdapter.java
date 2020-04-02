@@ -64,6 +64,7 @@ public class TakePhotoAdapter extends RecyclerView.Adapter<TakePhotoAdapter.view
     public class viewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.photoImage)
         ImageView photoImage;
+
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

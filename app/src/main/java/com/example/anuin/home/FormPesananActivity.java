@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -39,13 +41,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +65,12 @@ public class FormPesananActivity extends AppCompatActivity {
     RecyclerView recyclerPhoto;
     @BindView(R.id.btnClear)
     ImageButton btnClear;
+    @BindView(R.id.btnProses)
+    Button btnProses;
+    @BindView(R.id.txtDetailLokasi)
+    EditText txtDetailLokasi;
+    @BindView(R.id.txtDeskripsiPekerjaan)
+    EditText txtDeskripsiPekerjaan;
     private Uri mImageUri;
 
     Toolbar toolbar;
@@ -80,6 +94,7 @@ public class FormPesananActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     PrefManager prefManager;
     int id1, id2, id3, id4;
+    String kode_post;
     @BindView(R.id.txtPesananTitles)
     TextView txtPesananTitles;
     @BindView(R.id.txtCategory)
@@ -181,6 +196,96 @@ public class FormPesananActivity extends AppCompatActivity {
             }
         });*/
 
+
+    }
+
+    @NonNull
+    private RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, descriptionString);
+    }
+
+    private void initProsesOrder(int ids) {
+        Map<String, String> map = new HashMap<>();
+        map.put("APP_TOKEN", UtilsApi.APP_TOKEN);
+        map.put("USER_TOKEN", prefManager.getTokenUser());
+        Map<String, RequestBody> bodyMap = new HashMap<>();
+        bodyMap.put("member_id", createPartFromString(prefManager.getId() + ""));
+        bodyMap.put("product_jasa_id", createPartFromString(ids+ ""));
+        bodyMap.put("member_address_id", createPartFromString("26"));
+        bodyMap.put("provinsi", createPartFromString(id1+ ""));
+        bodyMap.put("city", createPartFromString(id2 + ""));
+        bodyMap.put("kecamatan", createPartFromString(id3 + ""));
+        bodyMap.put("kelurahan", createPartFromString(id4 + ""));
+        bodyMap.put("kode_post", createPartFromString(kode_post + ""));
+        bodyMap.put("work_date",  createPartFromString("2020-01-20"));
+        bodyMap.put("detail_pekerjaan", createPartFromString(txtDeskripsiPekerjaan.getText().toString()));
+        bodyMap.put("detail_lokasi", createPartFromString(txtDetailLokasi.getText().toString()));
+        bodyMap.put("biaya_panggil", createPartFromString("100000"));
+        bodyMap.put("biaya_layanan", createPartFromString("10000"));
+        bodyMap.put("total_tagihan", createPartFromString("110000"));
+        bodyMap.put("payment_method",  createPartFromString("1"));
+        bodyMap.put("payment_driver", createPartFromString("Gopay"));
+        /*RequestBody member_id = RequestBody.create(MediaType.parse("text/plain"), prefManager.getId() + "");
+        RequestBody product_jasa_id = RequestBody.create(MediaType.parse("text/plain"), ids + "");
+        RequestBody member_address_id = RequestBody.create(MediaType.parse("text/plain"), ids + "26");
+        RequestBody provinsi = RequestBody.create(MediaType.parse("text/plain"), id1 + "");
+        RequestBody city = RequestBody.create(MediaType.parse("text/plain"), id2 + "");
+        RequestBody kecamatan = RequestBody.create(MediaType.parse("text/plain"), id3 + "");
+        RequestBody kelurahan = RequestBody.create(MediaType.parse("text/plain"), id4 + "");
+        RequestBody kode_post1 = RequestBody.create(MediaType.parse("text/plain"), kode_post);
+        RequestBody work_date = RequestBody.create(MediaType.parse("text/plain"), "2020-01-20");
+        RequestBody detail_pekerjaan = RequestBody.create(MediaType.parse("text/plain"), txtDeskripsiPekerjaan.getText().toString() );
+        RequestBody detail_lokasi = RequestBody.create(MediaType.parse("text/plain"), txtDetailLokasi.getText().toString() );
+        RequestBody biaya_panggil = RequestBody.create(MediaType.parse("text/plain"), "100000" );
+        RequestBody biaya_layanan = RequestBody.create(MediaType.parse("text/plain"), "10000" );
+        RequestBody total_tagihan = RequestBody.create(MediaType.parse("text/plain"), "110000" );
+        RequestBody payment_method = RequestBody.create(MediaType.parse("text/plain"), "1" );
+        RequestBody payment_driver = RequestBody.create(MediaType.parse("text/plain"), "Gopay" );*/
+
+        File file = new File(mImageUri.getPath());
+        RequestBody propertyImage = RequestBody.create(MediaType.parse("image/*"),
+                file);
+        MultipartBody.Part propertyImagePart = MultipartBody.Part.createFormData("booking_image[]",
+                file.getName(),
+                propertyImage);
+
+        apiInterface.bookingOrder(map,
+                bodyMap,
+                propertyImagePart
+                ).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("STATUS").equals("200")){
+                            Toast.makeText(mContext, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(mContext, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
     private void openFileChooser() {
@@ -227,7 +332,12 @@ public class FormPesananActivity extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
                             txtCategory.setText(jsonArray.getJSONObject(0).getString("category_title"));
                             JSONArray jsonArray1 = new JSONArray(jsonArray.getJSONObject(0).getString("product_jasa"));
-
+                            btnProses.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    initProsesOrder(id);
+                                }
+                            });
                             for (int i = 0; i < jsonArray1.length(); i++) {
                                 if (Integer.parseInt(jsonArray1.getJSONObject(i).getString("id")) == ids) {
                                     txtPesananTitles.setText(jsonArray1.getJSONObject(i).getString("product_jasa_title"));
@@ -295,6 +405,7 @@ public class FormPesananActivity extends AppCompatActivity {
                                             id2 = Integer.parseInt(jsonArray.getJSONObject(i).getString("city"));
                                             id3 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kecamatan"));
                                             id4 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kelurahan"));
+                                            kode_post = jsonArray.getJSONObject(i).getString("kode_post");
                                             fetchWilayah();
                                         }
 
