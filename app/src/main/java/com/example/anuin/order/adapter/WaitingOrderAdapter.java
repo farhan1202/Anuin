@@ -15,12 +15,17 @@ import android.widget.TextView;
 import com.example.anuin.R;
 import com.example.anuin.order.OrderProcessActivity;
 import com.example.anuin.order.OrderWaitingActivity;
+import com.example.anuin.order.model.OrderList;
+
+import java.util.List;
 
 public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapter.vHolder> {
     Context context;
+    List<OrderList.DATABean> bookingList;
 
-    public WaitingOrderAdapter(Context context) {
+    public WaitingOrderAdapter(Context context, List<OrderList.DATABean> bookingList) {
         this.context = context;
+        this.bookingList = bookingList;
     }
 
     @NonNull
@@ -32,26 +37,17 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final vHolder vHolder, final int i) {
-        vHolder.tvkode.setText("Kode Pemesanan #ABC1123");
-        vHolder.tvmotode.setText("perbaikan / instalasi");
-        vHolder.tvtype.setText("AC");
-        vHolder.tvTime.setText("10 FEB 2020 14:30 WIB");
+        vHolder.tvkode.setText(bookingList.get(i).getBooking_code().getCode_name());
+        vHolder.tvmotode.setText(bookingList.get(i).getDetail_pekerjaan());
+        vHolder.tvtype.setText(bookingList.get(i).getProduct_jasa().getCategory().getCategory_title());
+        vHolder.tvTime.setText(bookingList.get(i).getWork_date());
         vHolder.tvToko.setText("00:59:10");
-        if (i%2!=0){
-            vHolder.btnWait.setText("PROSES");
-            vHolder.btnWait.setBackgroundColor(Color.parseColor("#27AE60"));
-            vHolder.btnWait.setTextColor(Color.rgb(255,255,255));
-        }
         vHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent;
-                if (i%2!=0){
-                    intent = new Intent(context, OrderProcessActivity.class);
-                }else{
-                    intent = new Intent(context, OrderWaitingActivity.class);
-                }
-                view.getContext().startActivity(intent);
+                Intent intent = new Intent(context, OrderWaitingActivity.class);
+                context.startActivity(intent);
+
             }
         });
 
@@ -59,7 +55,7 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
 
     @Override
     public int getItemCount() {
-        return 4;
+        return bookingList.size();
     }
 
     public class vHolder extends RecyclerView.ViewHolder {
