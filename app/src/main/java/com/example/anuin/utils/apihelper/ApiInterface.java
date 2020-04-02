@@ -164,6 +164,15 @@ public interface ApiInterface {
     );
     @POST("contact")
     Call<ResponseBody> aboutUs(@Header("APP_TOKEN") String token
+    @GET("helps-group")
+    Call<ResponseBody> getHelps (@Header("APP_TOKEN") String token
+    );
+
+    @FormUrlEncoded
+    @POST("booking-list")
+    Call<ResponseBody> getBookingLIst(@Header("APP_TOKEN") String token,
+                                      @Header("USER_TOKEN") String userToken,
+                                      @Field("member_id") int mID
     );
 
     @GET("terms-of-use")

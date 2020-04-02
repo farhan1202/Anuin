@@ -12,6 +12,24 @@ import android.view.ViewGroup;
 
 import com.example.anuin.order.adapter.WaitingOrderAdapter;
 import com.example.anuin.R;
+import com.example.anuin.order.model.OrderList;
+import com.example.anuin.utils.PrefManager;
+import com.example.anuin.utils.apihelper.ApiInterface;
+import com.example.anuin.utils.apihelper.UtilsApi;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +38,8 @@ public class AktifFragment extends Fragment {
     RecyclerView rvOrderAktif;
     WaitingOrderAdapter waitingOrderAdapter;
     Context context;
+    List<OrderList.DATABean> orderList;
+    ApiInterface apiInterface;
 
 
 
@@ -35,11 +55,46 @@ public class AktifFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_aktif, container, false);
         rvOrderAktif=view.findViewById(R.id.rvOrderAktif);
         context=view.getContext();
-        waitingOrderAdapter= new WaitingOrderAdapter(context);
-        rvOrderAktif.setLayoutManager(new LinearLayoutManager(context));
-        rvOrderAktif.setAdapter(waitingOrderAdapter);
+        apiInterface = UtilsApi.getApiService();
+
+        PrefManager manager = new PrefManager(context);
+        apiInterface.getBookingLIst(UtilsApi.APP_TOKEN, manager.getTokenUser(),manager.getId()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("STATUS").equals("200")){
+                            JSONArray jsonArray = jsonObject.getJSONArray("DATA");
+
+                            orderList = new ArrayList<>();
+                            Gson gson = new Gson();
+                            for (int i = 0; i<jsonArray.length(); i++){
+                                OrderList.DATABean dataBean = gson.fromJson(jsonArray.getJSONObject(i).toString(), OrderList.DATABean.class);
+                                orderList.add(dataBean);
+                            }
+
+                            waitingOrderAdapter= new WaitingOrderAdapter(context, orderList);
+                            rvOrderAktif.setLayoutManager(new LinearLayoutManager(context));
+                            rvOrderAktif.setAdapter(waitingOrderAdapter);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
         return view;
 
     }
+
 
 }
