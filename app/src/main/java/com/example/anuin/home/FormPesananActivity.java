@@ -202,7 +202,7 @@ public class FormPesananActivity extends AppCompatActivity {
     @NonNull
     private RequestBody createPartFromString(String descriptionString) {
         return RequestBody.create(
-                okhttp3.MultipartBody.FORM, descriptionString);
+                MediaType.parse("text/plain"), descriptionString);
     }
 
     private void initProsesOrder(int ids) {
@@ -218,7 +218,7 @@ public class FormPesananActivity extends AppCompatActivity {
         bodyMap.put("kecamatan", createPartFromString(id3 + ""));
         bodyMap.put("kelurahan", createPartFromString(id4 + ""));
         bodyMap.put("kode_post", createPartFromString(kode_post + ""));
-        bodyMap.put("work_date",  createPartFromString("2020-01-20"));
+        bodyMap.put("work_date",  createPartFromString("2020-01-20 10:10:10"));
         bodyMap.put("detail_pekerjaan", createPartFromString(txtDeskripsiPekerjaan.getText().toString()));
         bodyMap.put("detail_lokasi", createPartFromString(txtDetailLokasi.getText().toString()));
         bodyMap.put("biaya_panggil", createPartFromString("100000"));

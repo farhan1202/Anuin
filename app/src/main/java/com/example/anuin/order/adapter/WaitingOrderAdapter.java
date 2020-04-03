@@ -38,7 +38,7 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
     @Override
     public void onBindViewHolder(@NonNull final vHolder vHolder, final int i) {
         vHolder.tvkode.setText(bookingList.get(i).getBooking_code().getCode_name());
-        vHolder.tvmotode.setText(bookingList.get(i).getDetail_pekerjaan());
+        vHolder.tvmotode.setText(bookingList.get(i).getProduct_jasa().getProduct_jasa_title());
         vHolder.tvtype.setText(bookingList.get(i).getProduct_jasa().getCategory().getCategory_title());
         vHolder.tvTime.setText(bookingList.get(i).getWork_date());
         vHolder.tvToko.setText("00:59:10");
@@ -46,8 +46,8 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, OrderWaitingActivity.class);
+                intent.putExtra("IDORDER", bookingList.get(i).getId());
                 context.startActivity(intent);
-
             }
         });
 

@@ -154,6 +154,8 @@ public interface ApiInterface {
     Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token
     );
 
+
+
     @GET("kabupaten-list/{id}")
     Call<ResponseBody> getKabupaten(@Header("APP_TOKEN") String token,
                                     @Path("id") int id
@@ -202,6 +204,14 @@ public interface ApiInterface {
     Call<ResponseBody> getBookingLIst(@Header("APP_TOKEN") String token,
                                       @Header("USER_TOKEN") String userToken,
                                       @Field("member_id") int mID
+    );
+
+    @FormUrlEncoded
+    @POST("booking-detail")
+    Call<ResponseBody> getBookingDetail(@Header("APP_TOKEN") String token,
+                                      @Header("USER_TOKEN") String userToken,
+                                      @Field("member_id") int mID,
+                                      @Field("booking_id") int idBooking
     );
 
     @GET("terms-of-use")
