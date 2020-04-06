@@ -89,7 +89,7 @@ public class FormPesananActivity extends AppCompatActivity {
     @BindView(R.id.txtDeskripsiPekerjaan)
     EditText txtDeskripsiPekerjaan;
     Uri mImageUri;
-    String imagePath;
+
 
     Toolbar toolbar;
     EditText txtFormDate, txtFormTime;
@@ -122,6 +122,7 @@ public class FormPesananActivity extends AppCompatActivity {
     //    @BindView(R.id.picktureResult)
 //    ImageView picktureResult;
     ArrayList<String> list;
+    ArrayList<String> imagePath;
     TakePhotoAdapter takePhotoAdapter;
     int flag = 0;
 
@@ -137,6 +138,7 @@ public class FormPesananActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         list = new ArrayList<>();
+        imagePath = new ArrayList<>();
 
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
@@ -255,7 +257,7 @@ public class FormPesananActivity extends AppCompatActivity {
             btnClear.setVisibility(View.VISIBLE);
 
 
-            imagePath = getRealPathFromUri(mImageUri);
+            imagePath.add(getRealPathFromUri(mImageUri));
         }
 
         if (requestCode == 27) {
@@ -293,11 +295,16 @@ public class FormPesananActivity extends AppCompatActivity {
         bodyMap.put("payment_method", createPartFromString("1"));
         bodyMap.put("payment_driver", createPartFromString("Gopay"));
 
-        File file = new File(imagePath);
-        RequestBody propertyImage = RequestBody.create(MediaType.parse("multipart/from-data"), file);
-        MultipartBody.Part propertyImagePart = MultipartBody.Part.createFormData("booking_image[]",
-                file.getName(),
-                propertyImage);
+
+        MultipartBody.Part[] propertyImagePart = new MultipartBody.Part[imagePath.size()];
+        for (int i = 0; i < imagePath.size(); i++){
+            File file = new File(imagePath.get(i));
+            RequestBody propertyImage = RequestBody.create(MediaType.parse("multipart/from-data"), file);
+            propertyImagePart[i] = MultipartBody.Part.createFormData("booking_image[]",
+                    file.getName(),
+                    propertyImage);
+        }
+
 
         apiInterface.bookingOrder(map,
                 bodyMap,
