@@ -124,7 +124,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
                                     txtCategory.setText(jsonCategory.getString("category_title"));
 
                                     orderDate.setText(jsonObject1.getString("work_date").substring(0, 11));
-                                    orderTime.setText(jsonObject1.getString("work_date").substring(12));
+                                    orderTime.setText(jsonObject1.getString("work_date").substring(11));
                                     txtDetailAlamat.setText(jsonObject1.getString("detail_lokasi"));
 
 

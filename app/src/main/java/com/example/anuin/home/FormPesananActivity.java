@@ -1,14 +1,22 @@
 package com.example.anuin.home;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,9 +35,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anuin.MainActivity;
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.home.adapter.TakePhotoAdapter;
 import com.example.anuin.profil.AddAddressActivity;
@@ -42,7 +55,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,6 +76,8 @@ import retrofit2.Response;
 
 public class FormPesananActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
+    private int STORAGE_PERMISSION_CODE = 1;
+
     @BindView(R.id.recyclerPhoto)
     RecyclerView recyclerPhoto;
     @BindView(R.id.btnClear)
@@ -71,7 +88,8 @@ public class FormPesananActivity extends AppCompatActivity {
     EditText txtDetailLokasi;
     @BindView(R.id.txtDeskripsiPekerjaan)
     EditText txtDeskripsiPekerjaan;
-    private Uri mImageUri;
+    Uri mImageUri;
+    String imagePath;
 
     Toolbar toolbar;
     EditText txtFormDate, txtFormTime;
@@ -90,11 +108,11 @@ public class FormPesananActivity extends AppCompatActivity {
     TextView fieldKecamatan;
     @BindView(R.id.fieldKelurahan)
     TextView fieldKelurahan;
-
+    LoginDialog loginDialog;
     ApiInterface apiInterface;
     PrefManager prefManager;
     int id1, id2, id3, id4;
-    String kode_post;
+    String kode_post, lokasi_maps;
     @BindView(R.id.txtPesananTitles)
     TextView txtPesananTitles;
     @BindView(R.id.txtCategory)
@@ -106,6 +124,8 @@ public class FormPesananActivity extends AppCompatActivity {
     ArrayList<String> list;
     TakePhotoAdapter takePhotoAdapter;
     int flag = 0;
+
+    Bitmap selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +140,7 @@ public class FormPesananActivity extends AppCompatActivity {
 
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
+        loginDialog = new LoginDialog(this);
         fetchLokasi();
         fetchTitle();
 
@@ -136,7 +157,15 @@ public class FormPesananActivity extends AppCompatActivity {
                 dialog = new DatePickerDialog(FormPesananActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        txtFormDate.setText(i2 + "/" + i1 + "/" + i);
+                        String bulan = "" + i1;
+                        String tgl = "" + i2;
+                        if (i1 < 10) {
+                            bulan = "0" + i1;
+                        }
+                        if (i2 < 10) {
+                            tgl = "0" + i2;
+                        }
+                        txtFormDate.setText(i + "-" + bulan + "-" + tgl);
                     }
                 }, year, month, day);
                 dialog.show();
@@ -153,7 +182,15 @@ public class FormPesananActivity extends AppCompatActivity {
                 dialog1 = new TimePickerDialog(FormPesananActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        txtFormTime.setText(i + ":" + i1);
+                        String jam = i + "";
+                        String menit = i1 + "";
+                        if (i < 10) {
+                            jam = "0" + i;
+                        }
+                        if (i1 < 10) {
+                            menit = "0" + i1;
+                        }
+                        txtFormTime.setText(jam + ":" + menit);
                     }
                 }, hour, minute, DateFormat.is24HourFormat(mContext));
                 dialog1.show();
@@ -199,6 +236,35 @@ public class FormPesananActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            mImageUri = data.getData();
+
+
+            /*picktureResult.setImageURI(mImageUri);
+            picktureResult.setVisibility(View.VISIBLE);*/
+            Toast.makeText(getApplicationContext(), "" + getRealPathFromUri(mImageUri), Toast.LENGTH_SHORT).show();
+
+            list.add(mImageUri.toString());
+            takePhotoAdapter = new TakePhotoAdapter(mContext, list);
+            recyclerPhoto.setAdapter(takePhotoAdapter);
+            recyclerPhoto.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            btnClear.setVisibility(View.VISIBLE);
+
+
+            imagePath = getRealPathFromUri(mImageUri);
+        }
+
+        if (requestCode == 27) {
+            if (resultCode == RESULT_OK) {
+                fetchLokasi();
+            }
+        }
+    }
+
     @NonNull
     private RequestBody createPartFromString(String descriptionString) {
         return RequestBody.create(
@@ -211,41 +277,24 @@ public class FormPesananActivity extends AppCompatActivity {
         map.put("USER_TOKEN", prefManager.getTokenUser());
         Map<String, RequestBody> bodyMap = new HashMap<>();
         bodyMap.put("member_id", createPartFromString(prefManager.getId() + ""));
-        bodyMap.put("product_jasa_id", createPartFromString(ids+ ""));
-        bodyMap.put("member_address_id", createPartFromString("26"));
-        bodyMap.put("provinsi", createPartFromString(id1+ ""));
+        bodyMap.put("product_jasa_id", createPartFromString(ids + ""));
+        bodyMap.put("member_address_id", createPartFromString(lokasi_maps));
+        bodyMap.put("provinsi", createPartFromString(id1 + ""));
         bodyMap.put("city", createPartFromString(id2 + ""));
         bodyMap.put("kecamatan", createPartFromString(id3 + ""));
         bodyMap.put("kelurahan", createPartFromString(id4 + ""));
         bodyMap.put("kode_post", createPartFromString(kode_post + ""));
-        bodyMap.put("work_date",  createPartFromString("2020-01-20 10:10:10"));
+        bodyMap.put("work_date", createPartFromString(txtFormDate.getText().toString() + " " + txtFormTime.getText().toString() + ":00"));
         bodyMap.put("detail_pekerjaan", createPartFromString(txtDeskripsiPekerjaan.getText().toString()));
         bodyMap.put("detail_lokasi", createPartFromString(txtDetailLokasi.getText().toString()));
         bodyMap.put("biaya_panggil", createPartFromString("100000"));
         bodyMap.put("biaya_layanan", createPartFromString("10000"));
         bodyMap.put("total_tagihan", createPartFromString("110000"));
-        bodyMap.put("payment_method",  createPartFromString("1"));
+        bodyMap.put("payment_method", createPartFromString("1"));
         bodyMap.put("payment_driver", createPartFromString("Gopay"));
-        /*RequestBody member_id = RequestBody.create(MediaType.parse("text/plain"), prefManager.getId() + "");
-        RequestBody product_jasa_id = RequestBody.create(MediaType.parse("text/plain"), ids + "");
-        RequestBody member_address_id = RequestBody.create(MediaType.parse("text/plain"), ids + "26");
-        RequestBody provinsi = RequestBody.create(MediaType.parse("text/plain"), id1 + "");
-        RequestBody city = RequestBody.create(MediaType.parse("text/plain"), id2 + "");
-        RequestBody kecamatan = RequestBody.create(MediaType.parse("text/plain"), id3 + "");
-        RequestBody kelurahan = RequestBody.create(MediaType.parse("text/plain"), id4 + "");
-        RequestBody kode_post1 = RequestBody.create(MediaType.parse("text/plain"), kode_post);
-        RequestBody work_date = RequestBody.create(MediaType.parse("text/plain"), "2020-01-20");
-        RequestBody detail_pekerjaan = RequestBody.create(MediaType.parse("text/plain"), txtDeskripsiPekerjaan.getText().toString() );
-        RequestBody detail_lokasi = RequestBody.create(MediaType.parse("text/plain"), txtDetailLokasi.getText().toString() );
-        RequestBody biaya_panggil = RequestBody.create(MediaType.parse("text/plain"), "100000" );
-        RequestBody biaya_layanan = RequestBody.create(MediaType.parse("text/plain"), "10000" );
-        RequestBody total_tagihan = RequestBody.create(MediaType.parse("text/plain"), "110000" );
-        RequestBody payment_method = RequestBody.create(MediaType.parse("text/plain"), "1" );
-        RequestBody payment_driver = RequestBody.create(MediaType.parse("text/plain"), "Gopay" );*/
 
-        File file = new File(mImageUri.getPath());
-        RequestBody propertyImage = RequestBody.create(MediaType.parse("image/*"),
-                file);
+        File file = new File(imagePath);
+        RequestBody propertyImage = RequestBody.create(MediaType.parse("multipart/from-data"), file);
         MultipartBody.Part propertyImagePart = MultipartBody.Part.createFormData("booking_image[]",
                 file.getName(),
                 propertyImage);
@@ -253,24 +302,31 @@ public class FormPesananActivity extends AppCompatActivity {
         apiInterface.bookingOrder(map,
                 bodyMap,
                 propertyImagePart
-                ).enqueue(new Callback<ResponseBody>() {
+        ).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("STATUS").equals("200")){
+                        if (jsonObject.getString("STATUS").equals("200")) {
                             Toast.makeText(mContext, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                            loginDialog.dismissLoadingDialog();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("FLAGPAGE", 1);
+                            startActivity(intent);
+                            finish();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     try {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(mContext, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                        loginDialog.dismissLoadingDialog();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -281,7 +337,9 @@ public class FormPesananActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Log.e("ERROR", String.valueOf(t));
+                loginDialog.dismissLoadingDialog();
+                Toast.makeText(FormPesananActivity.this, "Check your connections", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -289,32 +347,35 @@ public class FormPesananActivity extends AppCompatActivity {
     }
 
     private void openFileChooser() {
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);*/
+
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, PICK_IMAGE_REQUEST);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
-            mImageUri = data.getData();
-            /*picktureResult.setImageURI(mImageUri);
-            picktureResult.setVisibility(View.VISIBLE);
-            list.add(flag + "");
-            flag++;*/
-            list.add(mImageUri.toString());
-            takePhotoAdapter = new TakePhotoAdapter(mContext, list);
-            recyclerPhoto.setAdapter(takePhotoAdapter);
-            recyclerPhoto.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-            btnClear.setVisibility(View.VISIBLE);
-        }
+    private String getRealPathFromUri(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(getApplicationContext(), uri, projection, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_idx);
+        cursor.close();
+        return result;
+    }
 
-        if (requestCode == 27) {
-            if (resultCode == RESULT_OK) {
-                fetchLokasi();
-            }
+    private void requestStoragePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            ActivityCompat.requestPermissions(FormPesananActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
         }
     }
 
@@ -335,7 +396,25 @@ public class FormPesananActivity extends AppCompatActivity {
                             btnProses.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    initProsesOrder(id);
+                                    if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                                            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                                        requestStoragePermission();
+                                    } else {
+                                        if (TextUtils.isEmpty(txtDetailLokasi.getText().toString())) {
+                                            txtDetailLokasi.setError("Field cant be blank");
+                                        } else if (TextUtils.isEmpty(txtDeskripsiPekerjaan.getText().toString())) {
+                                            txtDeskripsiPekerjaan.setError("Field cant be blank");
+                                        } else if (TextUtils.isEmpty(txtFormDate.getText().toString())) {
+                                            txtFormDate.setError("Please enter a work date");
+                                        } else if (TextUtils.isEmpty(txtFormTime.getText().toString())) {
+                                            txtFormTime.setError("Please enter a work time");
+                                        } else if (mImageUri == null) {
+                                            Toast.makeText(mContext, "Please add a photo", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            initProsesOrder(id);
+                                            loginDialog.startLoadingDialog();
+                                        }
+                                    }
                                 }
                             });
                             for (int i = 0; i < jsonArray1.length(); i++) {
@@ -406,6 +485,7 @@ public class FormPesananActivity extends AppCompatActivity {
                                             id3 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kecamatan"));
                                             id4 = Integer.parseInt(jsonArray.getJSONObject(i).getString("kelurahan"));
                                             kode_post = jsonArray.getJSONObject(i).getString("kode_post");
+                                            lokasi_maps = jsonArray.getJSONObject(i).getString("id");
                                             fetchWilayah();
                                         }
 

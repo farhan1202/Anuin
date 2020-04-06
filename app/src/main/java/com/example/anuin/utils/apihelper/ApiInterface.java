@@ -132,7 +132,7 @@ public interface ApiInterface {
     @POST("booking-order")
     Call<ResponseBody> bookingOrder(@HeaderMap Map<String, String> stringStringMap,
                                     @PartMap Map<String, RequestBody> stringBody,
-                                    @Part MultipartBody.Part booking_image
+                                    @Part MultipartBody.Part filePart
     );
     /*@Part("member_id") RequestBody member_id,
     @Part("product_jasa_id") RequestBody product_jasa_id,
