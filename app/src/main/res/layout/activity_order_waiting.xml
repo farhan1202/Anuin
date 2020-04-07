@@ -239,9 +239,10 @@
                             android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
-                        <ImageView
-                            android:src="@color/orange"
-                            android:layout_width="50dp"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerPhotoOrder"
+                            android:layout_width="match_parent"
+                            tools:listitem="@layout/row_item_photo"
                             android:layout_height="50dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -376,6 +377,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnBatal"
                 android:layout_marginTop="10dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

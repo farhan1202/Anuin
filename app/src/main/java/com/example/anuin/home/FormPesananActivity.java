@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -55,13 +54,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Time;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -76,6 +75,8 @@ import retrofit2.Response;
 
 public class FormPesananActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
+    @BindView(R.id.txtTotalTagihan)
+    TextView txtTotalTagihan;
     private int STORAGE_PERMISSION_CODE = 1;
 
     @BindView(R.id.recyclerPhoto)
@@ -111,7 +112,10 @@ public class FormPesananActivity extends AppCompatActivity {
     LoginDialog loginDialog;
     ApiInterface apiInterface;
     PrefManager prefManager;
+
     int id1, id2, id3, id4;
+    int product_jasa_harga, product_jasa_harga_layanan, total_tagihan;
+
     String kode_post, lokasi_maps;
     @BindView(R.id.txtPesananTitles)
     TextView txtPesananTitles;
@@ -153,7 +157,7 @@ public class FormPesananActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calendar = Calendar.getInstance();
                 final int day = calendar.get(Calendar.DAY_OF_MONTH);
-                final int month = calendar.get(Calendar.MONTH + 1);
+                final int month = calendar.get(Calendar.MONTH);
                 final int year = calendar.get(Calendar.YEAR);
 
                 dialog = new DatePickerDialog(FormPesananActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -162,7 +166,7 @@ public class FormPesananActivity extends AppCompatActivity {
                         String bulan = "" + i1;
                         String tgl = "" + i2;
                         if (i1 < 10) {
-                            bulan = "0" + i1;
+                            bulan = "0" + (i1 + 1);
                         }
                         if (i2 < 10) {
                             tgl = "0" + i2;
@@ -289,15 +293,15 @@ public class FormPesananActivity extends AppCompatActivity {
         bodyMap.put("work_date", createPartFromString(txtFormDate.getText().toString() + " " + txtFormTime.getText().toString() + ":00"));
         bodyMap.put("detail_pekerjaan", createPartFromString(txtDeskripsiPekerjaan.getText().toString()));
         bodyMap.put("detail_lokasi", createPartFromString(txtDetailLokasi.getText().toString()));
-        bodyMap.put("biaya_panggil", createPartFromString("100000"));
-        bodyMap.put("biaya_layanan", createPartFromString("10000"));
-        bodyMap.put("total_tagihan", createPartFromString("110000"));
+        bodyMap.put("biaya_panggil", createPartFromString(product_jasa_harga + ""));
+        bodyMap.put("biaya_layanan", createPartFromString(product_jasa_harga_layanan + ""));
+        bodyMap.put("total_tagihan", createPartFromString(total_tagihan + ""));
         bodyMap.put("payment_method", createPartFromString("1"));
         bodyMap.put("payment_driver", createPartFromString("Gopay"));
 
 
         MultipartBody.Part[] propertyImagePart = new MultipartBody.Part[imagePath.size()];
-        for (int i = 0; i < imagePath.size(); i++){
+        for (int i = 0; i < imagePath.size(); i++) {
             File file = new File(imagePath.get(i));
             RequestBody propertyImage = RequestBody.create(MediaType.parse("multipart/from-data"), file);
             propertyImagePart[i] = MultipartBody.Part.createFormData("booking_image[]",
@@ -386,7 +390,8 @@ public class FormPesananActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchTitle() {
+    private void
+    fetchTitle() {
         Intent intent = getIntent();
         int id = intent.getIntExtra("id1", 0);
         int ids = intent.getIntExtra("id", 0);
@@ -427,6 +432,10 @@ public class FormPesananActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray1.length(); i++) {
                                 if (Integer.parseInt(jsonArray1.getJSONObject(i).getString("id")) == ids) {
                                     txtPesananTitles.setText(jsonArray1.getJSONObject(i).getString("product_jasa_title"));
+                                    product_jasa_harga = jsonArray1.getJSONObject(i).getInt("product_jasa_harga");
+                                    product_jasa_harga_layanan = (int) (0.05 * product_jasa_harga);
+                                    total_tagihan = product_jasa_harga + product_jasa_harga_layanan;
+                                    txtTotalTagihan.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(total_tagihan) + ""));
                                 }
                             }
                         }

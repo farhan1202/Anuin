@@ -1,5 +1,6 @@
 package com.example.anuin.order;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -12,19 +13,24 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anuin.MainActivity;
 import com.example.anuin.R;
+import com.example.anuin.order.adapter.PhotoListAdapter;
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -67,6 +73,11 @@ public class OrderWaitingActivity extends AppCompatActivity {
     TextView txtBiayaLayanan;
     @BindView(R.id.txtTotalTagihan)
     TextView txtTotalTagihan;
+    @BindView(R.id.recyclerPhotoOrder)
+    RecyclerView recyclerPhotoOrder;
+    Context context;
+    @BindView(R.id.btnBatal)
+    Button btnBatal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +85,13 @@ public class OrderWaitingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_waiting);
         ButterKnife.bind(this);
         toolbar = findViewById(R.id.toolbarOrderWaiting);
+        recyclerPhotoOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         Button btnPayment = findViewById(R.id.btnPaymentMethode);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
+        context = this;
         componentDidMount();
 
 
@@ -127,7 +140,21 @@ public class OrderWaitingActivity extends AppCompatActivity {
                                     orderTime.setText(jsonObject1.getString("work_date").substring(11));
                                     txtDetailAlamat.setText(jsonObject1.getString("detail_lokasi"));
 
+                                    JSONArray jsonArray = jsonObject1.getJSONArray("booking_image");
+                                    ArrayList<String> strings = new ArrayList<>();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        strings.add(jsonArray.getJSONObject(i).getString("image_name"));
+                                    }
 
+                                    PhotoListAdapter photoListAdapter = new PhotoListAdapter(context, strings);
+                                    recyclerPhotoOrder.setAdapter(photoListAdapter);
+
+                                    btnBatal.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            onBackPressed();
+                                        }
+                                    });
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -158,10 +185,10 @@ public class OrderWaitingActivity extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.body().string());
-                                if (jsonObject.getString("STATUS").equals("200")){
+                                if (jsonObject.getString("STATUS").equals("200")) {
                                     JSONObject jsonObject1 = new JSONObject(jsonObject.getString("DATA"));
                                     txtAlamat.setText(jsonObject1.getString("lokasi_maps"));
                                 }

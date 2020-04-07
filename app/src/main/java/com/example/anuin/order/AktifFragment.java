@@ -69,7 +69,7 @@ public class AktifFragment extends Fragment {
 
                             orderList = new ArrayList<>();
                             Gson gson = new Gson();
-                            for (int i = 0; i<jsonArray.length(); i++){
+                            for (int i = jsonArray.length() - 1; i>=0; i--){
                                 OrderList.DATABean dataBean = gson.fromJson(jsonArray.getJSONObject(i).toString(), OrderList.DATABean.class);
                                 orderList.add(dataBean);
                             }
