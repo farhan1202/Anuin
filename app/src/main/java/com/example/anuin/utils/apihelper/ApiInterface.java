@@ -59,6 +59,14 @@ public interface ApiInterface {
                                      @Field("phone_number") String phone_number,
                                      @Field("member_image") String member_image);
 
+    @FormUrlEncoded
+    @POST("change-password-token")
+    Call<ResponseBody> changePassword(@Header("APP_TOKEN") String tokenApp,
+                                      @Header("USER_TOKEN") String tokenUser,
+                                      @Field("id") int idMember,
+                                      @Field("new_password") String newPass,
+                                      @Field("confirm_password") String newPassConfirm);
+
     @GET("banner")
     Call<ResponseBody> getBanner(@Header("APP_TOKEN") String token);
 

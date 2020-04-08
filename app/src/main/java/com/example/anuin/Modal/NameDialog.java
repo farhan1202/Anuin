@@ -118,8 +118,6 @@ public class NameDialog extends BottomSheetDialogFragment {
                             intent1.putExtra("FLAGPAGE", 2);
                             startActivity(intent1);
                             getActivity().finish();
-                        }else{
-                            loginDialog.dismissLoadingDialog();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
