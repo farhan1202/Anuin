@@ -142,22 +142,19 @@ public interface ApiInterface {
                                     @PartMap Map<String, RequestBody> stringBody,
                                     @Part MultipartBody.Part[] filePart
     );
-    /*@Part("member_id") RequestBody member_id,
-    @Part("product_jasa_id") RequestBody product_jasa_id,
-    @Part("member_address_id") RequestBody member_address_id,
-    @Part("provinsi") RequestBody provinsi,
-    @Part("city") RequestBody city,
-    @Part("kecamatan") RequestBody kecamatan,
-    @Part("kelurahan") RequestBody kelurahan,
-    @Part("kode_post") RequestBody kode_post,
-    @Part("work_date") RequestBody work_date,
-    @Part("detail_pekerjaan") RequestBody detail_pekerjaan,
-    @Part("detail_lokasi") RequestBody detail_lokasi,
-    @Part("biaya_panggil") RequestBody biaya_panggil,
-    @Part("biaya_layanan") RequestBody biaya_layanan,
-    @Part("total_tagihan") RequestBody total_tagihan,
-    @Part("payment_method") RequestBody payment_method,
-    @Part("payment_driver") RequestBody payment_driver,*/
+
+    @FormUrlEncoded
+    @POST("booking-payment")
+    Call<ResponseBody> bookingPayment(@Header("APP_TOKEN") String tokenApp,
+                                      @Header("USER_TOKEN") String tokenUser,
+                                      @Field("member_id") int idMember,
+                                      @Field("booking_id") int bookingId,
+                                      @Field("biaya_panggil") int biayaPanggil,
+                                      @Field("biaya_layanan") int biayaLayanan,
+                                      @Field("total_tagihan") int totalTagihan,
+                                      @Field("payment_method") String paymentMethod,
+                                      @Field("payment_driver") String payment_driver);
+
     @GET("provinsi-list")
     Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token
     );

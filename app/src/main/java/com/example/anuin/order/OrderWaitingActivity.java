@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,6 +44,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderWaitingActivity extends AppCompatActivity {
+    public static int METODE_PAYMENT = 27;
+    int metode = -1;
+
     Toolbar toolbar;
     @BindView(R.id.txtCoundown)
     TextView txtCoundown;
@@ -78,6 +83,10 @@ public class OrderWaitingActivity extends AppCompatActivity {
     Context context;
     @BindView(R.id.btnBatal)
     Button btnBatal;
+    @BindView(R.id.pembayaran)
+    TextView pembayaran;
+    @BindView(R.id.btnSelesai)
+    Button btnSelesai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +108,25 @@ public class OrderWaitingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MetodePembayaranActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, METODE_PAYMENT);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == METODE_PAYMENT) {
+            if (resultCode == RESULT_OK) {
+                metode = data.getIntExtra("metode", -1);
+                String method = null;
+                if (metode == 0) {
+                    method = "Tunai";
+                }
+                pembayaran.setText(method);
+                pembayaran.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void componentDidMount() {
@@ -155,6 +180,23 @@ public class OrderWaitingActivity extends AppCompatActivity {
                                             onBackPressed();
                                         }
                                     });
+
+                                    btnSelesai.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if (metode == -1 ){
+                                                Toast.makeText(context, "Harap Pilih Metode Pembayaran", Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                try {
+                                                    initPayment(jsonObject1.getInt("id"), jsonObject1.getInt("biaya_panggil"), jsonObject1.getInt("biaya_layanan"),
+                                                            jsonObject1.getInt("total_tagihan"));
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }
+                                    });
+
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -178,6 +220,51 @@ public class OrderWaitingActivity extends AppCompatActivity {
                         Toast.makeText(OrderWaitingActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void initPayment(int id, int biaya_panggil, int biaya_layanan, int total_tagihan) {
+        apiInterface.bookingPayment(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId(),
+                id,
+                biaya_panggil,
+                biaya_layanan,
+                total_tagihan,
+                metode+"",
+                "").enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        if (jsonObject.getString("STATUS").equals("200")){
+                            Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(OrderWaitingActivity.this, MainActivity.class);
+                            intent.putExtra("FLAGPAGE", 1);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("TAG", "onFailure: " + t.getMessage());
+                Toast.makeText(context, "Connection Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getLokasiUser(int member_address_id) {

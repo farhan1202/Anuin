@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,16 +44,27 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
         vHolder.tvmotode.setText(bookingList.get(i).getProduct_jasa().getProduct_jasa_title());
         vHolder.tvtype.setText(bookingList.get(i).getProduct_jasa().getCategory().getCategory_title());
         vHolder.tvTime.setText(bookingList.get(i).getWork_date());
+        if (bookingList.get(i).getBooking_status().equals("1")){
+            vHolder.btnWait.setText("Proses");
+            vHolder.btnWait.setTextColor(Color.parseColor("#FFFFFF"));
+            vHolder.btnWait.setBackgroundColor(Color.parseColor("#27AE60"));
+        }
         vHolder.tvToko.setText("00:59:10");
         vHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, OrderWaitingActivity.class);
-                intent.putExtra("IDORDER", bookingList.get(i).getId());
-                context.startActivity(intent);
+                if (bookingList.get(i).getBooking_status().equals("1")){
+                    Intent intent = new Intent(context, OrderProcessActivity.class);
+                    intent.putExtra("IDORDER", bookingList.get(i).getId());
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, OrderWaitingActivity.class);
+                    intent.putExtra("IDORDER", bookingList.get(i).getId());
+                    context.startActivity(intent);
+                }
+
             }
         });
-
     }
 
     @Override

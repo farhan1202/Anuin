@@ -296,7 +296,7 @@ public class FormPesananActivity extends AppCompatActivity {
         bodyMap.put("biaya_panggil", createPartFromString(product_jasa_harga + ""));
         bodyMap.put("biaya_layanan", createPartFromString(product_jasa_harga_layanan + ""));
         bodyMap.put("total_tagihan", createPartFromString(total_tagihan + ""));
-        bodyMap.put("payment_method", createPartFromString("1"));
+        bodyMap.put("payment_method", createPartFromString("0"));
         bodyMap.put("payment_driver", createPartFromString("Gopay"));
 
 
