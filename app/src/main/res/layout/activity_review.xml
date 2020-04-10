@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".order.ReviewActivity">
+
     <LinearLayout
         android:id="@+id/l1"
         android:layout_width="match_parent"
@@ -13,14 +14,14 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_marginVertical="16dp"
-            android:layout_gravity="center"
-            android:src="@drawable/btn"
+            android:id="@+id/imageMerchant"
             android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="16dp" />
 
         <TextView
-            android:id="@+id/txtTitleToko"
+            android:id="@+id/txtNamaMerchant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -30,43 +31,48 @@
             android:textStyle="bold" />
 
         <TextView
-            android:text="Berikan Penilaian Anda"
-            android:textSize="16dp"
-            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="Berikan Penilaian Anda"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+
         <RatingBar
             android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:numStars="5"
             android:rating="4"
-            android:stepSize="0.5"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:stepSize="1" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="18dp"
             android:background="@color/colorView" />
+
         <EditText
-            android:padding="14dp"
-            android:hint="Berikan Ulasan"
-            android:layout_marginHorizontal="20dp"
-            android:background="@drawable/modal"
             android:id="@+id/editUlasan"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/modal"
+            android:hint="Berikan Ulasan"
+            android:padding="14dp" />
 
 
     </LinearLayout>
+
     <RelativeLayout
-        android:layout_below="@id/l1"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/l1"
+        android:layout_alignParentBottom="true">
+
         <Button
             android:id="@+id/btnDone"
             android:layout_width="match_parent"

@@ -155,6 +155,17 @@ public interface ApiInterface {
                                       @Field("payment_method") String paymentMethod,
                                       @Field("payment_driver") String payment_driver);
 
+    @FormUrlEncoded
+    @POST("booking-approve")
+    Call<ResponseBody> bookingApprove(@Header("APP_TOKEN") String tokenApp,
+                                      @Header("USER_TOKEN") String tokenUser,
+                                      @Field("member_id") int idMember,
+                                      @Field("booking_id") int bookingId,
+                                      @Field("merchant_id") int merchant_id,
+                                      @Field("feedback") String feedback,
+                                      @Field("rating") int rating
+                                      );
+
     @GET("provinsi-list")
     Call<ResponseBody> getProvinsi(@Header("APP_TOKEN") String token
     );
