@@ -65,13 +65,14 @@
                         android:layout_height="wrap_content">
                     </TextView>
                     <TextView
+                        android:id="@+id/txtTotalTagihan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
+                        android:layout_gravity="center"
                         android:textColor="#000"
                         android:textSize="18dp"
-                        android:layout_marginTop="6dp"
-                        android:text="RP 105.000">
+                        android:layout_marginTop="6dp">
                     </TextView>
                 </LinearLayout>
             </RelativeLayout>

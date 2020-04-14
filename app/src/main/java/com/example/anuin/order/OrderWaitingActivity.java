@@ -95,7 +95,6 @@ public class OrderWaitingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         toolbar = findViewById(R.id.toolbarOrderWaiting);
         recyclerPhotoOrder.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        Button btnPayment = findViewById(R.id.btnPaymentMethode);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         apiInterface = UtilsApi.getApiService();
@@ -104,13 +103,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
         componentDidMount();
 
 
-        btnPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MetodePembayaranActivity.class);
-                startActivityForResult(intent, METODE_PAYMENT);
-            }
-        });
+
     }
 
     @Override
@@ -194,6 +187,21 @@ public class OrderWaitingActivity extends AppCompatActivity {
                                                     e.printStackTrace();
                                                 }
                                             }
+                                        }
+                                    });
+
+                                    btnPaymentMethode.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                            try {
+                                                Intent intent = new Intent(getApplicationContext(), MetodePembayaranActivity.class);
+                                                intent.putExtra("total_tagihan", jsonObject1.getInt("total_tagihan"));
+                                                startActivityForResult(intent, METODE_PAYMENT);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
                                         }
                                     });
 
