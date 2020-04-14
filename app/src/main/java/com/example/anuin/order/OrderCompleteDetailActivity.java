@@ -98,7 +98,6 @@ public class OrderCompleteDetailActivity extends AppCompatActivity {
                         if (jsonObject.getString("STATUS").equals("200")){
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
 
-
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
