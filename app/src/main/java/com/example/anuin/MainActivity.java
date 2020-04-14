@@ -127,11 +127,7 @@ public class MainActivity extends AppCompatActivity {
             changeFragment(new ProfileFrag(), ProfileFrag.class
                     .getSimpleName());
             bottomNav.setSelectedItemId(R.id.nav_profil);
-        } else if (flag == 3) {
-            changeFragment(new SelesaiFragment(), SelesaiFragment.class
-                    .getSimpleName());
-            bottomNav.setSelectedItemId(R.id.nav_order);
-        } else {
+        }else {
             changeFragment(new HomeFrag(), HomeFrag.class
                     .getSimpleName());
         }
