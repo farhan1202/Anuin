@@ -64,6 +64,7 @@ public class ReviewActivity extends AppCompatActivity {
         loginDialog = new LoginDialog(this);
 
         componentDidMount();
+
     }
 
     private void componentDidMount() {
@@ -123,6 +124,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+
     private void bookingApprove(int booking_id, int merchant_id, int rating, String toString) {
         apiInterface.bookingApprove(UtilsApi.APP_TOKEN, prefManager.getTokenUser(),prefManager.getId(),booking_id,merchant_id,toString, rating).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -133,7 +135,7 @@ public class ReviewActivity extends AppCompatActivity {
                         if (jsonObject.getString("STATUS").equals("200")){
                             Toast.makeText(ReviewActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ReviewActivity.this, MainActivity.class);
-                            intent.putExtra("FLAGPAGE", 1);
+                            intent.putExtra("FLAGPAGE", 3);
                             startActivity(intent);
                             finish();
                         }

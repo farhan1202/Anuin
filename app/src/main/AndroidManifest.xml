@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".order.ViewOrderPhotoActivity"></activity>
+        <activity android:name=".order.OrderCompleteDetailActivity"></activity>
+        <activity android:name=".order.ViewOrderPhotoActivity" />
         <activity android:name=".home.ViewImageActivity" />
         <activity android:name=".other.setting.DetailChildActivity" />
         <activity android:name=".other.setting.PrivacyPolicyActivity" />
