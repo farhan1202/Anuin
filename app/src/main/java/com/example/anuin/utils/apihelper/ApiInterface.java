@@ -230,6 +230,13 @@ public interface ApiInterface {
                                       @Field("booking_id") int idBooking
     );
 
+    @FormUrlEncoded
+    @POST("booking-complete-list")
+    Call<ResponseBody> getOrderComplete (@Header("APP_TOKEN") String token,
+                                           @Header("USER_TOKEN") String userToken,
+                                           @Field("member_id") int mID
+    );
+
     @GET("terms-of-use")
     Call<ResponseBody> termOfUse(@Header("APP_TOKEN") String token
     );

@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 
 import com.example.anuin.home.FormPesananActivity;
 import com.example.anuin.introNlogin.ApiLoginActivity;
+import com.example.anuin.order.AktifFragment;
+import com.example.anuin.order.SelesaiFragment;
 import com.example.anuin.utils.PrefManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -125,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
             changeFragment(new ProfileFrag(), ProfileFrag.class
                     .getSimpleName());
             bottomNav.setSelectedItemId(R.id.nav_profil);
+        } else if (flag == 3) {
+            changeFragment(new SelesaiFragment(), SelesaiFragment.class
+                    .getSimpleName());
+            bottomNav.setSelectedItemId(R.id.nav_order);
         } else {
             changeFragment(new HomeFrag(), HomeFrag.class
                     .getSimpleName());
