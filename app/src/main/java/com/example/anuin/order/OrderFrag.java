@@ -46,6 +46,8 @@ public class OrderFrag extends Fragment {
         adapter.addFrag(new AktifFragment(), "AKTIF");
         adapter.addFrag(new SelesaiFragment(), "SELESAI");
         viewPager.setAdapter(adapter);
+
+
     }
 
 }

@@ -135,7 +135,8 @@ public class ReviewActivity extends AppCompatActivity {
                         if (jsonObject.getString("STATUS").equals("200")){
                             Toast.makeText(ReviewActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ReviewActivity.this, MainActivity.class);
-                            intent.putExtra("FLAGPAGE", 3);
+                            intent.putExtra("FLAGPAGE", 1);
+                            intent.putExtra("FLAGPAGER", 1);
                             startActivity(intent);
                             finish();
                         }

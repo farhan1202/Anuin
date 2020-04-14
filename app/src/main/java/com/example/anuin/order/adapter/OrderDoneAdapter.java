@@ -44,6 +44,7 @@ public class OrderDoneAdapter extends RecyclerView.Adapter<OrderDoneAdapter.vHol
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, OrderCompleteDetailActivity.class);
+                intent.putExtra("id", bookingList.get(i).getId());
                 context.startActivity(intent);
             }
         });

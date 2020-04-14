@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
         }else {
             changeFragment(new HomeFrag(), HomeFrag.class
                     .getSimpleName());
+
+            bottomNav.setSelectedItemId(R.id.nav_home);
         }
 
 
@@ -185,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };*/
+
+
 
 
     @Override

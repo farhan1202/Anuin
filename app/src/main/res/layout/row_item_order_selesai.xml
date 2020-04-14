@@ -39,15 +39,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </TextView>
+
                 <Button
                     android:id="@+id/btnWait"
-                    android:text="Selessai"
-                    android:textSize="10dp"
-                    android:textColor="#27AE60"
-                    android:background="@drawable/bg_btn"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"/>
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/bg_btn"
+                    android:text="Selesai"
+                    android:textColor="#27AE60"
+                    android:textSize="10dp" />
             </RelativeLayout>
             <View
                 android:background="@color/colorView"

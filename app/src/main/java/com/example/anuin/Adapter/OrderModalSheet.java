@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +74,7 @@ public class OrderModalSheet extends BottomSheetDialogFragment {
                                 modalJasaName.setText(jsonObject1.getString("product_jasa_title"));
                                 modalJasaPrice.setText("" + NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("product_jasa_harga")));
                                 modalJasaDesc.setText(jsonObject1.getString("product_jasa_desc"));
-                                modalJasaWarning.setText(jsonObject1.getString("product_jasa_warning"));
+                                modalJasaWarning.setText(Html.fromHtml(jsonObject1.getString("product_jasa_warning")));
                                 int id_category = jsonObject1.getInt("category_id");
 //                            Toast.makeText(getContext(), "" + id_category, Toast.LENGTH_SHORT).show();
 
