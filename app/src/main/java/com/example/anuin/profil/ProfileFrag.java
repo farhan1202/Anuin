@@ -2,6 +2,7 @@ package com.example.anuin.profil;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anuin.Modal.EmailDialog;
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.Modal.NameDialog;
 import com.example.anuin.Modal.PasswordDialog;
 import com.example.anuin.Modal.PhoneDialog;
@@ -65,6 +67,8 @@ public class ProfileFrag extends Fragment {
     @BindView(R.id.recyclerAddress)
     RecyclerView recyclerAddress;
 
+    LoginDialog loginDialog;
+    Context context;
 
     public ProfileFrag() {
         // Required empty public constructor
@@ -88,6 +92,8 @@ public class ProfileFrag extends Fragment {
         prefManager = new PrefManager(view.getContext());
 
         apiInterface = UtilsApi.getApiService();
+        context = view.getContext();
+        loginDialog = new LoginDialog(context);
 
 
         if (prefManager.getSession()) {
@@ -164,6 +170,7 @@ public class ProfileFrag extends Fragment {
 
     private void FetchProfile() {
         PrefManager prefManager = new PrefManager(getContext());
+        loginDialog.startLoadingDialog();
         apiInterface.requestProfile(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -172,6 +179,7 @@ public class ProfileFrag extends Fragment {
                         JSONObject object = new JSONObject(response.body().string());
                         if (object.getString("STATUS").equals("200")) {
                             JSONObject object1 = object.getJSONObject("DATA");
+                            loginDialog.dismissLoadingDialog();
                             detailNama.setText(object1.getString("name"));
                             detailMail.setText(object1.getString("email"));
                             detailTelp.setText(object1.getString("phone_number"));
@@ -229,6 +237,7 @@ public class ProfileFrag extends Fragment {
                         e.printStackTrace();
                     }
                 } else {
+                    loginDialog.dismissLoadingDialog();
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("Sesi Login Berakhir")
                             .setCancelable(false)
@@ -250,7 +259,8 @@ public class ProfileFrag extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Toast.makeText(context, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                loginDialog.dismissLoadingDialog();
             }
         });
     }

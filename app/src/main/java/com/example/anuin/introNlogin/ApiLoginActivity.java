@@ -177,7 +177,8 @@ public class ApiLoginActivity extends AppCompatActivity {
                                                 prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
                                                 prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
                                                 Toast.makeText(ApiLoginActivity.this, "" + object.getString("name"), Toast.LENGTH_SHORT).show();
-                                                if (jsonObject1.getString("name").equals("") || jsonObject1.getString("username").equals("")) {
+                                                if (jsonObject1.getString("name").equals("") || jsonObject1.getString("name") == null ||
+                                                        jsonObject1.getString("username").equals("") || jsonObject1.getString("username") == null) {
                                                     updateProfile(object.getString("name"), jsonObject1.getString("email"), jsonObject1.getString("member_image"), jsonObject1.getString("phone_number"));
                                                 } else {
                                                     prefManager.saveSession();

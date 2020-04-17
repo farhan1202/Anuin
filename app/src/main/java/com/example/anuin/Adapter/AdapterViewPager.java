@@ -28,7 +28,7 @@ public class AdapterViewPager extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return banners.size();
     }
 
     @Override

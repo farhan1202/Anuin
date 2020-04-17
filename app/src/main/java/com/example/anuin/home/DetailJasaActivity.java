@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.anuin.Adapter.OrderModalSheet;
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.home.adapter.JasaAdapter;
 import com.example.anuin.home.interfaces.ProductJasaInterface;
@@ -58,6 +59,8 @@ public class DetailJasaActivity extends AppCompatActivity {
     boolean flags = false;
     int idJasaSelected;
 
+    LoginDialog loginDialog;
+
     List<ProductJasa.DATABean.ProductJasaBean> dataBeans;
 
     @Override
@@ -72,6 +75,7 @@ public class DetailJasaActivity extends AppCompatActivity {
         tPrice = findViewById(R.id.tPrice);
         context = this;
         apiInterface = UtilsApi.getApiService();
+        loginDialog = new LoginDialog(context);
 
 
         setSupportActionBar(toolbar);
@@ -91,6 +95,7 @@ public class DetailJasaActivity extends AppCompatActivity {
 
     private void fetchProductJasa(Intent intent) {
         int id = intent.getIntExtra("eId", 1);
+        loginDialog.startLoadingDialog();
         apiInterface.getProductJasa(UtilsApi.APP_TOKEN, id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -99,6 +104,7 @@ public class DetailJasaActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
+                            loginDialog.dismissLoadingDialog();
 
                             final JSONArray jsonArray1 = new JSONArray(jsonArray.getJSONObject(0).getString("product_jasa"));
 
@@ -177,12 +183,23 @@ public class DetailJasaActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }else {
+                    try {
+                        loginDialog.dismissLoadingDialog();
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        Toast.makeText(DetailJasaActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(context, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                loginDialog.dismissLoadingDialog();
             }
         });
     }

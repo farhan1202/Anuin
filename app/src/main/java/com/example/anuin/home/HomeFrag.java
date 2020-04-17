@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.anuin.Adapter.AdapterViewPager;
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.home.adapter.CategoryAdapter;
 import com.example.anuin.home.model.Banner;
@@ -53,25 +55,27 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFrag extends Fragment {
-/*MekanikAdapter mekanikAdapter;
-RecyclerView recyclerMekanik, recyclerDekor;*/
-Context context;
+    /*MekanikAdapter mekanikAdapter;
+    RecyclerView recyclerMekanik, recyclerDekor;*/
+    Context context;
 
-RecyclerView recyclerView;
-CategoryAdapter categoryAdapter;
-List<Category.DATABean> dataBeans;
+    RecyclerView recyclerView;
+    CategoryAdapter categoryAdapter;
+    List<Category.DATABean> dataBeans;
 
-ViewPager viewPager;
-AdapterViewPager adapterViewPager;
-ArrayList<Banner.DATABean> banners;
+    ViewPager viewPager;
+    AdapterViewPager adapterViewPager;
+    ArrayList<Banner.DATABean> banners;
 
-ApiInterface apiHelper;
+    ApiInterface apiHelper;
 
+    LoginDialog loginDialog;
 
 
     public HomeFrag() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,11 +85,9 @@ ApiInterface apiHelper;
         apiHelper = UtilsApi.getApiService();
         viewPager = view.findViewById(R.id.viewPager);
         recyclerView = view.findViewById(R.id.recyclerGroup);
-
+        loginDialog = new LoginDialog(context);
+        loginDialog.startLoadingDialog();
         FetchBanner();
-        fetchCategory();
-
-
         return view;
     }
 
@@ -93,15 +95,17 @@ ApiInterface apiHelper;
         apiHelper.getCategory(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("STATUS").equals("200")){
+                        if (jsonObject.getString("STATUS").equals("200")) {
+                            loginDialog.dismissLoadingDialog();
+
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
 
                             dataBeans = new ArrayList<>();
                             Gson gson = new Gson();
-                            for (int i = 0; i < jsonArray.length(); i++){
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 Category.DATABean dataBean = gson.fromJson(jsonArray.getJSONObject(i).toString(), Category.DATABean.class);
                                 dataBeans.add(dataBean);
                             }
@@ -110,7 +114,7 @@ ApiInterface apiHelper;
                             recyclerView.setAdapter(categoryAdapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             recyclerView.setHasFixedSize(true);
-                        }else{
+                        } else {
                             Toast.makeText(context, "404", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
@@ -118,8 +122,9 @@ ApiInterface apiHelper;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     try {
+                        loginDialog.dismissLoadingDialog();
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
@@ -133,6 +138,7 @@ ApiInterface apiHelper;
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(context, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                loginDialog.dismissLoadingDialog();
             }
         });
     }
@@ -141,31 +147,37 @@ ApiInterface apiHelper;
         apiHelper.getBanner(UtilsApi.APP_TOKEN).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject object = new JSONObject(response.body().string());
-                        if (object.getString("STATUS").equals("200")){
+                        if (object.getString("STATUS").equals("200")) {
+
+                            fetchCategory();
+
                             JSONArray array = object.getJSONArray("DATA");
 
                             banners = new ArrayList<>();
 
                             Gson gson = new Gson();
                             for (int i = 0; i < array.length(); i++) {
-                                Banner.DATABean banner = gson.fromJson(array.getJSONObject(i).toString(),Banner.DATABean.class);
+                                Banner.DATABean banner = gson.fromJson(array.getJSONObject(i).toString(), Banner.DATABean.class);
                                 banners.add(banner);
                             }
 
-                            adapterViewPager = new AdapterViewPager(context,banners);
+                            adapterViewPager = new AdapterViewPager(context, banners);
 
                             viewPager.setAdapter(adapterViewPager);
+
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     try {
+                        loginDialog.dismissLoadingDialog();
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
@@ -178,6 +190,7 @@ ApiInterface apiHelper;
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loginDialog.dismissLoadingDialog();
                 Toast.makeText(context, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
