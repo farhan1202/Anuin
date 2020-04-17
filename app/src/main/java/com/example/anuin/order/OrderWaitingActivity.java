@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anuin.MainActivity;
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.order.adapter.PhotoListAdapter;
 import com.example.anuin.utils.PrefManager;
@@ -88,6 +89,8 @@ public class OrderWaitingActivity extends AppCompatActivity {
     @BindView(R.id.btnSelesai)
     Button btnSelesai;
 
+    LoginDialog loginDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +103,9 @@ public class OrderWaitingActivity extends AppCompatActivity {
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
         context = this;
+        loginDialog = new LoginDialog(context);
         componentDidMount();
+
 
 
 
@@ -124,6 +129,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
 
     private void componentDidMount() {
         Intent intent = getIntent();
+        loginDialog.startLoadingDialog();
         apiInterface.getBookingDetail(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId(), intent.getIntExtra("IDORDER", 0))
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -132,6 +138,8 @@ public class OrderWaitingActivity extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.body().string());
                                 if (jsonObject.getString("STATUS").equals("200")) {
+                                    loginDialog.dismissLoadingDialog();
+
                                     JSONObject jsonObject1 = new JSONObject(jsonObject.getString("DATA"));
 
                                     String hour = jsonObject1.getString("created_at").substring(11, 13);
@@ -213,6 +221,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
                             }
                         } else {
                             try {
+                                loginDialog.dismissLoadingDialog();
                                 JSONObject jsonObject = new JSONObject(response.errorBody().string());
                                 Toast.makeText(OrderWaitingActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
@@ -225,6 +234,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        loginDialog.dismissLoadingDialog();
                         Toast.makeText(OrderWaitingActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -292,12 +302,22 @@ public class OrderWaitingActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                        Toast.makeText(context, "Connection Error", Toast.LENGTH_SHORT).show();
+                        Log.d("TAG", "onFailure: " + t.getMessage());
                     }
                 });
     }

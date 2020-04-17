@@ -127,6 +127,7 @@ public class FormPesananActivity extends AppCompatActivity {
 //    ImageView picktureResult;
     ArrayList<String> list;
     ArrayList<String> imagePath;
+    ArrayList<String> datas;
     TakePhotoAdapter takePhotoAdapter;
     int flag = 0;
 
@@ -422,7 +423,10 @@ public class FormPesananActivity extends AppCompatActivity {
                                             txtFormTime.setError("Please enter a work time");
                                         } else if (mImageUri == null) {
                                             Toast.makeText(mContext, "Please add a photo", Toast.LENGTH_SHORT).show();
-                                        } else {
+                                        } else if(datas.isEmpty()){
+                                            Toast.makeText(mContext, "Mohon tambahkan alamat", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
                                             initProsesOrder(id);
                                             loginDialog.startLoadingDialog();
                                         }
@@ -472,7 +476,7 @@ public class FormPesananActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")) {
                             JSONArray jsonArray = jsonObject.getJSONArray("DATA");
-                            ArrayList<String> datas = new ArrayList<>();
+                            datas = new ArrayList<>();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 datas.add(jsonArray.getJSONObject(i).getString("alamat"));
                             }

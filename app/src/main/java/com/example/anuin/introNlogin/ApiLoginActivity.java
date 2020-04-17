@@ -250,7 +250,6 @@ public class ApiLoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
             // Signed in successfully, show authenticated UI.
 //            Toast.makeText(this, "Wellcome " + account.getId(), Toast.LENGTH_SHORT).show();
             apiInterface.loginSocialMedia(UtilsApi.APP_TOKEN,
@@ -269,6 +268,7 @@ public class ApiLoginActivity extends AppCompatActivity {
                                         Toast.makeText(ApiLoginActivity.this, "" + account.getDisplayName(), Toast.LENGTH_SHORT).show();
                                         prefManager.spString(PrefManager.SP_TOKEN_USER, jsonObject1.getString("token"));
                                         prefManager.spInt(PrefManager.SP_ID, jsonObject1.getInt("id"));
+
                                         if (jsonObject1.getString("name").equals("") || jsonObject1.getString("name") == null ||
                                                 jsonObject1.getString("username").equals("") || jsonObject1.getString("username") == null) {
                                             updateProfile(account.getDisplayName(), jsonObject1.getString("email"), jsonObject1.getString("member_image"), jsonObject1.getString("phone_number"));
