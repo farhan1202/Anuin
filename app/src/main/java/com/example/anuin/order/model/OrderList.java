@@ -7,7 +7,7 @@ public class OrderList {
     /**
      * STATUS : 200
      * MESSAGE : Booking List
-     * DATA : [{"id":19,"member_id":46,"product_jasa_id":5,"member_address_id":26,"booking_code_id":19,"booking_payment_id":19,"provinsi":"2","city":"7","kecamatan":"128","kelurahan":"1305","kode_post":40184,"detail_lokasi":"asasaaaasasdsaa","work_date":"2020-01-20 00:00:00","detail_pekerjaan":"asdasd","biaya_panggil":100000,"biaya_layanan":10000,"total_tagihan":110000,"payment_method":"1","booking_status":"0","deleted":"0","created_at":"2020-04-02 11:07:02","updated_at":"2020-04-02 11:07:02","product_jasa":{"id":5,"category_id":1,"product_jasa_index":"1","product_jasa_title":"test","product_jasa_desc":"test","product_jasa_harga":2113,"product_jasa_warning":"<ul><li>-EDIT<\/li><\/ul>","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-03-31 07:34:56","updated_at":"2020-03-31 07:35:09","category":{"id":1,"master_category_id":1,"category_index":"1","category_title":"AC","category_desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur egestas tellus a hendrerit luctus.","category_image":"http://104.248.149.236/anuin/gateway/public/media/default/category/default.png","category_banner":"","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-01-01 00:00:00","updated_at":"2020-03-10 05:01:33","unextimage":"default/category/default.png"}},"booking_code":{"id":19,"booking_id":19,"member_id":46,"code_name":"4104620200402","booking_status":"0","deleted":"0","created_at":"2020-04-02 11:07:02","updated_at":"2020-04-02 11:07:02"},"booking_payment":{"id":19,"booking_id":19,"booking_code_id":19,"member_id":46,"booking_status":"0","payment_method":"1","payment_driver":"Gopay","total_tagihan":110000,"deleted":"0","created_at":"2020-04-02 11:07:02","updated_at":"2020-04-02 11:07:02"},"booking_image":[{"id":12,"booking_id":19,"member_id":46,"booking_status":"0","image_name":"http://104.248.149.236/anuin/gateway/public/media/images/member-booking/124929570.jpg","deleted":"0","created_at":"2020-04-02 11:07:02","updated_at":"2020-04-02 11:07:02","unextimage":"images/member-booking/124929570.jpg"}]}]
+     * DATA : [{"id":138,"member_id":46,"product_jasa_id":1,"member_address_id":55,"booking_code_id":138,"booking_payment_id":"","provinsi":"2","city":"7","kecamatan":"128","kelurahan":"1305","kode_post":26161,"detail_lokasi":"hjn","work_date":"2020-04-20 13:56:00","detail_pekerjaan":"g y gvg","biaya_panggil":1000000,"biaya_layanan":50000,"total_tagihan":1050000,"payment_method":"0","booking_status":"0","deleted":"0","created_at":"2020-04-20 13:57:04","updated_at":"2020-04-20 13:57:04","product_jasa":{"id":1,"category_id":1,"product_jasa_index":"1","product_jasa_title":"Perbaikan/Instalasi","product_jasa_desc":"Desc","product_jasa_harga":1000000,"product_jasa_warning":"warning","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-01-01 00:00:00","updated_at":"2020-03-31 00:21:38","category":{"id":1,"master_category_id":1,"category_index":"1","category_title":"AC","category_desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur egestas tellus a hendrerit luctus.","category_image":"http://104.248.149.236/anuin/gateway/public/media/default/category/default.png","category_banner":"","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-01-01 00:00:00","updated_at":"2020-03-10 05:01:33","unextimage":"default/category/default.png"}},"booking_code":{"id":138,"booking_id":138,"member_id":46,"code_name":"9284620200420","booking_status":"0","deleted":"0","created_at":"2020-04-20 13:57:04","updated_at":"2020-04-20 13:57:04"},"booking_payment":null,"booking_image":[{"id":113,"booking_id":138,"member_id":46,"booking_status":"0","image_name":"http://104.248.149.236/anuin/gateway/public/media/images/member-booking/281650379.jpg","deleted":"0","created_at":"2020-04-20 13:57:04","updated_at":"2020-04-20 13:57:04","unextimage":"images/member-booking/281650379.jpg"},{"id":114,"booking_id":138,"member_id":46,"booking_status":"0","image_name":"http://104.248.149.236/anuin/gateway/public/media/images/member-booking/802072760.jpg","deleted":"0","created_at":"2020-04-20 13:57:04","updated_at":"2020-04-20 13:57:04","unextimage":"images/member-booking/802072760.jpg"}]}]
      */
 
     private String STATUS;
@@ -40,32 +40,32 @@ public class OrderList {
 
     public static class DATABean {
         /**
-         * id : 19
+         * id : 138
          * member_id : 46
-         * product_jasa_id : 5
-         * member_address_id : 26
-         * booking_code_id : 19
-         * booking_payment_id : 19
+         * product_jasa_id : 1
+         * member_address_id : 55
+         * booking_code_id : 138
+         * booking_payment_id :
          * provinsi : 2
          * city : 7
          * kecamatan : 128
          * kelurahan : 1305
-         * kode_post : 40184
-         * detail_lokasi : asasaaaasasdsaa
-         * work_date : 2020-01-20 00:00:00
-         * detail_pekerjaan : asdasd
-         * biaya_panggil : 100000
-         * biaya_layanan : 10000
-         * total_tagihan : 110000
-         * payment_method : 1
+         * kode_post : 26161
+         * detail_lokasi : hjn
+         * work_date : 2020-04-20 13:56:00
+         * detail_pekerjaan : g y gvg
+         * biaya_panggil : 1000000
+         * biaya_layanan : 50000
+         * total_tagihan : 1050000
+         * payment_method : 0
          * booking_status : 0
          * deleted : 0
-         * created_at : 2020-04-02 11:07:02
-         * updated_at : 2020-04-02 11:07:02
-         * product_jasa : {"id":5,"category_id":1,"product_jasa_index":"1","product_jasa_title":"test","product_jasa_desc":"test","product_jasa_harga":2113,"product_jasa_warning":"<ul><li>-EDIT<\/li><\/ul>","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-03-31 07:34:56","updated_at":"2020-03-31 07:35:09","category":{"id":1,"master_category_id":1,"category_index":"1","category_title":"AC","category_desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur egestas tellus a hendrerit luctus.","category_image":"http://104.248.149.236/anuin/gateway/public/media/default/category/default.png","category_banner":"","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-01-01 00:00:00","updated_at":"2020-03-10 05:01:33","unextimage":"default/category/default.png"}}
-         * booking_code : {"id":19,"booking_id":19,"member_id":46,"code_name":"4104620200402","booking_status":"0","deleted":"0","created_at":"2020-04-02 11:07:02","updated_at":"2020-04-02 11:07:02"}
-         * booking_payment : {"id":19,"booking_id":19,"booking_code_id":19,"member_id":46,"booking_status":"0","payment_method":"1","payment_driver":"Gopay","total_tagihan":110000,"deleted":"0","created_at":"2020-04-02 11:07:02","updated_at":"2020-04-02 11:07:02"}
-         * booking_image : [{"id":12,"booking_id":19,"member_id":46,"booking_status":"0","image_name":"http://104.248.149.236/anuin/gateway/public/media/images/member-booking/124929570.jpg","deleted":"0","created_at":"2020-04-02 11:07:02","updated_at":"2020-04-02 11:07:02","unextimage":"images/member-booking/124929570.jpg"}]
+         * created_at : 2020-04-20 13:57:04
+         * updated_at : 2020-04-20 13:57:04
+         * product_jasa : {"id":1,"category_id":1,"product_jasa_index":"1","product_jasa_title":"Perbaikan/Instalasi","product_jasa_desc":"Desc","product_jasa_harga":1000000,"product_jasa_warning":"warning","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-01-01 00:00:00","updated_at":"2020-03-31 00:21:38","category":{"id":1,"master_category_id":1,"category_index":"1","category_title":"AC","category_desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur egestas tellus a hendrerit luctus.","category_image":"http://104.248.149.236/anuin/gateway/public/media/default/category/default.png","category_banner":"","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-01-01 00:00:00","updated_at":"2020-03-10 05:01:33","unextimage":"default/category/default.png"}}
+         * booking_code : {"id":138,"booking_id":138,"member_id":46,"code_name":"9284620200420","booking_status":"0","deleted":"0","created_at":"2020-04-20 13:57:04","updated_at":"2020-04-20 13:57:04"}
+         * booking_payment : null
+         * booking_image : [{"id":113,"booking_id":138,"member_id":46,"booking_status":"0","image_name":"http://104.248.149.236/anuin/gateway/public/media/images/member-booking/281650379.jpg","deleted":"0","created_at":"2020-04-20 13:57:04","updated_at":"2020-04-20 13:57:04","unextimage":"images/member-booking/281650379.jpg"},{"id":114,"booking_id":138,"member_id":46,"booking_status":"0","image_name":"http://104.248.149.236/anuin/gateway/public/media/images/member-booking/802072760.jpg","deleted":"0","created_at":"2020-04-20 13:57:04","updated_at":"2020-04-20 13:57:04","unextimage":"images/member-booking/802072760.jpg"}]
          */
 
         private int id;
@@ -73,7 +73,7 @@ public class OrderList {
         private int product_jasa_id;
         private int member_address_id;
         private int booking_code_id;
-        private int booking_payment_id;
+        private String booking_payment_id;
         private String provinsi;
         private String city;
         private String kecamatan;
@@ -92,7 +92,7 @@ public class OrderList {
         private String updated_at;
         private ProductJasaBean product_jasa;
         private BookingCodeBean booking_code;
-        private BookingPaymentBean booking_payment;
+        private Object booking_payment;
         private List<BookingImageBean> booking_image;
 
         public int getId() {
@@ -135,11 +135,11 @@ public class OrderList {
             this.booking_code_id = booking_code_id;
         }
 
-        public int getBooking_payment_id() {
+        public String getBooking_payment_id() {
             return booking_payment_id;
         }
 
-        public void setBooking_payment_id(int booking_payment_id) {
+        public void setBooking_payment_id(String booking_payment_id) {
             this.booking_payment_id = booking_payment_id;
         }
 
@@ -287,11 +287,11 @@ public class OrderList {
             this.booking_code = booking_code;
         }
 
-        public BookingPaymentBean getBooking_payment() {
+        public Object getBooking_payment() {
             return booking_payment;
         }
 
-        public void setBooking_payment(BookingPaymentBean booking_payment) {
+        public void setBooking_payment(Object booking_payment) {
             this.booking_payment = booking_payment;
         }
 
@@ -305,19 +305,19 @@ public class OrderList {
 
         public static class ProductJasaBean {
             /**
-             * id : 5
+             * id : 1
              * category_id : 1
              * product_jasa_index : 1
-             * product_jasa_title : test
-             * product_jasa_desc : test
-             * product_jasa_harga : 2113
-             * product_jasa_warning : <ul><li>-EDIT</li></ul>
+             * product_jasa_title : Perbaikan/Instalasi
+             * product_jasa_desc : Desc
+             * product_jasa_harga : 1000000
+             * product_jasa_warning : warning
              * deleted : 0
              * actived : 1
              * created_by : 1
              * updated_by : 1
-             * created_at : 2020-03-31 07:34:56
-             * updated_at : 2020-03-31 07:35:09
+             * created_at : 2020-01-01 00:00:00
+             * updated_at : 2020-03-31 00:21:38
              * category : {"id":1,"master_category_id":1,"category_index":"1","category_title":"AC","category_desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur egestas tellus a hendrerit luctus.","category_image":"http://104.248.149.236/anuin/gateway/public/media/default/category/default.png","category_banner":"","deleted":"0","actived":"1","created_by":"1","updated_by":"1","created_at":"2020-01-01 00:00:00","updated_at":"2020-03-10 05:01:33","unextimage":"default/category/default.png"}
              */
 
@@ -597,14 +597,14 @@ public class OrderList {
 
         public static class BookingCodeBean {
             /**
-             * id : 19
-             * booking_id : 19
+             * id : 138
+             * booking_id : 138
              * member_id : 46
-             * code_name : 4104620200402
+             * code_name : 9284620200420
              * booking_status : 0
              * deleted : 0
-             * created_at : 2020-04-02 11:07:02
-             * updated_at : 2020-04-02 11:07:02
+             * created_at : 2020-04-20 13:57:04
+             * updated_at : 2020-04-20 13:57:04
              */
 
             private int id;
@@ -681,133 +681,17 @@ public class OrderList {
             }
         }
 
-        public static class BookingPaymentBean {
-            /**
-             * id : 19
-             * booking_id : 19
-             * booking_code_id : 19
-             * member_id : 46
-             * booking_status : 0
-             * payment_method : 1
-             * payment_driver : Gopay
-             * total_tagihan : 110000
-             * deleted : 0
-             * created_at : 2020-04-02 11:07:02
-             * updated_at : 2020-04-02 11:07:02
-             */
-
-            private int id;
-            private int booking_id;
-            private int booking_code_id;
-            private int member_id;
-            private String booking_status;
-            private String payment_method;
-            private String payment_driver;
-            private int total_tagihan;
-            private String deleted;
-            private String created_at;
-            private String updated_at;
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public int getBooking_id() {
-                return booking_id;
-            }
-
-            public void setBooking_id(int booking_id) {
-                this.booking_id = booking_id;
-            }
-
-            public int getBooking_code_id() {
-                return booking_code_id;
-            }
-
-            public void setBooking_code_id(int booking_code_id) {
-                this.booking_code_id = booking_code_id;
-            }
-
-            public int getMember_id() {
-                return member_id;
-            }
-
-            public void setMember_id(int member_id) {
-                this.member_id = member_id;
-            }
-
-            public String getBooking_status() {
-                return booking_status;
-            }
-
-            public void setBooking_status(String booking_status) {
-                this.booking_status = booking_status;
-            }
-
-            public String getPayment_method() {
-                return payment_method;
-            }
-
-            public void setPayment_method(String payment_method) {
-                this.payment_method = payment_method;
-            }
-
-            public String getPayment_driver() {
-                return payment_driver;
-            }
-
-            public void setPayment_driver(String payment_driver) {
-                this.payment_driver = payment_driver;
-            }
-
-            public int getTotal_tagihan() {
-                return total_tagihan;
-            }
-
-            public void setTotal_tagihan(int total_tagihan) {
-                this.total_tagihan = total_tagihan;
-            }
-
-            public String getDeleted() {
-                return deleted;
-            }
-
-            public void setDeleted(String deleted) {
-                this.deleted = deleted;
-            }
-
-            public String getCreated_at() {
-                return created_at;
-            }
-
-            public void setCreated_at(String created_at) {
-                this.created_at = created_at;
-            }
-
-            public String getUpdated_at() {
-                return updated_at;
-            }
-
-            public void setUpdated_at(String updated_at) {
-                this.updated_at = updated_at;
-            }
-        }
-
         public static class BookingImageBean {
             /**
-             * id : 12
-             * booking_id : 19
+             * id : 113
+             * booking_id : 138
              * member_id : 46
              * booking_status : 0
-             * image_name : http://104.248.149.236/anuin/gateway/public/media/images/member-booking/124929570.jpg
+             * image_name : http://104.248.149.236/anuin/gateway/public/media/images/member-booking/281650379.jpg
              * deleted : 0
-             * created_at : 2020-04-02 11:07:02
-             * updated_at : 2020-04-02 11:07:02
-             * unextimage : images/member-booking/124929570.jpg
+             * created_at : 2020-04-20 13:57:04
+             * updated_at : 2020-04-20 13:57:04
+             * unextimage : images/member-booking/281650379.jpg
              */
 
             private int id;

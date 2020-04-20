@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -36,6 +38,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,12 +56,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -112,6 +118,7 @@ public class FormPesananActivity extends AppCompatActivity {
     LoginDialog loginDialog;
     ApiInterface apiInterface;
     PrefManager prefManager;
+    Context context;
 
     int id1, id2, id3, id4;
     int product_jasa_harga, product_jasa_harga_layanan, total_tagihan;
@@ -130,6 +137,7 @@ public class FormPesananActivity extends AppCompatActivity {
     ArrayList<String> datas;
     TakePhotoAdapter takePhotoAdapter;
     int flag = 0;
+    String currentImagePath = null;
 
     Bitmap selectedImage;
 
@@ -148,6 +156,7 @@ public class FormPesananActivity extends AppCompatActivity {
         apiInterface = UtilsApi.getApiService();
         prefManager = new PrefManager(this);
         loginDialog = new LoginDialog(this);
+        context =this;
         fetchLokasi();
         fetchTitle();
 
@@ -250,7 +259,6 @@ public class FormPesananActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
             mImageUri = data.getData();
 
-
             /*picktureResult.setImageURI(mImageUri);
             picktureResult.setVisibility(View.VISIBLE);*/
             Toast.makeText(getApplicationContext(), "" + getRealPathFromUri(mImageUri), Toast.LENGTH_SHORT).show();
@@ -263,6 +271,15 @@ public class FormPesananActivity extends AppCompatActivity {
 
 
             imagePath.add(getRealPathFromUri(mImageUri));
+        }else if(requestCode == 2 && resultCode == RESULT_OK){
+            Toast.makeText(mContext, "" + currentImagePath, Toast.LENGTH_SHORT).show();
+            list.add(String.valueOf(Uri.fromFile(new File(currentImagePath))));
+            takePhotoAdapter = new TakePhotoAdapter(mContext, list);
+            recyclerPhoto.setAdapter(takePhotoAdapter);
+            recyclerPhoto.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            btnClear.setVisibility(View.VISIBLE);
+
+            imagePath.add(currentImagePath);
         }
 
         if (requestCode == 27) {
@@ -271,6 +288,7 @@ public class FormPesananActivity extends AppCompatActivity {
             }
         }
     }
+
 
     @NonNull
     private RequestBody createPartFromString(String descriptionString) {
@@ -297,8 +315,8 @@ public class FormPesananActivity extends AppCompatActivity {
         bodyMap.put("biaya_panggil", createPartFromString(product_jasa_harga + ""));
         bodyMap.put("biaya_layanan", createPartFromString(product_jasa_harga_layanan + ""));
         bodyMap.put("total_tagihan", createPartFromString(total_tagihan + ""));
-        bodyMap.put("payment_method", createPartFromString("0"));
-        bodyMap.put("payment_driver", createPartFromString("Gopay"));
+        /*bodyMap.put("payment_method", createPartFromString("0"));
+        bodyMap.put("payment_driver", createPartFromString("Gopay"));*/
 
 
         MultipartBody.Part[] propertyImagePart = new MultipartBody.Part[imagePath.size()];
@@ -364,9 +382,59 @@ public class FormPesananActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);*/
 
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        /*Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, PICK_IMAGE_REQUEST);
+        startActivityForResult(photoPickerIntent, PICK_IMAGE_REQUEST);*/
+
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Add Photo");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePicture.resolveActivity(getPackageManager()) != null){
+                        File imageFile = null;
+                        try {
+                            imageFile = getImageFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (imageFile != null){
+                            Uri imageUri = FileProvider.getUriForFile(context, "com.example.android.fileprovider", imageFile);
+                            takePicture.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                            startActivityForResult(takePicture, 2);
+                        }
+                    }
+
+
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickerIntent.setType("image/*");
+                    startActivityForResult(photoPickerIntent, PICK_IMAGE_REQUEST);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private File getImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageName = "jpg_"+timeStamp+"_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File imageFile = File.createTempFile(imageName,".jpg",storageDir);
+        currentImagePath = imageFile.getAbsolutePath();
+        return imageFile;
+
     }
 
     private String getRealPathFromUri(Uri uri) {
@@ -421,7 +489,7 @@ public class FormPesananActivity extends AppCompatActivity {
                                             txtFormDate.setError("Please enter a work date");
                                         } else if (TextUtils.isEmpty(txtFormTime.getText().toString())) {
                                             txtFormTime.setError("Please enter a work time");
-                                        } else if (mImageUri == null) {
+                                        } else if (list == null) {
                                             Toast.makeText(mContext, "Please add a photo", Toast.LENGTH_SHORT).show();
                                         } else if(datas.isEmpty()){
                                             Toast.makeText(mContext, "Mohon tambahkan alamat", Toast.LENGTH_SHORT).show();

@@ -274,19 +274,19 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        android:text="Pilih metode pembayaran"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"-->
+<!--                        android:text="Pilih metode pembayaran"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/txtPesananTitle"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/colorCard" />
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="1dp"-->
+<!--                        android:layout_below="@+id/txtPesananTitle"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:background="@color/colorCard" />-->
 
                     <RelativeLayout
                         android:layout_width="match_parent"
