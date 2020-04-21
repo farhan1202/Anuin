@@ -495,7 +495,7 @@ public class FormPesananActivity extends AppCompatActivity {
                                             Toast.makeText(mContext, "Mohon tambahkan alamat", Toast.LENGTH_SHORT).show();
                                         }
                                         else {
-                                            initProsesOrder(id);
+                                            initProsesOrder(ids);
                                             loginDialog.startLoadingDialog();
                                         }
                                     }

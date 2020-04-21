@@ -136,6 +136,11 @@ public interface ApiInterface {
                                          @Field("member_id") int idMember,
                                          @Field("member_address_id") int idAddressMember);
 
+    @GET("payment-method/{id}")
+    Call<ResponseBody> getMethodPaymentDetail (@Header("APP_TOKEN") String tokenApp,
+                                               @Header("USER_TOKEN") String tokenUser,
+                                               @Path("id") int id);
+
     @Multipart
     @POST("booking-order")
     Call<ResponseBody> bookingOrder(@HeaderMap Map<String, String> stringStringMap,

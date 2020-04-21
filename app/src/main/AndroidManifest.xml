@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".order.OrderCompleteDetailActivity"></activity>
+        <activity android:name=".order.PaymentBankActivity"></activity>
+        <activity android:name=".order.OrderCompleteDetailActivity" />
         <activity android:name=".order.ViewOrderPhotoActivity" />
         <activity android:name=".home.ViewImageActivity" />
         <activity android:name=".other.setting.DetailChildActivity" />
@@ -95,13 +96,13 @@
         </activity>
 
         <provider
-            android:authorities="com.example.android.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path"/>
+                android:resource="@xml/file_path" />
         </provider>
     </application>
 

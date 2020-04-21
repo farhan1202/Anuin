@@ -2,6 +2,7 @@ package com.example.anuin.order;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -47,6 +48,7 @@ import retrofit2.Response;
 public class OrderWaitingActivity extends AppCompatActivity {
     public static int METODE_PAYMENT = 27;
     int metode = -1;
+    String payment_driver = "";
 
     Toolbar toolbar;
     @BindView(R.id.txtCoundown)
@@ -116,15 +118,59 @@ public class OrderWaitingActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == METODE_PAYMENT) {
             if (resultCode == RESULT_OK) {
-                metode = data.getIntExtra("metode", -1);
-                String method = null;
-                if (metode == 0) {
-                    method = "Tunai";
-                }
-                pembayaran.setText(method);
-                pembayaran.setVisibility(View.VISIBLE);
+                fetchPembayaran(data);
             }
         }
+    }
+
+    private void fetchPembayaran(Intent data) {
+        loginDialog.startLoadingDialog();
+        apiInterface.getMethodPaymentDetail(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), data.getIntExtra("metode", 0))
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.body().string());
+                                if (jsonObject.getString("STATUS").equals("200")){
+                                    loginDialog.dismissLoadingDialog();
+                                    JSONObject jsonObject1 = new JSONObject(jsonObject.getJSONObject("DATA").toString());
+                                    JSONArray jsonArray = jsonObject1.getJSONArray("payment_method");
+//                                    Toast.makeText(context, "" + jsonArray.getJSONObject(0).getInt("id"), Toast.LENGTH_SHORT).show();
+                                    for (int i = 0 ; i < jsonArray.length() ; i ++){
+                                        if (data.getIntExtra("id", 0) == jsonArray.getJSONObject(i).getInt("id")){
+                                            pembayaran.setText(jsonArray.getJSONObject(i).getString("title"));
+                                            pembayaran.setVisibility(View.VISIBLE);
+                                            btnPaymentMethode.setText("UBAH PEMBAYARAN");
+                                            metode = data.getIntExtra("metode", -1);
+                                            payment_driver = jsonArray.getJSONObject(i).getString("variable_method");
+                                        }
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            try {
+                                loginDialog.dismissLoadingDialog();
+                                JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        loginDialog.dismissLoadingDialog();
+                        Toast.makeText(context, "Connection Error ", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void componentDidMount() {
@@ -247,7 +293,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
                 biaya_layanan,
                 total_tagihan,
                 metode+"",
-                "").enqueue(new Callback<ResponseBody>() {
+                payment_driver).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
@@ -255,9 +301,12 @@ public class OrderWaitingActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")){
                             Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(OrderWaitingActivity.this, MainActivity.class);
-                            intent.putExtra("FLAGPAGE", 1);
-                            startActivity(intent);
+//                            Intent intent = new Intent(OrderWaitingActivity.this, MainActivity.class);
+//                            intent.putExtra("FLAGPAGE", 1);
+//                            startActivity(intent);
+                            JSONObject jsonObject1 = new JSONObject(jsonObject.getJSONObject("DATA").toString());
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject1.getString("redirect_url")));
+                            startActivity(browserIntent);
                             finish();
                         }
                     } catch (JSONException e) {

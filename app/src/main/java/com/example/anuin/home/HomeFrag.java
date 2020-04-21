@@ -84,6 +84,7 @@ public class HomeFrag extends Fragment {
         context = view.getContext();
         apiHelper = UtilsApi.getApiService();
         viewPager = view.findViewById(R.id.viewPager);
+        viewPager.requestFocus();
         recyclerView = view.findViewById(R.id.recyclerGroup);
         loginDialog = new LoginDialog(context);
         loginDialog.startLoadingDialog();

@@ -4,6 +4,8 @@ package com.example.anuin.order;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.anuin.Modal.LoginDialog;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -19,7 +21,6 @@ import com.example.anuin.order.adapter.PagerOrderAdapter;
  * A simple {@link Fragment} subclass.
  */
 public class OrderFrag extends Fragment {
-
 
     public OrderFrag() {
         // Required empty public constructor
