@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".order.OrderChatActivity">
+    <RelativeLayout
+        android:id="@+id/chatTop"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/btnBacks"
+            android:src="@drawable/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_toRightOf="@id/btnBacks"
+            android:layout_marginLeft="20dp"
+            android:src="@android:color/darker_gray"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"/>
+        <TextView
+            android:id="@+id/namaMerchant"
+            android:text="Jaya Electrik "
+            android:textColor="@android:color/black"
+            android:layout_toRightOf="@id/profile_image"
+            android:layout_marginLeft="20dp"
+            android:textSize="19sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_below="@id/chatTop"
+        android:background="@color/colorCard"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+    <ScrollView
+        android:id="@+id/chatMid"
+        android:layout_below="@id/chatTop"
+        android:layout_above="@id/chatBot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Merchan Name"
+                            android:textColor="@color/orange"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="3dp"
+                            android:layout_height="3dp"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@color/colorCard" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 min" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_merchant"
+                        android:padding="10dp"
+                        android:text="Hallo, Selamat siang pak"
+                        android:textColor="@android:color/black" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/nama"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Anda"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="3dp"
+                            android:layout_height="3dp"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@color/colorCard" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 min" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_gravity="end"
+                        android:id="@+id/text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_member"
+                        android:padding="10dp"
+                        android:text="Ya selamat Siang"
+                        android:textColor="@android:color/black" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <View
+        android:layout_above="@id/chatBot"
+        android:background="@color/colorCard"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+    <RelativeLayout
+        android:id="@+id/chatBot"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:padding="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+
+            android:background="@android:color/white"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/txtSendChat"
+                android:background="@android:color/white"
+                android:hint="Tulis Pesan Disini"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_height="30dp"/>
+            <View
+                android:background="@color/colorCard"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:id="@+id/btnSendChat"
+                android:src="@drawable/ic_send_black_24dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
