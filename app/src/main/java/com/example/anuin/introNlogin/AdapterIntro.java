@@ -3,6 +3,8 @@ package com.example.anuin.introNlogin;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,7 @@ public class AdapterIntro  extends PagerAdapter {
         Walkthrough walkthrough = walkthroughs.get(position);
 
         txtTitle.setText(walkthrough.getTitle());
-        txtDesc.setText(walkthrough.getDesc());
+        txtDesc.setText(Html.fromHtml(walkthrough.getDesc()));
         Glide.with(context)
                 .load(walkthrough.getImgSrc())
                 .into(imageView);

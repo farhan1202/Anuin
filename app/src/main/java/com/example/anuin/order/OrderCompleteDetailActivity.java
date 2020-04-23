@@ -138,9 +138,10 @@ public class OrderCompleteDetailActivity extends AppCompatActivity {
                                     .into(imageMerchant);
 
                             JSONObject jsonPayment = new JSONObject(jsonArray.getJSONObject(position).getString("booking_payment"));
-                            if (jsonPayment.getString("payment_method").equals("0")){
-                                metodeBayar.setText("Tunai");
-                            }
+                            String payment_type_title = jsonPayment.getString("payment_type_title");
+                            String payment_method_title = jsonPayment.getString("payment_method_title");
+
+                            metodeBayar.setText(payment_type_title+" - "+payment_method_title);
 
                             orderDate.setText(jsonArray.getJSONObject(position).getString("work_date").substring(0, 11));
                             orderTime.setText(jsonArray.getJSONObject(position).getString("work_date").substring(11));

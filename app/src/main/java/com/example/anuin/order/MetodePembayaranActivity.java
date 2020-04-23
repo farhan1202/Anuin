@@ -51,14 +51,15 @@ public class MetodePembayaranActivity extends AppCompatActivity {
         cvTunai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MetodePembayaranActivity.this, BayarActivity.class);
-                startActivityForResult(intent, OrderWaitingActivity.METODE_PAYMENT);
+                Intent intent1 = new Intent(getApplicationContext(), PaymentListActivity.class);
+                intent1.putExtra("id", 1);
+                startActivityForResult(intent1, 1);
             }
         });
         cvBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(getApplicationContext(), PaymentBankActivity.class);
+                Intent intent1 = new Intent(getApplicationContext(), PaymentListActivity.class);
                 intent1.putExtra("id", 2);
                 startActivityForResult(intent1, 2);
             }
@@ -67,10 +68,9 @@ public class MetodePembayaranActivity extends AppCompatActivity {
         cvEWalet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent();
-                intent1.putExtra("metode", 3);
-                setResult(RESULT_OK, intent1);
-                finish();
+                Intent intent1 = new Intent(getApplicationContext(), PaymentListActivity.class);
+                intent1.putExtra("id", 3);
+                startActivityForResult(intent1, 3);
             }
         });
 
@@ -79,8 +79,18 @@ public class MetodePembayaranActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2){
-            if (resultCode == RESULT_OK){
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        } else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        } else if (requestCode == 3) {
+            if (resultCode == RESULT_OK) {
                 setResult(RESULT_OK, data);
                 finish();
             }

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anuin.R;
 import com.example.anuin.order.interfaces.PaymentBankInterface;
-import com.example.anuin.order.model.PaymentBank;
+import com.example.anuin.order.model.Payment;
 
 import java.util.List;
 
@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
 
 public class PaymentBankAdapter extends RecyclerView.Adapter<PaymentBankAdapter.viewHolder> {
     Context context;
-    List<PaymentBank.DATABean.PaymentMethodBean> paymentBanks;
+    List<Payment.DATABean.PaymentMethodBean> paymentBanks;
     PaymentBankInterface onItemClick;
     private int lastSelectedPosition = -1;
 
-    public PaymentBankAdapter(Context context, List<PaymentBank.DATABean.PaymentMethodBean> paymentBanks, PaymentBankInterface onItemClick) {
+    public PaymentBankAdapter(Context context, List<Payment.DATABean.PaymentMethodBean> paymentBanks, PaymentBankInterface onItemClick) {
         this.context = context;
         this.paymentBanks = paymentBanks;
         this.onItemClick = onItemClick;

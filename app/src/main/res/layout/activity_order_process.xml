@@ -86,7 +86,7 @@
                             android:layout_height="wrap_content"/>
                     </RelativeLayout>
                     <RelativeLayout
-
+                        android:id="@+id/btnChat"
                         android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:layout_width="0dp"
@@ -451,9 +451,12 @@
 
                             <TextView
                                 android:id="@+id/metodeBayar"
-                                android:layout_width="wrap_content"
+                                android:background="@drawable/inpuut_back"
+                                android:padding="10dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Mandiri" />
+                                android:text="-"
+                                android:textSize="18sp" />
 
 
                         </RelativeLayout>

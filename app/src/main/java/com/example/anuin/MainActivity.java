@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
             backToast.cancel();
             super.onBackPressed();
             moveTaskToBack(true);
-            System.exit(0);
         } else {
             backToast = Toast.makeText(this, "Press back againt to exit ", Toast.LENGTH_SHORT);
             backToast.show();

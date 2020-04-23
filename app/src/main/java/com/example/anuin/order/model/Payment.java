@@ -2,7 +2,7 @@ package com.example.anuin.order.model;
 
 import java.util.List;
 
-public class PaymentBank {
+public class Payment {
 
     /**
      * STATUS : 200

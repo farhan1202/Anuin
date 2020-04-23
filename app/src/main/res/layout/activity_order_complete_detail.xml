@@ -421,9 +421,11 @@
 
                             <TextView
                                 android:id="@+id/metodeBayar"
+                                android:background="@drawable/inpuut_back"
+                                android:padding="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Mandiri" />
+                                android:text="-" />
 
 
                         </RelativeLayout>

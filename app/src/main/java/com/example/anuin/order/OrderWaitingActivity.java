@@ -107,10 +107,6 @@ public class OrderWaitingActivity extends AppCompatActivity {
         context = this;
         loginDialog = new LoginDialog(context);
         componentDidMount();
-
-
-
-
     }
 
     @Override
@@ -307,7 +303,6 @@ public class OrderWaitingActivity extends AppCompatActivity {
                             JSONObject jsonObject1 = new JSONObject(jsonObject.getJSONObject("DATA").toString());
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject1.getString("redirect_url")));
                             startActivity(browserIntent);
-                            finish();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -412,6 +407,55 @@ public class OrderWaitingActivity extends AppCompatActivity {
 
         }.start();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPayment();
+    }
+
+    private void checkPayment() {
+        Intent intent = getIntent();
+        apiInterface.getBookingDetail(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), prefManager.getId(), intent.getIntExtra("IDORDER", 0))
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.body().string());
+                                if (jsonObject.getString("STATUS").equals("200")) {
+                                    JSONObject jsonObject1 = new JSONObject(jsonObject.getString("DATA"));
+                                    if (jsonObject1.getString("booking_status").equals("1")){
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.putExtra("FLAGPAGE", 1);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                                Toast.makeText(OrderWaitingActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(OrderWaitingActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override

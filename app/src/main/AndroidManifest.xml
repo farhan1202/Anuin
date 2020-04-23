@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".order.PaymentBankActivity"></activity>
+        <activity android:name=".order.OrderChatActivity"></activity>
+        <activity android:name=".order.PaymentListActivity" />
         <activity android:name=".order.OrderCompleteDetailActivity" />
         <activity android:name=".order.ViewOrderPhotoActivity" />
         <activity android:name=".home.ViewImageActivity" />

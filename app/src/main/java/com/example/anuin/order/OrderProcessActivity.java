@@ -86,6 +86,8 @@ public class OrderProcessActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     PrefManager prefManager;
     Context context;
+    @BindView(R.id.btnChat)
+    RelativeLayout btnChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +121,7 @@ public class OrderProcessActivity extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.body().string());
                                 if (jsonObject.getString("STATUS").equals("200")) {
+
                                     JSONObject jsonObject1 = new JSONObject(jsonObject.getString("DATA"));
 
                                     txtBiayaPanggil.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("biaya_panggil")) + ""));
@@ -145,9 +148,11 @@ public class OrderProcessActivity extends AppCompatActivity {
                                             .into(imageMerchant);
 
                                     JSONObject jsonPayment = new JSONObject(jsonObject1.getString("booking_payment"));
-                                    if (jsonPayment.getString("payment_method").equals("0")){
-                                        metodeBayar.setText("Tunai");
-                                    }
+                                    String payment_type_title = jsonPayment.getString("payment_type_title");
+                                    String payment_method_title = jsonPayment.getString("payment_method_title");
+
+                                    metodeBayar.setText(payment_type_title + " - " + payment_method_title);
+
 
                                     orderDate.setText(jsonObject1.getString("work_date").substring(0, 11));
                                     orderTime.setText(jsonObject1.getString("work_date").substring(11));
@@ -174,6 +179,13 @@ public class OrderProcessActivity extends AppCompatActivity {
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
+                                        }
+                                    });
+
+                                    btnChat.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(getApplicationContext(), OrderChatActivity.class));
                                         }
                                     });
 

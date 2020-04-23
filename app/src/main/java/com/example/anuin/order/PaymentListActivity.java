@@ -16,7 +16,7 @@ import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.R;
 import com.example.anuin.order.adapter.PaymentBankAdapter;
 import com.example.anuin.order.interfaces.PaymentBankInterface;
-import com.example.anuin.order.model.PaymentBank;
+import com.example.anuin.order.model.Payment;
 import com.example.anuin.utils.PrefManager;
 import com.example.anuin.utils.apihelper.ApiInterface;
 import com.example.anuin.utils.apihelper.UtilsApi;
@@ -37,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PaymentBankActivity extends AppCompatActivity {
+public class PaymentListActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerPayBank)
     RecyclerView recyclerPayBank;
@@ -53,6 +53,7 @@ public class PaymentBankActivity extends AppCompatActivity {
 
     boolean flags = false;
     int idPaymentBank;
+    int metode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +74,9 @@ public class PaymentBankActivity extends AppCompatActivity {
 
     private void componenDidMount() {
         Intent intent = getIntent();
+        metode = intent.getIntExtra("id", 0);
         loginDialog.startLoadingDialog();
-        apiInterface.getMethodPaymentDetail(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), intent.getIntExtra("id", 0))
+        apiInterface.getMethodPaymentDetail(UtilsApi.APP_TOKEN, prefManager.getTokenUser(), metode)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -85,11 +87,13 @@ public class PaymentBankActivity extends AppCompatActivity {
                                     loginDialog.dismissLoadingDialog();
                                     JSONObject jsonObject1 = new JSONObject(jsonObject.getJSONObject("DATA").toString());
 
+                                    tvBank.setText(jsonObject1.getString("title"));
+
                                     JSONArray jsonArray = jsonObject1.getJSONArray("payment_method");
-                                    List<PaymentBank.DATABean.PaymentMethodBean> paymentMethodBeans = new ArrayList<>();
+                                    List<Payment.DATABean.PaymentMethodBean> paymentMethodBeans = new ArrayList<>();
                                     Gson gson = new Gson();
                                     for (int i = 0 ; i < jsonArray.length() ; i++){
-                                        PaymentBank.DATABean.PaymentMethodBean paymentMethodBean = gson.fromJson(jsonArray.getString(i), PaymentBank.DATABean.PaymentMethodBean.class);
+                                        Payment.DATABean.PaymentMethodBean paymentMethodBean = gson.fromJson(jsonArray.getString(i), Payment.DATABean.PaymentMethodBean.class);
                                         paymentMethodBeans.add(paymentMethodBean);
                                     }
 
@@ -110,7 +114,7 @@ public class PaymentBankActivity extends AppCompatActivity {
                                             if (flags){
                                                 Intent intent = new Intent();
                                                 intent.putExtra("id", idPaymentBank);
-                                                intent.putExtra("metode", 2);
+                                                intent.putExtra("metode", metode);
                                                 setResult(RESULT_OK, intent);
                                                 finish();
                                             }
