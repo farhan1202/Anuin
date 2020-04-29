@@ -125,16 +125,16 @@ public class OrderWaitingActivity extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.body().string());
-                                if (jsonObject.getString("STATUS").equals("200")){
+                                if (jsonObject.getString("STATUS").equals("200")) {
                                     loginDialog.dismissLoadingDialog();
                                     JSONObject jsonObject1 = new JSONObject(jsonObject.getJSONObject("DATA").toString());
                                     JSONArray jsonArray = jsonObject1.getJSONArray("payment_method");
 //                                    Toast.makeText(context, "" + jsonArray.getJSONObject(0).getInt("id"), Toast.LENGTH_SHORT).show();
-                                    for (int i = 0 ; i < jsonArray.length() ; i ++){
-                                        if (data.getIntExtra("id", 0) == jsonArray.getJSONObject(i).getInt("id")){
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        if (data.getIntExtra("id", 0) == jsonArray.getJSONObject(i).getInt("id")) {
                                             pembayaran.setText(jsonArray.getJSONObject(i).getString("title"));
                                             pembayaran.setVisibility(View.VISIBLE);
                                             btnPaymentMethode.setText("UBAH PEMBAYARAN");
@@ -148,7 +148,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }else{
+                        } else {
                             try {
                                 loginDialog.dismissLoadingDialog();
                                 JSONObject jsonObject = new JSONObject(response.errorBody().string());
@@ -188,7 +188,8 @@ public class OrderWaitingActivity extends AppCompatActivity {
                                     String menit = jsonObject1.getString("created_at").substring(14, 16);
                                     String detik = jsonObject1.getString("created_at").substring(17);
                                     int totalDetikOrder = (Integer.parseInt(hour) * 3600) + (Integer.parseInt(menit) * 60) + Integer.parseInt(detik);
-                                    countdownPayment(totalDetikOrder);
+                                        countdownPayment(totalDetikOrder);
+
                                     txtBiayaPanggil.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("biaya_panggil")) + ""));
                                     txtBiayaLayanan.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("biaya_layanan")) + ""));
                                     txtTotalTagihan.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(jsonObject1.getInt("total_tagihan")) + ""));
@@ -227,9 +228,9 @@ public class OrderWaitingActivity extends AppCompatActivity {
                                     btnSelesai.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            if (metode == -1 ){
+                                            if (metode == -1) {
                                                 Toast.makeText(context, "Harap Pilih Metode Pembayaran", Toast.LENGTH_SHORT).show();
-                                            }else{
+                                            } else {
                                                 try {
                                                     initPayment(jsonObject1.getInt("id"), jsonObject1.getInt("biaya_panggil"), jsonObject1.getInt("biaya_layanan"),
                                                             jsonObject1.getInt("total_tagihan"));
@@ -288,14 +289,14 @@ public class OrderWaitingActivity extends AppCompatActivity {
                 biaya_panggil,
                 biaya_layanan,
                 total_tagihan,
-                metode+"",
+                metode + "",
                 payment_driver).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        if (jsonObject.getString("STATUS").equals("200")){
+                        if (jsonObject.getString("STATUS").equals("200")) {
                             Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
 //                            Intent intent = new Intent(OrderWaitingActivity.this, MainActivity.class);
 //                            intent.putExtra("FLAGPAGE", 1);
@@ -309,7 +310,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     try {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
@@ -346,7 +347,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                        }else{
+                        } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(response.errorBody().string());
                                 Toast.makeText(context, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
@@ -426,7 +427,7 @@ public class OrderWaitingActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response.body().string());
                                 if (jsonObject.getString("STATUS").equals("200")) {
                                     JSONObject jsonObject1 = new JSONObject(jsonObject.getString("DATA"));
-                                    if (jsonObject1.getString("booking_status").equals("1")){
+                                    if (jsonObject1.getString("booking_status").equals("1")) {
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         intent.putExtra("FLAGPAGE", 1);
                                         startActivity(intent);

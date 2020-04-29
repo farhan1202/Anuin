@@ -3,6 +3,7 @@ package com.example.anuin.order.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.example.anuin.R;
 import com.example.anuin.order.OrderProcessActivity;
 import com.example.anuin.order.OrderWaitingActivity;
+import com.example.anuin.order.OrderWaitingMerchantActivity;
 import com.example.anuin.order.model.OrderList;
 
 import java.util.List;
@@ -44,21 +46,24 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
         vHolder.tvmotode.setText(bookingList.get(i).getProduct_jasa().getProduct_jasa_title());
         vHolder.tvtype.setText(bookingList.get(i).getProduct_jasa().getCategory().getCategory_title());
         vHolder.tvTime.setText(bookingList.get(i).getWork_date());
-        if (bookingList.get(i).getBooking_status().equals("1")){
+        if (bookingList.get(i).getBooking_status().equals("2")) {
             vHolder.btnWait.setText("Proses");
             vHolder.btnWait.setTextColor(Color.parseColor("#FFFFFF"));
             vHolder.btnWait.setBackgroundColor(Color.parseColor("#27AE60"));
         }
 
-        vHolder.tvToko.setText("00:59:10");
         vHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (bookingList.get(i).getBooking_status().equals("1")){
+                if (bookingList.get(i).getBooking_status().equals("2")) {
                     Intent intent = new Intent(context, OrderProcessActivity.class);
                     intent.putExtra("IDORDER", bookingList.get(i).getId());
                     context.startActivity(intent);
-                }else{
+                } else if (bookingList.get(i).getBooking_status().equals("1")) {
+                    Intent intent = new Intent(context, OrderWaitingMerchantActivity.class);
+                    intent.putExtra("IDORDER", bookingList.get(i).getId());
+                    context.startActivity(intent);
+                } else {
                     Intent intent = new Intent(context, OrderWaitingActivity.class);
                     intent.putExtra("IDORDER", bookingList.get(i).getId());
                     context.startActivity(intent);
@@ -74,18 +79,18 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
     }
 
     public class vHolder extends RecyclerView.ViewHolder {
-        TextView tvkode,tvmotode,tvtype,tvTime,tvToko;
+        TextView tvkode, tvmotode, tvtype, tvTime, tvToko;
         Button btnWait;
         CardView cardView;
+
         public vHolder(@NonNull View itemView) {
             super(itemView);
-            tvkode=itemView.findViewById(R.id.tvKode);
-            tvmotode=itemView.findViewById(R.id.tvMotode);
-            tvtype=itemView.findViewById(R.id.tvTipe);
-            tvTime=itemView.findViewById(R.id.tvTimeNDate);
-            tvToko=itemView.findViewById(R.id.tvToko);
-            btnWait=itemView.findViewById(R.id.btnWait);
-            cardView=itemView.findViewById(R.id.cvOrder);
+            tvkode = itemView.findViewById(R.id.tvKode);
+            tvmotode = itemView.findViewById(R.id.tvMotode);
+            tvtype = itemView.findViewById(R.id.tvTipe);
+            tvTime = itemView.findViewById(R.id.tvTimeNDate);
+            btnWait = itemView.findViewById(R.id.btnWait);
+            cardView = itemView.findViewById(R.id.cvOrder);
         }
     }
 }

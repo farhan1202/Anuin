@@ -11,6 +11,7 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 
+import com.example.anuin.Modal.LoginDialog;
 import com.example.anuin.home.FormPesananActivity;
 import com.example.anuin.introNlogin.ApiLoginActivity;
 import com.example.anuin.order.AktifFragment;
@@ -54,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             requestStoragePermission();

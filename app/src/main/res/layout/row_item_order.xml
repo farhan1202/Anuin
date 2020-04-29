@@ -97,15 +97,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </TextView>
-                <TextView
-                    android:id="@+id/tvToko"
-                    android:layout_margin="2dp"
-                    android:text="00:59:10"
-                    android:textSize="10dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </TextView>
             </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
