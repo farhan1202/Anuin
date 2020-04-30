@@ -126,6 +126,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
     private void bookingApprove(int booking_id, int merchant_id, int rating, String toString) {
+        loginDialog.startLoadingDialog();
         apiInterface.bookingApprove(UtilsApi.APP_TOKEN, prefManager.getTokenUser(),prefManager.getId(),booking_id,merchant_id,toString, rating).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -134,6 +135,7 @@ public class ReviewActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getString("STATUS").equals("200")){
                             Toast.makeText(ReviewActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
+                            loginDialog.dismissLoadingDialog();
                             Intent intent = new Intent(ReviewActivity.this, MainActivity.class);
                             intent.putExtra("FLAGPAGE", 1);
                             intent.putExtra("FLAGPAGER", 1);
@@ -147,6 +149,7 @@ public class ReviewActivity extends AppCompatActivity {
                     }
                 }else{
                     try {
+                        loginDialog.dismissLoadingDialog();
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(ReviewActivity.this, "" + jsonObject.getString("MESSAGE"), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
@@ -160,6 +163,7 @@ public class ReviewActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loginDialog.dismissLoadingDialog();
                 Log.d("TAG", "onFailure: " + t.getMessage());
                 Toast.makeText(ReviewActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
             }
