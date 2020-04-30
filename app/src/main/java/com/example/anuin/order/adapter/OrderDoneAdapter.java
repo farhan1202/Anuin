@@ -36,7 +36,7 @@ public class OrderDoneAdapter extends RecyclerView.Adapter<OrderDoneAdapter.vHol
 
     @Override
     public void onBindViewHolder(@NonNull OrderDoneAdapter.vHolder vHolder, int i) {
-        vHolder.tvkode.setText(bookingList.get(i).getBooking_code().getCode_name());
+        vHolder.tvkode.setText("#"+bookingList.get(i).getBooking_code().getCode_name());
         vHolder.tvmotode.setText(bookingList.get(i).getProduct_jasa().getProduct_jasa_title());
         vHolder.tvtype.setText(bookingList.get(i).getProduct_jasa().getCategory().getCategory_title());
         vHolder.tvTime.setText(bookingList.get(i).getWork_date());
@@ -53,7 +53,7 @@ public class OrderDoneAdapter extends RecyclerView.Adapter<OrderDoneAdapter.vHol
 
     @Override
     public int getItemCount() {
-        return bookingList.size();
+        return (bookingList != null ? bookingList.size() : 0);
     }
 
     public class vHolder extends RecyclerView.ViewHolder {

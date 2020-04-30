@@ -48,6 +48,8 @@ public class MetodePembayaranActivity extends AppCompatActivity {
         int total_tagihan = intent.getIntExtra("total_tagihan", 0);
         txtTotalTagihan.setText((NumberFormat.getCurrencyInstance(new Locale("in", "ID")).format(total_tagihan) + ""));
 
+        tvMotode.setText(intent.getStringExtra("product_jasa_title"));
+        tvTipe.setText(intent.getStringExtra("category_title"));
         cvTunai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

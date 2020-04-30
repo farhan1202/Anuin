@@ -42,7 +42,7 @@ public class WaitingOrderAdapter extends RecyclerView.Adapter<WaitingOrderAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final vHolder vHolder, final int i) {
-        vHolder.tvkode.setText(bookingList.get(i).getBooking_code().getCode_name());
+        vHolder.tvkode.setText("#"+bookingList.get(i).getBooking_code().getCode_name());
         vHolder.tvmotode.setText(bookingList.get(i).getProduct_jasa().getProduct_jasa_title());
         vHolder.tvtype.setText(bookingList.get(i).getProduct_jasa().getCategory().getCategory_title());
         vHolder.tvTime.setText(bookingList.get(i).getWork_date());

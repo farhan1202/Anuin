@@ -407,7 +407,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/btn"
-                android:text="Bayar"
+                android:text="SELESAI"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>

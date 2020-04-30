@@ -31,7 +31,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -131,7 +134,7 @@ public class OrderProcessActivity extends AppCompatActivity {
                                     getLokasiUser(jsonObject1.getInt("member_address_id"));
 
                                     JSONObject jsonBooking = new JSONObject(jsonObject1.getString("booking_code"));
-                                    txtCodeBooking.setText(jsonBooking.getString("code_name"));
+                                    txtCodeBooking.setText("#"+jsonBooking.getString("code_name"));
 
                                     JSONObject jsonProductJasa = new JSONObject(jsonObject1.getString("product_jasa"));
                                     txtDetailJasa.setText(jsonProductJasa.getString("product_jasa_title"));
@@ -153,8 +156,15 @@ public class OrderProcessActivity extends AppCompatActivity {
 
                                     metodeBayar.setText(payment_type_title + " - " + payment_method_title);
 
+                                    String date1 = jsonObject1.getString("work_date").substring(0, 11);
+                                    try {
+                                        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(date1);
+                                        SimpleDateFormat formatter1=new SimpleDateFormat("dd MMM yyy");
+                                        orderDate.setText(formatter1.format(date));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
 
-                                    orderDate.setText(jsonObject1.getString("work_date").substring(0, 11));
                                     orderTime.setText(jsonObject1.getString("work_date").substring(11));
                                     txtDetailAlamat.setText(jsonObject1.getString("detail_lokasi"));
 
