@@ -75,7 +75,6 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                 startActivityForResult(intent1, 3);
             }
         });
-
     }
 
     @Override
@@ -97,6 +96,5 @@ public class MetodePembayaranActivity extends AppCompatActivity {
                 finish();
             }
         }
-
     }
 }
